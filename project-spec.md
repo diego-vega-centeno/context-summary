@@ -158,6 +158,89 @@ Blocked: waiting on @john decision about session handling
 Last activity: 3 people discussed token expiry approach
 ```
 
+## UI/UX Decisions — Addendum
+
+### General Layout
+Fixed sidenav on the left, main content on the right.
+Component library: shadcn/ui (clean, modern, dark/light theme built in)
+
+### Sidenav
+- Dashboard
+- PR Stories
+- Settings
+─────────────
+- Theme toggle
+- User email
+- Sign out
+
+### Route Structure
+app/
+├── page.tsx                          # Landing (simple hero + one CTA)
+├── (auth)/
+│   ├── login/page.tsx
+│   └── signup/page.tsx
+├── (dashboard)/
+│   ├── layout.tsx                    # Sidenav + header
+│   ├── dashboard/page.tsx            # Stats row + kanban status board
+│   ├── stories/page.tsx              # PR cards grid + filters
+│   ├── stories/[id]/page.tsx         # Full story view
+│   └── settings/page.tsx
+└── api/
+    ├── prs/route.ts                  # GET list, POST add PR
+    ├── prs/[id]/route.ts             # GET, DELETE
+    ├── prs/[id]/sync/route.ts        # POST manual sync
+    ├── summarize/[id]/route.ts       # POST Gemini summarization
+    └── cron/sync/route.ts            # GET Vercel cron job
+
+### Page Descriptions
+
+Landing (app/)
+- Simple hero, one line explaining the app
+- Single CTA: "Get Started" → redirects to login then dashboard
+
+Dashboard (dashboard/)
+- Stats row: total / open / merged / closed / stale as cards
+- Kanban status board below: columns per status (layout only, no drag for MVP)
+- Future V2: drag to assign custom states like priority or to-do
+
+PR Stories (stories/)
+- Cards grid (2 columns desktop, 1 mobile)
+- Each card shows: title, repo, status badge, stale indicator, one-liner, last synced
+- Filter bar: All / Open / Merged / Closed / Stale
+- "Add PR" button in header
+- Click card → full story view (full page navigation)
+
+Story View (stories/[id]/)
+- Full page, not a drawer
+- Back button → returns to PR Stories
+- PR title + metadata at top (author, status, dates)
+- Collapsible sections:
+    - What was built and why
+    - Key decisions (who, what, when)
+    - Blocking points with context
+    - Current state
+    - Next steps
+- Manual refresh button + last synced timestamp
+- Direct URL accessible and shareable
+
+### Navigation Flow
+Landing → Dashboard (entry point after auth)
+
+Sidenav: Dashboard / PR Stories / Settings
+
+PR Stories → card click → Story View (full page)
+Story View → back button → PR Stories
+
+### Key UX Decisions
+- Story view is full page (not drawer) — content needs space to breathe
+- Kanban on dashboard is layout only for MVP, no drag behavior
+- "PR Stories" naming reinforces the app differentiator over generic "PR List"
+- /stories/[id] URL reads naturally and is shareable
+- Auth pages have no sidenav (centered card layout)
+- Stale threshold: 7 days
+- Status computed on sync, not on dashboard render
+
+
 ## What's Next to Discuss
 1. Application architecture — folder structure, API routes, sync strategy
 2. Gemini prompt design — critical, the narrative quality is the entire product
