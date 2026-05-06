@@ -174,7 +174,7 @@ export default function LandingPage() {
             </div>
           </div>
           <p className="text-center text-xs text-muted-foreground mt-4">
-            Example card — AI reconstructs the blockers automatically
+            Example card automatically reconstructed by AI
           </p>
         </div>
       </section>
