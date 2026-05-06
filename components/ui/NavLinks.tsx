@@ -5,7 +5,7 @@ import clsx from "clsx";
 
 const links = [
   { name: "Dashboard", href: "/dashboard" },
-  { name: "Summary", href: "/summary" },
+  { name: "PR stories", href: "/pr-stories" },
 ];
 
 export default function NavLinks() {

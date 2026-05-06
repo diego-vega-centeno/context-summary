@@ -9,6 +9,7 @@
   --muted-background: #8b8888;
   --muted-foreground: #292121;
   --border: #543a3a1a;
+  --warning: #be1a1a;
 }
 
 .dark {
@@ -20,6 +21,9 @@
   --muted-background: #262626;
   --muted-foreground: #a1a1a1;
   --border: #543a3a1a;
+  --sidebar-background: #1f1e1e;
+  --sidebar-foreground: #262626;
+  --warning: #be1a1a;
 }
 
 @theme {
@@ -32,6 +36,8 @@
   --color-border: var(--border);
   --color-primary: var(--primary);
   --color-secondary: var(--secondary);
+  --color-sidebar-background: var(--sidebar-background);
+  --color-warning: var(--warning);
 }
 
 body {
