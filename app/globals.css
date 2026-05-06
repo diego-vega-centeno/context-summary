@@ -3,11 +3,13 @@
 :root {
   --background: #ededed;
   --foreground: #0a0a0a;
-  --highlight: #5e5b5b;
+  --highlight: #a9a3a3;
   --primary: #0a0917;
   --secondary: #262626;
   --muted-background: #8b8888;
   --muted-foreground: #292121;
+  --sidebar-background: #e0d9d9;
+  --sidebar-foreground: #262626;
   --border: #543a3a1a;
   --warning: #be1a1a;
 }
@@ -37,6 +39,7 @@
   --color-primary: var(--primary);
   --color-secondary: var(--secondary);
   --color-sidebar-background: var(--sidebar-background);
+  --color-sidebar-foreground: var(--sidebar-foreground);
   --color-warning: var(--warning);
 }
 
