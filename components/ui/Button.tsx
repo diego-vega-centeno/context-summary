@@ -30,19 +30,35 @@ const buttonVariants = cva(
   },
 );
 
+type ButtonProps = React.ComponentProps<"button"> &
+  VariantProps<typeof buttonVariants> & {
+    icon?: React.ComponentType<object>;
+    href?: string;
+  };
+
 export default function Button({
   variant,
   size,
   className,
   icon: Icon,
+  href,
   ...props
-}: React.ComponentProps<"button"> &
-  VariantProps<typeof buttonVariants> & { icon?: React.ComponentType }) {
-  const Component = props.href ? Link : "button";
+}: ButtonProps) {
+  const _className = buttonVariants({ variant, size, className });
+
+  if (href) {
+    return (
+      <Link href={href} className={_className}>
+        {Icon && <Icon />}
+        {props.children}
+      </Link>
+    );
+  }
+
   return (
-    <Component className={buttonVariants({ variant, size, className })} {...props}>
+    <button className={_className} {...props}>
       {Icon && <Icon />}
       {props.children}
-    </Component>
+    </button>
   );
 }
