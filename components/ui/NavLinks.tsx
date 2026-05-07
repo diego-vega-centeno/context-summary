@@ -2,27 +2,27 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
+import Button from "@/components/ui/Button";
+import { LayoutDashboard, BookOpenText } from "lucide-react";
 
 const links = [
-  { name: "Dashboard", href: "/dashboard" },
-  { name: "PR stories", href: "/pr-stories" },
+  { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
+  { name: "PR stories", href: "/stories", icon: BookOpenText },
 ];
 
 export default function NavLinks() {
-  const pathname = usePathname();
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col gap-1">
       {links.map((link) => {
         return (
-          <Link
+          <Button
             key={link.name}
             href={link.href}
-            className={clsx("w-full px-2 py-1 hover:text-white hover:bg-highlight rounded-sm", {
-              "bg-white text-black": pathname === link.href,
-            })}
+            variant={'withIcon'}
+            icon={link.icon}
           >
             {link.name}
-          </Link>
+          </Button>
         );
       })}
     </div>
