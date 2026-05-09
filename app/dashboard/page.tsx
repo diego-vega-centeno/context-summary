@@ -4,8 +4,10 @@ import {
   GitMerge,
   SquareDot,
   TriangleAlert,
+  RefreshCw,
 } from "lucide-react";
 import type { TrackedPRWithSummary } from "@/types/index.ts";
+import Button from "@/components/ui/Button";
 
 const total_prs_length = dummyPRs.length;
 
@@ -66,11 +68,18 @@ const columns: { status: string; prs: TrackedPRWithSummary[] }[] = [
 export default function Page() {
   return (
     <main className="flex flex-1 h-full w-full flex-col justify-between p-6 max-w-6xl mx-auto">
-      <div className="">
-        <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight">
-          Dashboard
-        </h1>
-        <h2 className="text-muted-foreground p-4 pl-0">Last synced</h2>
+      <div>
+        <div className="flex justify-between items-center mb-3">
+          <div>
+            <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight">
+              Dashboard
+            </h1>
+            <h2 className="text-muted-foreground text-sm">Last synced</h2>
+          </div>
+          <Button variant="withIcon" border icon={RefreshCw}>
+            Sync all
+          </Button>
+        </div>
         <div className="grid md:grid-cols-[repeat(auto-fit,minmax(120px,1fr))] grid-cols-2 gap-2">
           {(
             Object.keys(status_config) as Array<keyof typeof status_config>

@@ -21,6 +21,10 @@ const buttonVariants = cva(
         false: null,
         true: "opacity-50 cursor-not-allowed",
       },
+      border: {
+        true: "border-1 border-border",
+        false: null,
+      },
     },
     defaultVariants: {
       variant: "default",
@@ -32,7 +36,7 @@ const buttonVariants = cva(
 
 type ButtonProps = React.ComponentProps<"button"> &
   VariantProps<typeof buttonVariants> & {
-    icon?: React.ComponentType<object>;
+    icon?: React.ComponentType<React.SVGProps<SVGSVGElement>>;
     href?: string;
   };
 
@@ -40,16 +44,17 @@ export default function Button({
   variant,
   size,
   className,
+  border,
   icon: Icon,
   href,
   ...props
 }: ButtonProps) {
-  const _className = buttonVariants({ variant, size, className });
+  const _className = buttonVariants({ variant, size, className, border });
 
   if (href) {
     return (
       <Link href={href} className={_className}>
-        {Icon && <Icon />}
+        {Icon && <Icon className="h-2/3"/>}
         {props.children}
       </Link>
     );
@@ -57,7 +62,7 @@ export default function Button({
 
   return (
     <button className={_className} {...props}>
-      {Icon && <Icon />}
+      {Icon && <Icon className="h-2/3" />}
       {props.children}
     </button>
   );
