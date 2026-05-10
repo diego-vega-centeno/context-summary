@@ -1,3 +1,4 @@
+"use client";
 import { getPRsByStatus, dummyPRs } from "@/lib/data/dummy-data";
 import {
   GitPullRequest,
@@ -8,6 +9,7 @@ import {
 } from "lucide-react";
 import { type TrackedPRWithSummary, type PRStatus } from "@/types/index";
 import Button from "@/components/ui/Button";
+import { useState } from "react";
 
 const columns = ["open", "stale", "merged", "closed"];
 
@@ -99,6 +101,14 @@ function PRMiniCard(pr: TrackedPRWithSummary) {
 }
 
 export default function Page() {
+  const [refreshing, setRefreshing] = useState(false);
+
+  async function refreshPRs() {
+    setRefreshing(true);
+    await new Promise((r) => setTimeout(r, 2000));
+    setRefreshing(false);
+  }
+
   return (
     <main className="flex flex-1 flex-col justify-between p-6 max-w-6xl mx-auto">
       <div>
@@ -109,14 +119,16 @@ export default function Page() {
             </h1>
             <h2 className="text-muted-foreground text-sm">Last synced</h2>
           </div>
-          <Button
-            className="text-sm"
-            variant="withIcon"
-            border
-            icon={RefreshCw}
+          <button
+            className="inline-flex items-center justify-center rounded-md text-foreground hover:bg-highlight hover:text-foreground h-8 px-2 border-1 border-border"
+            disabled={refreshing}
+            onClick={refreshPRs}
           >
+            <RefreshCw
+              className={`h-2/3 mr-1 ${refreshing ? "animate-spin" : ""}`}
+            />
             Sync all
-          </Button>
+          </button>
         </div>
         <div className="grid md:grid-cols-[repeat(auto-fit,minmax(120px,1fr))] grid-cols-2 gap-2">
           {columns.map((status) => (
@@ -140,9 +152,7 @@ export default function Page() {
                 >
                   {status}
                 </div>
-                <span className="pl-2">
-                  {prs[status as PRStatus].length}
-                </span>
+                <span className="pl-2">{prs[status as PRStatus].length}</span>
               </div>
               {prs[status as PRStatus].map((pr) => PRMiniCard(pr))}
             </div>
