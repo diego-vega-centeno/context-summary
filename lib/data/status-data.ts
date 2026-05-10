@@ -44,7 +44,7 @@ const status_data: Record<
   closed: {
     title: "closed",
     icon: SquareDot,
-    color: "bg-grey-700/50  dark:bg-grey-700 border-grey-700",
+    color: "bg-zinc-600/50  dark:bg-zinc-600 border-zinc-600",
     length: prs["closed"].length,
   },
   stale: {
