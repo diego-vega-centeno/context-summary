@@ -77,7 +77,7 @@ export default function Page() {
           </button>
         </div>
         <div className="grid md:grid-cols-[repeat(auto-fit,minmax(120px,1fr))] grid-cols-2 gap-2">
-          {columns.map((status) => (
+          {["total", ...columns].map((status) => (
             <div key={status}>
               <StatsCard status={status as PRStatus | "total"} />
             </div>
