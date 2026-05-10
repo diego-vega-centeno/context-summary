@@ -93,7 +93,7 @@ const columns: {
 
 export default function Page() {
   return (
-    <main className="flex flex-1 h-full w-full flex-col justify-between p-6 max-w-6xl mx-auto">
+    <main className="flex flex-1 flex-col justify-between p-6 max-w-6xl mx-auto">
       <div>
         <div className="flex justify-between items-center mb-3">
           <div>
