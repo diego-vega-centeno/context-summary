@@ -9,55 +9,72 @@ import {
 import { type TrackedPRWithSummary, type PRStatus } from "@/types/index";
 import Button from "@/components/ui/Button";
 
-const total_prs_length = dummyPRs.length;
+const columns = ["open", "stale", "merged", "closed"];
 
-const status_config = {
+const prs = {
+  open: getPRsByStatus("open"),
+  merged: getPRsByStatus("merged"),
+  closed: getPRsByStatus("closed"),
+  stale: getPRsByStatus("stale"),
+};
+
+const status_data: Record<
+  PRStatus | "total",
+  {
+    title: string;
+    icon: React.ComponentType<any>;
+    color: string;
+    length: number;
+  }
+> = {
   total: {
     title: "total",
     icon: GitPullRequest,
     color: "bg-grey-700/50 dark:bg-grey-700 border-grey-700",
+    length: dummyPRs.length,
   },
   open: {
     title: "open",
     icon: GitPullRequest,
     color: "bg-green-700/50 dark:bg-green-700 border-green-700",
+    length: prs["open"].length,
   },
   merged: {
     title: "merged",
     icon: GitMerge,
     color: "bg-purple-700/50 dark:bg-purple-700 border-purple-700",
+    length: prs["merged"].length,
   },
   closed: {
     title: "closed",
     icon: SquareDot,
     color: "bg-grey-700/50  dark:bg-grey-700 border-grey-700",
+    length: prs["closed"].length,
   },
   stale: {
     title: "stale",
     icon: TriangleAlert,
     color: "bg-yellow-700/50 dark:bg-yellow-700 border-yellow-700",
+    length: prs["stale"].length,
   },
 };
 
-function StatsCard({
-  value,
-  config,
-}: {
-  value: number;
-  config: Record<string, any>;
-}) {
+function StatsCard({ status }: { status: PRStatus | "total" }) {
+  const IconComponent = status_data[status].icon;
   return (
     <div
       className={`p-3 border-1 border-border rounded-lg flex items-center gap-2`}
     >
       <div className="w-2/3">
-        <div className="text-lg text-muted-foreground">{config.title}</div>
-        <div className="text-xl">{value}</div>
+        <div className="text-lg text-muted-foreground">
+          {status_data[status].title}
+        </div>
+        <div className="text-xl">{status_data[status].length}</div>
       </div>
       <div
-        className={`w-10 h-10 flex items-center justify-center ${config.color} bg-muted-background rounded-xl bg-border`}
+        className={`w-10 h-10 flex items-center justify-center ${status_data[status].color} bg-muted-background rounded-xl bg-border`}
       >
-        {<config.icon className="w-1/2 h-1/2" />}
+        {<IconComponent className="w-1/2 h-1/2" />}
       </div>
     </div>
   );
@@ -81,16 +98,6 @@ function PRMiniCard(pr: TrackedPRWithSummary) {
   );
 }
 
-const columns: {
-  status: PRStatus;
-  prs: TrackedPRWithSummary[];
-}[] = [
-  { status: "open", prs: getPRsByStatus("open") },
-  { status: "stale", prs: getPRsByStatus("stale") },
-  { status: "merged", prs: getPRsByStatus("merged") },
-  { status: "closed", prs: getPRsByStatus("closed") },
-];
-
 export default function Page() {
   return (
     <main className="flex flex-1 flex-col justify-between p-6 max-w-6xl mx-auto">
@@ -102,23 +109,19 @@ export default function Page() {
             </h1>
             <h2 className="text-muted-foreground text-sm">Last synced</h2>
           </div>
-          <Button className="text-sm" variant="withIcon" border icon={RefreshCw}>
+          <Button
+            className="text-sm"
+            variant="withIcon"
+            border
+            icon={RefreshCw}
+          >
             Sync all
           </Button>
         </div>
         <div className="grid md:grid-cols-[repeat(auto-fit,minmax(120px,1fr))] grid-cols-2 gap-2">
-          {(
-            Object.keys(status_config) as Array<keyof typeof status_config>
-          ).map((status) => (
+          {columns.map((status) => (
             <div key={status}>
-              <StatsCard
-                value={
-                  status === "total"
-                    ? total_prs_length
-                    : getPRsByStatus(status).length
-                }
-                config={status_config[status]}
-              />
+              <StatsCard status={status as PRStatus | "total"} />
             </div>
           ))}
         </div>
@@ -129,27 +132,21 @@ export default function Page() {
           click to view full story
         </div>
         <div className="grid md:grid-cols-[repeat(auto-fit,minmax(200px,1fr))] grid-cols-2 gap-2">
-          {columns.map(
-            ({
-              status,
-              prs,
-            }: {
-              status: PRStatus;
-              prs: TrackedPRWithSummary[];
-            }) => (
-              <div className={"flex flex-col gap-2"} key={status}>
-                <div className="py-2">
-                  <div
-                    className={`inline-block border-1 rounded-xl ${status_config[status].color} px-3 py-1 text-sm`}
-                  >
-                    {status}
-                  </div>
-                  <span className="pl-2">{prs.length}</span>
+          {columns.map((status) => (
+            <div className={"flex flex-col gap-2"} key={status}>
+              <div className="py-2">
+                <div
+                  className={`inline-block border-1 rounded-xl ${status_data[status as PRStatus].color} px-3 py-1 text-sm`}
+                >
+                  {status}
                 </div>
-                {prs.map((pr) => PRMiniCard(pr))}
+                <span className="pl-2">
+                  {prs[status as PRStatus].length}
+                </span>
               </div>
-            ),
-          )}
+              {prs[status as PRStatus].map((pr) => PRMiniCard(pr))}
+            </div>
+          ))}
         </div>
       </div>
     </main>
