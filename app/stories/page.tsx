@@ -13,7 +13,7 @@ function PRCard(pr: TrackedPRWithSummary) {
   return (
     <div
       key={pr.id}
-      className="text-sm border-1 border-border rounded-lg p-3 hover:bg-hover hover:cursor-pointer"
+      className="text-sm border-1 border-border rounded-lg p-4 hover:bg-hover hover:cursor-pointer"
     >
       <div
         className={`inline-flex items-center border-1 rounded-xl ${status_data[pr.status].color} px-2 mb-2 text-sm`}
@@ -77,10 +77,10 @@ export default function Page() {
             Add PR
           </button>
         </div>
-        <div className="w-full flex gap-3 mb-8">
+        <div className="w-full flex gap-3 mb-8 flex-wrap">
           <input
             placeholder="Search PRs ..."
-            className="w-3/8 bg-sidebar-background p-2 rounded-md text-sm"
+            className="min-w-full md:min-w-40 w-3/8 bg-sidebar-background p-2 rounded-md text-sm"
             type="text"
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
