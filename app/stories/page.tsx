@@ -1,7 +1,7 @@
 "use client";
 import { type TrackedPRWithSummary, type PRStatus } from "@/types/index";
 import { Plus, Clock } from "lucide-react";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { status_data, prs, formatRelativeDate } from "@/lib/data/status-data";
 import { dummyPRs } from "@/lib/data/dummy-data";
 
@@ -42,7 +42,21 @@ export default function Page() {
   const [statusSelected, setStatusSelected] = useState<PRStatus | "total">(
     "total",
   );
-  const [selectedPRs, setSelectedPRs] = useState(dummyPRs);
+
+  const filteredPRs = useMemo(() => {
+    let basePRs = statusSelected === "total" ? dummyPRs : prs[statusSelected];
+    if (searchInput) {
+      const query = searchInput.trim().toLowerCase();
+      return basePRs.filter(
+        (pr) =>
+          pr.title.toLowerCase().includes(query) ||
+          pr.repo_owner.toLowerCase().includes(query) ||
+          pr.repo_name.toLowerCase().includes(query) ||
+          pr.author.toLowerCase().includes(query),
+      );
+    }
+    return basePRs;
+  }, [statusSelected, searchInput]);
 
   async function refreshPRs() {
     setRefreshing(true);
@@ -52,8 +66,6 @@ export default function Page() {
 
   function handleStatusSelection(status: PRStatus | "total") {
     setStatusSelected(status);
-    if (status === "total") setSelectedPRs(dummyPRs);
-    else setSelectedPRs(prs[status]);
   }
 
   return (
@@ -98,7 +110,7 @@ export default function Page() {
           ))}
         </div>
         <div className="grid md:grid-cols-2 grid-cols-1 gap-2">
-          {selectedPRs.map((pr) => (
+          {filteredPRs.map((pr) => (
             <div className={"flex flex-col gap-2"} key={pr.id}>
               {PRCard(pr)}
             </div>
