@@ -1,6 +1,6 @@
 "use client";
 import { type TrackedPRWithSummary, type PRStatus } from "@/types/index";
-import { Plus, Clock } from "lucide-react";
+import { Plus, Clock, RefreshCw } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import {
   status_data,
@@ -19,11 +19,16 @@ function PRCard(pr: TrackedPRWithSummary) {
       key={pr.id}
       className="text-sm border-1 border-border rounded-lg p-4 hover:bg-hover hover:cursor-pointer"
     >
-      <div
-        className={`inline-flex items-center border-1 rounded-xl ${status_data[pr.status].color} px-2 mb-2 text-sm`}
-      >
-        <IconComponent className="inline-block w-6 pr-2" />
-        <span>{pr.status}</span>
+      <div className="flex justify-between">
+        <div
+          className={`inline-flex items-center border-1 rounded-xl ${status_data[pr.status].color} px-2 mb-2 text-sm`}
+        >
+          <IconComponent className="inline-block w-6 pr-2" />
+          <span>{pr.status}</span>
+        </div>
+        <div>
+          <RefreshCw className="w-8 h-8 p-2 hover:bg-highlight rounded-full" />
+        </div>
       </div>
       <div className="font-medium text-foreground">{pr.title}</div>
       <div className="">
