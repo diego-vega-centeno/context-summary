@@ -1,8 +1,6 @@
-"use client";
-import { RefreshCw } from "lucide-react";
-import { useState } from "react";
 import { status_data, prs } from "@/lib/data/status-data";
 import { type TrackedPRWithSummary, type PRStatus } from "@/types/index";
+import SyncAllButton from "@/components/ui/SyncAllButton";
 
 const columns = ["open", "stale", "merged", "closed"];
 
@@ -46,14 +44,6 @@ function PRMiniCard(pr: TrackedPRWithSummary) {
 }
 
 export default function Page() {
-  const [refreshing, setRefreshing] = useState(false);
-
-  async function refreshPRs() {
-    setRefreshing(true);
-    await new Promise((r) => setTimeout(r, 2000));
-    setRefreshing(false);
-  }
-
   return (
     <main className="flex flex-1 flex-col justify-between p-6 max-w-6xl mx-auto">
       <div>
@@ -64,17 +54,7 @@ export default function Page() {
             </h1>
             <h2 className="text-muted-foreground text-sm">Last synced</h2>
           </div>
-          <button
-            type="button"
-            className={`inline-flex items-center justify-center rounded-md text-foreground hover:bg-highlight hover:text-foreground h-8 px-2 border-1 border-border ${refreshing ? "opacity-50 cursor-not-allowed" : ""}`}
-            disabled={refreshing}
-            onClick={refreshPRs}
-          >
-            <RefreshCw
-              className={`h-2/3 mr-1 ${refreshing ? "animate-spin" : ""}`}
-            />
-            Sync all
-          </button>
+          <SyncAllButton />
         </div>
         <div className="grid md:grid-cols-[repeat(auto-fit,minmax(120px,1fr))] grid-cols-2 gap-2">
           {["total", ...columns].map((status) => (
