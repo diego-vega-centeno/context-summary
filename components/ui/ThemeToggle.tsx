@@ -29,17 +29,17 @@ export function ThemeToggle({
     >
       {theme === "dark" ? (
         <Moon
-          className="h-8 w-8 p-1 rounded-full hover:bg-foreground hover:text-background hover:cursor-pointer"
+          className="h-7 w-7 p-1 rounded-full hover:bg-foreground hover:text-background hover:cursor-pointer"
           onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
         />
       ) : (
         <Sun
-          className="h-8 w-8 p-1 rounded-full hover:bg-foreground hover:text-background hover:cursor-pointer"
+          className="h-5 w-5 p-1 rounded-full hover:bg-foreground hover:text-background hover:cursor-pointer"
           onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
         />
       )}
       {showLabels && (
-        <span className="ml-2">
+        <span className="ml-1">
           {theme === "dark" ? "dark mode" : "light mode"}
         </span>
       )}
