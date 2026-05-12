@@ -9,7 +9,7 @@ import PRCard from "@/components/ui/PRCard";
 
 const status = ["total", "open", "stale", "merged", "closed"];
 
-export default function Page() {
+export default function StoriesPage() {
   const [refreshingPR, setRefreshingPR] = useState<null | string>(null);
   const [searchInput, setSearchInput] = useState("");
   const [statusSelected, setStatusSelected] = useState<PRStatus | "total">(

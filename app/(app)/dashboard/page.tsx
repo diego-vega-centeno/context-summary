@@ -43,7 +43,7 @@ function PRMiniCard(pr: TrackedPRWithSummary) {
   );
 }
 
-export default function Page() {
+export default function DashboardPage() {
   return (
     <main className="flex flex-1 flex-col justify-between p-6 max-w-6xl mx-auto">
       <div>
