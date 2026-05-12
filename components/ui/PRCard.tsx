@@ -13,7 +13,7 @@ export default function PRCard({ pr, refreshingPR, refreshPR }: PRCardProps) {
   return (
     <div
       key={pr.id}
-      className="text-sm border-1 border-border rounded-lg p-4 hover:bg-hover hover:cursor-pointer"
+      className="text-sm border-1 border-border rounded-lg p-4 hover:bg-hover hover:cursor-default"
     >
       <div className="flex justify-between">
         <div
