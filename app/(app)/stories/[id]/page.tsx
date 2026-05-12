@@ -93,7 +93,9 @@ export default async function StoryPage({ params }: Props) {
             PR stories
           </Button>
           <div className="flex items-center gap-2">
-            <span className="text-muted-foreground">Synced</span>
+            <span className="text-muted-foreground text-xs">
+              Synced <span>{formatRelativeDate(pr.last_synced_at)}</span>
+            </span>
             <SyncButton text="Refresh" />
           </div>
         </div>
