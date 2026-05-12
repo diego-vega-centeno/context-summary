@@ -1,6 +1,7 @@
 import Button from "@/components/ui/Button";
-import { ArrowLeft, GitPullRequest } from "lucide-react";
+import { ArrowLeft, GitPullRequest, RefreshCw } from "lucide-react";
 import { dummyPRs } from "@/lib/data/dummy-data";
+import SyncButton from "@/components/ui/SyncButton";
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -27,9 +28,13 @@ export default async function StoryPage({ params }: Props) {
     <main className="flex flex-1 flex-col justify-between p-6 px-20 max-w-6xl mx-auto">
       <div>
         <div className="flex justify-between items-center mb-3">
-          <Button href={"/stories"} variant="withIcon">
+          <Button href={"/stories"} variant="withIcon" icon={ArrowLeft}>
             PR stories
           </Button>
+          <div className="flex items-center gap-2">
+            <span className="text-muted-foreground">Synced</span>
+            <SyncButton text="Refresh" />
+          </div>
         </div>
         <div className="w-full flex gap-3 mb-8 flex-wrap"></div>
       </div>

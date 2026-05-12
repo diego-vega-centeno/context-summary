@@ -50,12 +50,18 @@ export default function Button({
   href,
   ...props
 }: ButtonProps) {
-  const _className = buttonVariants({ variant, size, className, border,disabled });
+  const _className = buttonVariants({
+    variant,
+    size,
+    className,
+    border,
+    disabled,
+  });
 
   if (href) {
     return (
       <Link href={href} className={_className}>
-        {Icon && <Icon className="h-2/3"/>}
+        {Icon && <Icon className="h-5 w-5" />}
         {props.children}
       </Link>
     );
@@ -63,7 +69,7 @@ export default function Button({
 
   return (
     <button className={_className} {...props}>
-      {Icon && <Icon className="h-2/3" />}
+      {Icon && <Icon className="h-5 w-5" />}
       {props.children}
     </button>
   );

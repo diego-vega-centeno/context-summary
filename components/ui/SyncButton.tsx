@@ -1,8 +1,8 @@
-'use client'
+"use client";
 import { RefreshCw } from "lucide-react";
 import { useState } from "react";
 
-export default function SyncAllButton() {
+export default function SyncButton({ text }) {
   const [refreshing, setRefreshing] = useState(false);
 
   async function refreshPRs() {
@@ -17,8 +17,8 @@ export default function SyncAllButton() {
       disabled={refreshing}
       onClick={refreshPRs}
     >
-      <RefreshCw className={`h-2/3 mr-1 ${refreshing ? "animate-spin" : ""}`} />
-      Sync all
+      <RefreshCw className={`w-4 h-4 mr-2 ${refreshing ? "animate-spin" : ""}`} />
+      {text}
     </button>
   );
 }

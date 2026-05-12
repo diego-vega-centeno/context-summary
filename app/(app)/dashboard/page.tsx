@@ -1,6 +1,6 @@
 import { status_data, prs } from "@/lib/data/status-data";
 import { type TrackedPRWithSummary, type PRStatus } from "@/types/index";
-import SyncAllButton from "@/components/ui/SyncAllButton";
+import SyncButton from "@/components/ui/SyncButton";
 
 const columns = ["open", "stale", "merged", "closed"];
 
@@ -54,7 +54,7 @@ export default function Page() {
             </h1>
             <h2 className="text-muted-foreground text-sm">Last synced</h2>
           </div>
-          <SyncAllButton />
+          <SyncButton text='Sync all' />
         </div>
         <div className="grid md:grid-cols-[repeat(auto-fit,minmax(120px,1fr))] grid-cols-2 gap-2">
           {["total", ...columns].map((status) => (
