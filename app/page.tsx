@@ -1,4 +1,3 @@
-"use client";
 import {
   BookOpen,
   Users,
@@ -7,13 +6,10 @@ import {
   Zap,
   Timeline,
 } from "lucide-react";
-import GitHubIcon from "@mui/icons-material/GitHub";
 import Button from "@/components/ui/Button";
-import { useRouter } from "next/navigation";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 
 export default function LandingPage() {
-  const router = useRouter();
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <header className="border-b border-b-2 border-border px-6 py-4 flex items-center justify-between">
@@ -60,19 +56,11 @@ export default function LandingPage() {
         </p>
 
         <div className="flex items-center gap-4">
-          <Button
-            size="lg"
-            onClick={() => router.push("/dashboard")}
-            className="gap-2"
-          >
+          <Button size="lg" href="/dashboard" className="gap-2">
             Get Started Free
             <ArrowRight className="w-4 h-4" />
           </Button>
-          <Button
-            size="lg"
-            onClick={() => router.push("/signup")}
-            className="gap-2"
-          >
+          <Button size="lg" href="/signup" className="gap-2">
             Sign up
           </Button>
         </div>
@@ -145,7 +133,11 @@ export default function LandingPage() {
                   </p>
                 </div>
               </div>
-              {<div className="text-xs py-2 px-3 rounded-full text-muted-foreground bg-muted-background">STALE 17d</div>}
+              {
+                <div className="text-xs py-2 px-3 rounded-full text-muted-foreground bg-muted-background">
+                  STALE 17d
+                </div>
+              }
             </div>
             <p className="text-md text-foreground mb-3">
               <span className="font-medium">Current status: </span>
