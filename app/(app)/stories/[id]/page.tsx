@@ -33,7 +33,7 @@ function PRMainSection({ pr }: { pr: TrackedPRWithSummary }) {
         </Link>
       </div>
       <h2 className="text-2xl font-semibold">{pr.title}</h2>
-      <div className="grid grid-cols-4 text-sm py-3">
+      <div className="grid grid-cols-2 md:grid-cols-4 text-sm py-3">
         <div>
           <div className="flex flex-col">
             <div className="text-muted-foreground">Repository</div>
@@ -86,7 +86,7 @@ export default async function StoryPage({ params }: Props) {
   }
 
   return (
-    <div className="flex flex-1 flex-col justify-between p-6 px-20 w-4xl mx-auto">
+    <div className="flex flex-1 flex-col justify-between p-6 px-20 min-w-md max-w-4xl mx-auto">
       <div>
         <div className="flex justify-between items-center mb-3">
           <Button href={"/stories"} variant="withIcon" icon={ArrowLeft}>

@@ -10,7 +10,7 @@ export default function AppLayout({
       <div className="md:w-64 max-h-screen">
         <SideNav />
       </div>
-      <div className="flex-1 max-h-screen min-w-sm overflow-auto">
+      <div className="flex-1 max-h-screen min-w-xs overflow-auto">
         {children}
       </div>
     </div>
