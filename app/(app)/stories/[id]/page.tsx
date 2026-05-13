@@ -1,5 +1,5 @@
 import Button from "@/components/ui/Button";
-import { ArrowLeft, GitPullRequest } from "lucide-react";
+import { ArrowLeft, GitPullRequest, Hammer } from "lucide-react";
 import { dummyPRs } from "@/lib/data/dummy-data";
 import SyncButton from "@/components/ui/SyncButton";
 import { formatRelativeDate } from "@/lib/data/utils";
@@ -29,7 +29,7 @@ export default async function StoryPage({ params }: Props) {
 
   return (
     <div className="flex flex-1 flex-col justify-between p-6 px-20 min-w-md max-w-4xl mx-auto">
-      <div>
+      <div className="space-y-4">
         <div className="flex justify-between items-center mb-3">
           <Button href={"/stories"} variant="withIcon" icon={ArrowLeft}>
             PR stories
@@ -44,7 +44,25 @@ export default async function StoryPage({ params }: Props) {
         <div className="w-full flex justify-center">
           <PRMainSection pr={pr} />
         </div>
-        <StorySection />
+        <StorySection
+          title="What was being built and why"
+          content={
+            <div className="space-y-2">
+              <div className="text-md font-semibold">
+                IP-based rate limiting middleware with configurable thresholds
+                per endpoint
+              </div>
+              <div className="text-muted-foreground">
+                After the April DDoS incident that took down the payments
+                endpoint for 40 minutes, the team agreed rate limiting was P0.
+                This PR implements the solution that was designed in the
+                post-mortem.
+              </div>
+            </div>
+          }
+          icon={<Hammer className="h-4 w-4"/>}
+          accent="bg-blue-100 dark:bg-blue-950 text-blue-600 dark:text-blue-400"
+        />
       </div>
     </div>
   );
