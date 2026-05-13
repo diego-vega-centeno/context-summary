@@ -49,19 +49,13 @@ export default async function StoryPage({ params }: Props) {
           content={
             <div className="space-y-2">
               <div className="text-md font-semibold">
-                IP-based rate limiting middleware with configurable thresholds
-                per endpoint
-              </div>
+                {pr.summary?.summary_json.what_was_built.summary}</div>
               <div className="text-muted-foreground">
-                After the April DDoS incident that took down the payments
-                endpoint for 40 minutes, the team agreed rate limiting was P0.
-                This PR implements the solution that was designed in the
-                post-mortem.
-              </div>
+                {pr.summary?.summary_json.what_was_built.context}</div>
             </div>
           }
           icon={<Hammer className="h-4 w-4"/>}
-          accent="bg-blue-100 dark:bg-blue-950 text-blue-600 dark:text-blue-400"
+          accent="bg-blue-300 dark:bg-blue-950 text-blue-900 dark:text-blue-400"
         />
       </div>
     </div>
