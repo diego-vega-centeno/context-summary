@@ -1,5 +1,5 @@
 import { ExternalLink } from "lucide-react";
-import { formatRelativeDate } from "@/lib/data/utils";
+import { formatRelativeDate } from "@/lib/utils";
 import { status_data } from "@/lib/data/status-data";
 import { type TrackedPRWithSummary } from "@/types/index";
 import Link from "next/link";

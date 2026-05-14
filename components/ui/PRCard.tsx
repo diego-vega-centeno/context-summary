@@ -1,7 +1,7 @@
 import { type TrackedPRWithSummary } from "@/types/index";
 import { Clock, RefreshCw } from "lucide-react";
 import { status_data } from "@/lib/data/status-data";
-import { formatRelativeDate } from "@/lib/data/utils";
+import { formatRelativeDate } from "@/lib/utils";
 import Link from "next/link";
 
 interface PRCardProps {

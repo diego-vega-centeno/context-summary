@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 import { dummyPRs } from "@/lib/data/dummy-data";
 import SyncButton from "@/components/ui/SyncButton";
-import { formatRelativeDate } from "@/lib/data/utils";
+import { formatRelativeDate } from "@/lib/utils";
 import PRMainSection from "@/components/ui/PRMainSection";
 import StorySection from "@/components/ui/StorySection";
 
