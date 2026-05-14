@@ -2,7 +2,7 @@
 @variant dark (&:where(.dark, .dark *));
 
 :root {
-  --background: #ededed;
+  --background: #ffffff;
   --foreground: #0a0a0a;
   --highlight: #a9a3a382;
   --primary: #0a0917;
