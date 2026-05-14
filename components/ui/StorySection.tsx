@@ -5,7 +5,7 @@ import { ChevronDown, ChevronRight } from "lucide-react";
 
 interface CollapsibleProps {
   title: string;
-  content: React.ReactNode;
+  children: React.ReactNode;
   icon: React.ReactNode;
   defaultOpen?: boolean;
   accent?: string;
@@ -13,12 +13,12 @@ interface CollapsibleProps {
 
 export default function StorySection({
   title,
-  content,
+  children,
   icon,
-  defaultOpen,
+  defaultOpen = false,
   accent,
 }: CollapsibleProps) {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(defaultOpen);
   return (
     <Collapsible.Root
       open={isOpen}
@@ -44,7 +44,7 @@ export default function StorySection({
         <div
           className={`px-5 py-4 border border-border rounded-lg ${isOpen ? "border-t-0 rounded-t-none" : ""}`}
         >
-          {content}
+          {children}
         </div>
       </Collapsible.Content>
     </Collapsible.Root>
