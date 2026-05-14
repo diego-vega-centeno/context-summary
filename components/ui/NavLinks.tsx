@@ -18,7 +18,7 @@ export default function NavLinks() {
             href={link.href}
             variant={"withIcon"}
             icon={link.icon}
-            className={pathname === link.href ? "bg-highlight" : ""}
+            className={pathname === link.href ? "bg-highlight/50" : ""}
           >
             {link.name}
           </Button>
