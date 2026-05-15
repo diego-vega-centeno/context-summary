@@ -60,8 +60,8 @@ export default function LandingPage() {
             Get Started Free
             <ArrowRight className="w-4 h-4" />
           </Button>
-          <Button size="lg" href="/signup" className="gap-2">
-            Sign up
+          <Button size="lg" href="/login" className="gap-2">
+            Sign in
           </Button>
         </div>
 
