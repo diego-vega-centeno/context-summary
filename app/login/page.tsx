@@ -50,7 +50,7 @@ export default function LoginPage() {
               </label>
               <input
                 id="password"
-                className="border border-highlight w-full bg-sidebar-background p-2 rounded-md ring-ring h-9 outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50 transition-[color,box-shadow]"
+                className="border border-highlight w-full bg-sidebar-background p-2 rounded-md h-9 outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50 transition-[color,box-shadow]"
                 type="password"
                 placeholder="*********"
                 autoComplete="current-password"
@@ -85,7 +85,6 @@ export default function LoginPage() {
             disabled={loading}
             className="w-full flex items-center justify-center bg-muted-background p-5"
           >
-            {loading && <LoaderCircle className="h-4 w-4 mr-2 animate-spin" />}
             Sign in with Google
           </Button>
         </div>
