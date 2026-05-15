@@ -37,7 +37,7 @@ const buttonVariants = cva(
 
 type ButtonProps = React.ComponentProps<"button"> &
   VariantProps<typeof buttonVariants> & {
-    icon?: React.ComponentType<React.SVGProps<SVGSVGElement>>;
+    icon?: React.ComponentType<{ className?: string }>;
     href?: string;
   };
 
