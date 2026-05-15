@@ -4,6 +4,7 @@ import Button from "@/components/ui/Button";
 import { useState } from "react";
 import { LoaderCircle } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -68,9 +69,9 @@ export default function LoginPage() {
         </div>
         <div className="text-muted-foreground text-sm text-center p-3">
           Don't have an account?{" "}
-          <a href="/" className="text-white underline">
+          <Link href="/" className="text-white underline">
             Sign up
-          </a>
+          </Link>
         </div>
         <div className="relative">
           <hr className="/border-border h-6" />
