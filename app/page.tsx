@@ -26,7 +26,7 @@ export default function LandingPage() {
 
       <main className="flex-1 flex flex-col items-center justify-center px-6 py-20 text-center">
         <h1
-          className="max-w-3xl mb-6 text-foreground"
+          className="max-w-4xl mb-6 text-foreground"
           style={{ fontSize: "3rem", fontWeight: 700, lineHeight: 1.15 }}
         >
           Stop asking{" "}
