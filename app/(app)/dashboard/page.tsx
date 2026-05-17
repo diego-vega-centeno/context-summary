@@ -1,7 +1,9 @@
-import { status_data, prs } from "@/lib/data/status-data";
+import { status_data } from "@/lib/data/status-data";
 import { type TrackedPRWithSummary, type PRStatus } from "@/types/index";
 import SyncButton from "@/components/ui/SyncButton";
 import Link from "next/link";
+import { fetchTrackedPRs } from "@/lib/data/prs";
+// import { dummyPRs } from "@/lib/data/dummy-data";
 
 const columns = ["open", "stale", "merged", "closed"];
 
@@ -43,7 +45,17 @@ function PRMiniCard(pr: TrackedPRWithSummary) {
   );
 }
 
-export default function DashboardPage() {
+export default async function DashboardPage() {
+  const userId = "7f759600-988e-4a81-9878-439523293021";
+  const trackedPRs = await fetchTrackedPRs(userId);
+
+  const prs = {
+    open: trackedPRs.filter((pr) => pr.status === "open"),
+    merged: trackedPRs.filter((pr) => pr.status === "merged"),
+    closed: trackedPRs.filter((pr) => pr.status === "closed"),
+    stale: trackedPRs.filter((pr) => pr.status === "stale"),
+  };
+
   return (
     <main className="flex flex-1 flex-col justify-between p-6 max-w-6xl mx-auto">
       <div>
