@@ -68,7 +68,7 @@ export default async function DashboardPage() {
           </div>
           <SyncButton text="Sync all" />
         </div>
-        <div className="grid md:grid-cols-[repeat(auto-fit,minmax(120px,1fr))] grid-cols-2 gap-2">
+        <div className="grid md:grid-cols-[repeat(auto-fit,minmax(170px,1fr))] grid-cols-2 gap-2">
           {["total", ...columns].map((status) => (
             <div key={status}>
               <StatsCard status={status as PRStatus | "total"} />
