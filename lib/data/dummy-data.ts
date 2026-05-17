@@ -6,8 +6,8 @@ export const dummyPRs: TrackedPRWithSummary[] = [
   // ── OPEN ──────────────────────────────────
 
   {
-    id: "pr-001",
-    user_id: "user-dummy",
+    id: "88268875-108e-4f58-8671-50e5021e16f3",
+    user_id: "7f759600-988e-4a81-9878-439523293021",
     repo_owner: "acme-corp",
     repo_name: "payments-service",
     pr_number: 234,
@@ -19,8 +19,8 @@ export const dummyPRs: TrackedPRWithSummary[] = [
     last_synced_at: "2024-03-10T15:00:00Z",
     added_at: "2024-03-02T08:00:00Z",
     summary: {
-      id: "sum-001",
-      pr_id: "pr-001",
+      id: "e0f6c26d-49d7-4001-9f93-01826075d9e9",
+      pr_id: "88268875-108e-4f58-8671-50e5021e16f3",
       generated_at: "2024-03-10T15:01:00Z",
       summary_json: {
         one_liner:
@@ -70,8 +70,8 @@ export const dummyPRs: TrackedPRWithSummary[] = [
   },
 
   {
-    id: "pr-002",
-    user_id: "user-dummy",
+    id: "f478631d-b355-460d-9659-197e412a149c",
+    user_id: "7f759600-988e-4a81-9878-439523293021",
     repo_owner: "nova-labs",
     repo_name: "dashboard-ui",
     pr_number: 87,
@@ -83,8 +83,8 @@ export const dummyPRs: TrackedPRWithSummary[] = [
     last_synced_at: "2024-03-11T10:00:00Z",
     added_at: "2024-03-06T08:00:00Z",
     summary: {
-      id: "sum-002",
-      pr_id: "pr-002",
+      id: "c9664551-768a-4933-92f7-7b8229f3d97e",
+      pr_id: "f478631d-b355-460d-9659-197e412a149c",
       generated_at: "2024-03-11T10:01:00Z",
       summary_json: {
         one_liner:
@@ -127,8 +127,8 @@ export const dummyPRs: TrackedPRWithSummary[] = [
   },
 
   {
-    id: "pr-003",
-    user_id: "user-dummy",
+    id: "67885b14-0f2c-473d-9d47-69634e9e4f5a",
+    user_id: "7f759600-988e-4a81-9878-439523293021",
     repo_owner: "stackwise",
     repo_name: "api-gateway",
     pr_number: 412,
@@ -140,8 +140,8 @@ export const dummyPRs: TrackedPRWithSummary[] = [
     last_synced_at: "2024-03-11T16:30:00Z",
     added_at: "2024-03-08T09:00:00Z",
     summary: {
-      id: "sum-003",
-      pr_id: "pr-003",
+      id: "55403061-2679-4674-883a-44621c4b7261",
+      pr_id: "67885b14-0f2c-473d-9d47-69634e9e4f5a",
       generated_at: "2024-03-11T16:31:00Z",
       summary_json: {
         one_liner:
@@ -193,8 +193,8 @@ export const dummyPRs: TrackedPRWithSummary[] = [
   // ── MERGED ────────────────────────────────
 
   {
-    id: "pr-004",
-    user_id: "user-dummy",
+    id: "9633e070-55e1-4545-9781-309d7373d573",
+    user_id: "7f759600-988e-4a81-9878-439523293021",
     repo_owner: "acme-corp",
     repo_name: "payments-service",
     pr_number: 198,
@@ -206,8 +206,8 @@ export const dummyPRs: TrackedPRWithSummary[] = [
     last_synced_at: "2024-03-11T10:00:00Z",
     added_at: "2024-02-11T08:00:00Z",
     summary: {
-      id: "sum-004",
-      pr_id: "pr-004",
+      id: "45330386-3f6e-4e5a-8b43-68892415170d",
+      pr_id: "9633e070-55e1-4545-9781-309d7373d573",
       generated_at: "2024-03-11T10:01:00Z",
       summary_json: {
         one_liner:
@@ -254,8 +254,8 @@ export const dummyPRs: TrackedPRWithSummary[] = [
   },
 
   {
-    id: "pr-005",
-    user_id: "user-dummy",
+    id: "d3663a86-778a-4416-8798-963a48e78077",
+    user_id: "7f759600-988e-4a81-9878-439523293021",
     repo_owner: "nova-labs",
     repo_name: "mobile-app",
     pr_number: 56,
@@ -267,8 +267,8 @@ export const dummyPRs: TrackedPRWithSummary[] = [
     last_synced_at: "2024-03-11T10:00:00Z",
     added_at: "2024-01-16T08:00:00Z",
     summary: {
-      id: "sum-005",
-      pr_id: "pr-005",
+      id: "85215033-689e-4a6c-9742-50853517269e",
+      pr_id: "d3663a86-778a-4416-8798-963a48e78077",
       generated_at: "2024-03-11T10:01:00Z",
       summary_json: {
         one_liner:
@@ -309,8 +309,8 @@ export const dummyPRs: TrackedPRWithSummary[] = [
   // ── CLOSED ────────────────────────────────
 
   {
-    id: "pr-006",
-    user_id: "user-dummy",
+    id: "f734493a-8772-4d2c-81f1-303c7270e557",
+    user_id: "7f759600-988e-4a81-9878-439523293021",
     repo_owner: "stackwise",
     repo_name: "billing-module",
     pr_number: 301,
@@ -322,8 +322,8 @@ export const dummyPRs: TrackedPRWithSummary[] = [
     last_synced_at: "2024-03-11T10:00:00Z",
     added_at: "2024-02-02T08:00:00Z",
     summary: {
-      id: "sum-006",
-      pr_id: "pr-006",
+      id: "77965074-6725-4f4d-91a5-829215089223",
+      pr_id: "f734493a-8772-4d2c-81f1-303c7270e557",
       generated_at: "2024-03-11T10:01:00Z",
       summary_json: {
         one_liner:
@@ -367,8 +367,8 @@ export const dummyPRs: TrackedPRWithSummary[] = [
   // ── STALE ─────────────────────────────────
 
   {
-    id: "pr-007",
-    user_id: "user-dummy",
+    id: "475b66d4-d576-4a46-88d4-531075778891",
+    user_id: "7f759600-988e-4a81-9878-439523293021",
     repo_owner: "orion-tech",
     repo_name: "data-pipeline",
     pr_number: 78,
@@ -380,8 +380,8 @@ export const dummyPRs: TrackedPRWithSummary[] = [
     last_synced_at: "2024-03-11T10:00:00Z",
     added_at: "2024-01-21T08:00:00Z",
     summary: {
-      id: "sum-007",
-      pr_id: "pr-007",
+      id: "16541624-9548-4384-9642-169864275143",
+      pr_id: "475b66d4-d576-4a46-88d4-531075778891",
       generated_at: "2024-03-11T10:01:00Z",
       summary_json: {
         one_liner:
@@ -423,8 +423,8 @@ export const dummyPRs: TrackedPRWithSummary[] = [
   },
 
   {
-    id: "pr-008",
-    user_id: "user-dummy",
+    id: "2a346e45-2f9a-4712-888e-6715f606368d",
+    user_id: "7f759600-988e-4a81-9878-439523293021",
     repo_owner: "bluewave-io",
     repo_name: "search-service",
     pr_number: 145,
@@ -436,8 +436,8 @@ export const dummyPRs: TrackedPRWithSummary[] = [
     last_synced_at: "2024-03-11T10:00:00Z",
     added_at: "2024-01-06T08:00:00Z",
     summary: {
-      id: "sum-008",
-      pr_id: "pr-008",
+      id: "68112101-7023-4484-9133-728795551322",
+      pr_id: "2a346e45-2f9a-4712-888e-6715f606368d",
       generated_at: "2024-03-11T10:01:00Z",
       summary_json: {
         one_liner:
