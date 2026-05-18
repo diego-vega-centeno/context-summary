@@ -9,7 +9,6 @@ export default async function DashboardCount() {
   const statusCounts = await fetchStatusCounts(
     "7f759600-988e-4a81-9878-439523293021",
   );
-  console.log(statusCounts);
   const countMap: Partial<Record<PRStatus | "total", string>> = {};
   let totalCount = 0;
 
