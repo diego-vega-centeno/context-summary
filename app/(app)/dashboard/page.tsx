@@ -1,49 +1,13 @@
 import { status_data } from "@/lib/data/status-data";
 import { type TrackedPRWithSummary, type PRStatus } from "@/types/index";
 import SyncButton from "@/components/ui/SyncButton";
-import Link from "next/link";
 import { fetchTrackedPRs } from "@/lib/data/prs";
-// import { dummyPRs } from "@/lib/data/dummy-data";
+import { Suspense } from "react";
+import PRMiniCard from "@/components/ui/dashboard/PRMiniCard";
+import PRMiniCardSkeleton from "@/components/ui/dashboard/PRMiniCardSkeleton";
+import StatsCard from "@/components/ui/dashboard/StatsCard";
 
 const columns = ["open", "stale", "merged", "closed"];
-
-function StatsCard({ status }: { status: PRStatus | "total" }) {
-  const IconComponent = status_data[status].icon;
-  return (
-    <div
-      className={`px-3 py-2 border border-border rounded-lg flex items-center gap-2`}
-    >
-      <div className="w-2/3">
-        <div className="text-md text-muted-foreground">
-          {status_data[status].title}
-        </div>
-        <div className="text-xl">{status_data[status].length}</div>
-      </div>
-      <div
-        className={`w-8 h-8 flex items-center justify-center ${status_data[status].color} rounded-xl`}
-      >
-        {<IconComponent className="w-1/2 h-1/2" />}
-      </div>
-    </div>
-  );
-}
-
-function PRMiniCard(pr: TrackedPRWithSummary) {
-  return (
-    <Link
-      href={`stories/${pr.id}`}
-      key={pr.id}
-      className="text-sm border border-border rounded-lg p-3 hover:bg-hover hover:cursor-pointer"
-    >
-      <div className="font-medium text-foreground">{pr.title}</div>
-      <div className="text-muted-foreground pb-2">
-        <div className="pt-2">{`#${pr.pr_number} - ${pr.repo_name}`}</div>
-      </div>
-      <hr className="border-border" />
-      <div className="pt-2">{pr.summary?.summary_json.current_state}</div>
-    </Link>
-  );
-}
 
 export default async function DashboardPage() {
   const userId = "7f759600-988e-4a81-9878-439523293021";
@@ -92,7 +56,10 @@ export default async function DashboardPage() {
                 </div>
                 <span className="pl-2">{prs[status as PRStatus].length}</span>
               </div>
-              {prs[status as PRStatus].map((pr) => PRMiniCard(pr))}
+              {prs[status as PRStatus].map((pr) => (
+                // <Suspense fallback={<PRMiniCardSkeleton/>}><PRMiniCard key={pr.id} pr={pr}/></Suspense>
+                <PRMiniCard key={pr.id} pr={pr} />
+              ))}
             </div>
           ))}
         </div>
