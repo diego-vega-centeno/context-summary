@@ -1,7 +1,13 @@
 import { status_data } from "@/lib/data/status-data";
 import { PRStatus } from "@/types";
 
-export default function StatsCard({ status }: { status: PRStatus | "total" }) {
+export default function StatsCard({
+  status,
+  count,
+}: {
+  status: PRStatus | "total";
+  count: string;
+}) {
   const IconComponent = status_data[status].icon;
   return (
     <div
@@ -11,7 +17,7 @@ export default function StatsCard({ status }: { status: PRStatus | "total" }) {
         <div className="text-md text-muted-foreground">
           {status_data[status].title}
         </div>
-        <div className="text-xl">{status_data[status].length}</div>
+        <div className="text-xl">{count}</div>
       </div>
       <div
         className={`w-8 h-8 flex items-center justify-center ${status_data[status].color} rounded-xl`}

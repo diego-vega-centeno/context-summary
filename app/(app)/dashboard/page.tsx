@@ -1,11 +1,9 @@
 import { status_data } from "@/lib/data/status-data";
-import { type TrackedPRWithSummary, type PRStatus } from "@/types/index";
-import SyncButton from "@/components/ui/SyncButton";
+import { type PRStatus } from "@/types/index";
 import { fetchTrackedPRs } from "@/lib/data/prs";
 import { Suspense } from "react";
 import PRMiniCard from "@/components/ui/dashboard/PRMiniCard";
-import PRMiniCardSkeleton from "@/components/ui/dashboard/PRMiniCardSkeleton";
-import StatsCard from "@/components/ui/dashboard/StatsCard";
+import DashboardCount from "@/components/ui/dashboard/DashboardCount";
 
 const columns = ["open", "stale", "merged", "closed"];
 
@@ -23,22 +21,7 @@ export default async function DashboardPage() {
   return (
     <main className="flex flex-1 flex-col justify-between p-6 max-w-6xl mx-auto">
       <div>
-        <div className="flex justify-between items-center mb-3">
-          <div>
-            <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight">
-              Dashboard
-            </h1>
-            <h2 className="text-muted-foreground text-sm">Last synced</h2>
-          </div>
-          <SyncButton text="Sync all" />
-        </div>
-        <div className="grid md:grid-cols-[repeat(auto-fit,minmax(170px,1fr))] grid-cols-2 gap-2">
-          {["total", ...columns].map((status) => (
-            <div key={status}>
-              <StatsCard status={status as PRStatus | "total"} />
-            </div>
-          ))}
-        </div>
+        <DashboardCount />
         <h2 className="pt-8 max-w-xs text-3xl font-semibold leading-10 tracking-tight">
           Status board
         </h2>
