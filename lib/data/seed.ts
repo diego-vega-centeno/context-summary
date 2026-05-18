@@ -104,14 +104,14 @@ async function seedPRSummaries() {
   const prSummaries = dummyPRs
     .filter((pr) => pr.summary)
     .map((pr) => ({
-      id: pr.summary?.id,
+      id: pr.summary!.id,
       pr_id: pr.id,
-      summary_json: JSON.stringify(pr.summary!.summary_json),
+      summary_json: pr.summary!.summary_json as any,
       generated_at: pr.summary!.generated_at,
     }));
 
   const insertedPRSummaries = await sql`
-        INSERT INTO pr_summaries ${sql(prSummaries, "pr_id", "summary_json")}
+        INSERT INTO pr_summaries ${sql(prSummaries, "id", "pr_id", "summary_json", "generated_at")}
         ON CONFLICT (id) DO NOTHING;
       `;
 
