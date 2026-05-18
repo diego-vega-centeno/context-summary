@@ -1,4 +1,4 @@
-import SideNav from "@/components/ui/SideNav";
+import SideNav from "@/app/ui/SideNav";
 
 export default function AppLayout({
   children,

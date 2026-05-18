@@ -1,4 +1,4 @@
-import Button from "@/components/ui/Button";
+import Button from "@/app/ui/Button";
 import {
   ArrowLeft,
   GitPullRequest,
@@ -9,10 +9,10 @@ import {
   ListChecks,
 } from "lucide-react";
 import { dummyPRs } from "@/lib/data/dummy-data";
-import SyncButton from "@/components/ui/SyncButton";
+import SyncButton from "@/app/ui/SyncButton";
 import { formatRelativeDate } from "@/lib/utils";
-import PRMainSection from "@/components/ui/PRMainSection";
-import StorySection from "@/components/ui/StorySection";
+import PRMainSection from "@/app/ui/PRMainSection";
+import StorySection from "@/app/ui/StorySection";
 
 interface Props {
   params: Promise<{ id: string }>;

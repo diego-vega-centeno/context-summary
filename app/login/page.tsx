@@ -1,6 +1,6 @@
 "use client";
 
-import Button from "@/components/ui/Button";
+import Button from "@/app/ui/Button";
 import { useState } from "react";
 import { LoaderCircle } from "lucide-react";
 import Image from "next/image";

@@ -6,8 +6,8 @@ import {
   Zap,
   Timeline,
 } from "lucide-react";
-import Button from "@/components/ui/Button";
-import { ThemeToggle } from "@/components/ui/ThemeToggle";
+import Button from "@/app/ui/Button";
+import { ThemeToggle } from "@/app/ui/ThemeToggle";
 
 export default function LandingPage() {
   return (

@@ -1,4 +1,4 @@
-import SyncButton from "@/components/ui/SyncButton";
+import SyncButton from "@/app/ui/SyncButton";
 import StatsCard from "./StatsCard";
 import { PRStatus } from "@/types";
 import { fetchStatusCounts } from "@/lib/data/prs";

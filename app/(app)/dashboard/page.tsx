@@ -1,7 +1,7 @@
 import { Suspense } from "react";
-import DashboardCount from "@/components/ui/dashboard/DashboardCount";
-import DashboardStatus from "@/components/ui/dashboard/DashboardStatus";
-import { DashboardStatusSkeleton } from "@/components/ui/skeletons";
+import DashboardCount from "@/app/ui/dashboard/DashboardCount";
+import DashboardStatus from "@/app/ui/dashboard/DashboardStatus";
+import { DashboardStatusSkeleton } from "@/app/ui/skeletons";
 
 export default async function DashboardPage() {
   return (

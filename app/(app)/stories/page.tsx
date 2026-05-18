@@ -5,7 +5,7 @@ import { useMemo, useState } from "react";
 import { status_data, prs } from "@/lib/data/status-data";
 import { useDebounce } from "@/lib/data/hooks/use-debounce";
 import { dummyPRs } from "@/lib/data/dummy-data";
-import PRCard from "@/components/ui/PRCard";
+import PRCard from "@/app/ui/PRCard";
 
 const status = ["total", "open", "stale", "merged", "closed"];
 
