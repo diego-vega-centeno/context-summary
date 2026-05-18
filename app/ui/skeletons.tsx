@@ -27,7 +27,13 @@ export function DashboardStatusSkeleton() {
             </div>
             <div
               className={`${shimmer} relative overflow-hidden text-sm border border-border rounded-lg p-3 h-40`}
-            ></div>
+            />
+            <div
+              className={`${shimmer} relative overflow-hidden text-sm border border-border rounded-lg p-3 h-40`}
+            />
+            <div
+              className={`${shimmer} relative overflow-hidden text-sm border border-border rounded-lg p-3 h-40`}
+            />
           </div>
         ))}
       </div>
@@ -54,7 +60,7 @@ export function DashboardCountSkeleton() {
           return (
             <div
               key={status}
-              className={`${shimmer} relative overflow-hidden px-3 py-2 border border-border rounded-lg flex items-center gap-2 h-10`}
+              className={`${shimmer} relative overflow-hidden px-3 py-2 border border-border rounded-lg flex items-center gap-2 h-[70px]`}
             ></div>
           );
         })}
