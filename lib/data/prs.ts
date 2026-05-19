@@ -1,4 +1,4 @@
-import { TrackedPRWithSummary } from "@/types";
+import { PRMiniCardType, TrackedPRWithSummary } from "@/types";
 import postgres from "postgres";
 import logger from "../logger";
 
@@ -9,7 +9,7 @@ async function fetchTrackedPRs(
 ): Promise<TrackedPRWithSummary[]> {
   try {
     logger.info("Fetching data...");
-    // await new Promise((resolve) => setTimeout(resolve, 3000));
+    await new Promise((resolve) => setTimeout(resolve, 3000));
     const prs = await sql<TrackedPRWithSummary[]>`
       SELECT
         p.*,
@@ -30,8 +30,34 @@ async function fetchTrackedPRs(
   }
 }
 
+async function fetchDashboardPRs(
+  userId: string,
+): Promise<PRMiniCardType[]> {
+  try {
+    logger.info("Fetching data...");
+    await new Promise((resolve) => setTimeout(resolve, 3000));
+    const prs = await sql<PRMiniCardType[]>`
+      SELECT
+        p.id, 
+        p.title,
+        p.status,
+        p.pr_number, 
+        p.repo_name, 
+        s.summary_json->>'current_state' AS current_state
+      FROM tracked_prs  p
+      LEFT JOIN pr_summaries s ON p.id = s.pr_id
+      WHERE user_id=${userId}
+    `;
+
+    return prs;
+  } catch (error) {
+    logger.error("Database error: ", error);
+    throw new Error("Failed to fetch PRs.");
+  }
+}
+
 async function fetchStatusCounts(userId: string) {
-  // await new Promise((resolve) => setTimeout(resolve, 3000));
+  await new Promise((resolve) => setTimeout(resolve, 3000));
 
   return await sql`
     SELECT status::text, count(*)::int FROM tracked_prs
@@ -47,4 +73,4 @@ async function fetchPRById(id: string) {}
 
 async function fetchPRSummary(prId: string) {}
 
-export { fetchTrackedPRs, fetchStatusCounts };
+export { fetchTrackedPRs, fetchStatusCounts, fetchDashboardPRs };
