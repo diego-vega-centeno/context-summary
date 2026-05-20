@@ -1,99 +1,10 @@
-"use client";
-import { type PRStatus } from "@/types/index";
-import { Plus } from "lucide-react";
-import { useMemo, useState } from "react";
-import { status_data, prs } from "@/lib/data/status-data";
-import { useDebounce } from "@/lib/data/hooks/use-debounce";
-import { dummyPRs } from "@/lib/data/dummy-data";
-import PRCard from "@/app/ui/PRCard";
+import { fetchDashboardPRs } from "@/lib/data/prs";
+import StoriesClientPage from "@/app/ui/stories/StoriesClientPage";
 
-const status = ["total", "open", "stale", "merged", "closed"];
 
-export default function StoriesPage() {
-  const [refreshingPR, setRefreshingPR] = useState<null | string>(null);
-  const [searchInput, setSearchInput] = useState("");
-  const [statusSelected, setStatusSelected] = useState<PRStatus | "total">(
-    "total",
-  );
-  const debouncedSearchInput = useDebounce(searchInput, 300);
+export default async function StoriesPage() {
+  const userId = "7f759600-988e-4a81-9878-439523293021";
+  const dashboardPRs = await fetchDashboardPRs(userId);
 
-  const filteredPRs = useMemo(() => {
-    const basePRs = statusSelected === "total" ? dummyPRs : prs[statusSelected];
-    if (debouncedSearchInput) {
-      const query = debouncedSearchInput.trim().toLowerCase();
-      return basePRs.filter(
-        (pr) =>
-          pr.title.toLowerCase().includes(query) ||
-          pr.repo_owner.toLowerCase().includes(query) ||
-          pr.repo_name.toLowerCase().includes(query) ||
-          pr.author.toLowerCase().includes(query),
-      );
-    }
-    return basePRs;
-  }, [statusSelected, debouncedSearchInput]);
-
-  async function addPR() {
-    console.log("add PR");
-  }
-
-  async function refreshPR(id: string) {
-    setRefreshingPR(id);
-    await new Promise((r) => setTimeout(r, 2000));
-    setRefreshingPR(null);
-  }
-
-  return (
-    <main className="flex flex-1 flex-col justify-between p-6 px-20 max-w-6xl mx-auto">
-      <div>
-        <div className="flex justify-between items-center mb-3">
-          <div>
-            <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight">
-              Stories
-            </h1>
-            <h2 className="text-muted-foreground text-sm">Last synced</h2>
-          </div>
-          <button
-            type="button"
-            className={`inline-flex items-center justify-center rounded-md hover:bg-highlight hover:text-foreground h-7 px-2 border-1 border-border bg-foreground text-background`}
-            onClick={addPR}
-          >
-            <Plus className="w-5 h-5 mr-1" />
-            Add PR
-          </button>
-        </div>
-        <div className="w-full flex gap-3 mb-8 flex-wrap">
-          <input
-            placeholder="Search PRs ..."
-            className="min-w-full md:min-w-40 w-3/8 bg-sidebar-background p-2 rounded-md text-sm"
-            type="text"
-            value={searchInput}
-            onChange={(e) => setSearchInput(e.target.value)}
-          />
-          {status.map((status) => (
-            <div
-              className={`flex items-center gap-2 px-2 rounded-xl text-sm hover:cursor-pointer border-1 border-border font-semibold ${statusSelected === status ? "bg-white text-black" : "hover:bg-hover hover:text-white text-muted-foreground"}`}
-              key={status}
-              onClick={() => setStatusSelected(status as PRStatus)}
-            >
-              <span>{status}</span>
-              <div className="inline-flex items-center justify-center rounded-full bg-muted-background w-6 h-6 text-white text-xs ml-2">
-                {status_data[status as PRStatus].length}
-              </div>
-            </div>
-          ))}
-        </div>
-        <div className="grid md:grid-cols-2 grid-cols-1 gap-2">
-          {filteredPRs.map((pr) => (
-            <div className={"flex flex-col gap-2"} key={pr.id}>
-              <PRCard
-                pr={pr}
-                refreshingPR={refreshingPR}
-                refreshPR={refreshPR}
-              />
-            </div>
-          ))}
-        </div>
-      </div>
-    </main>
-  );
+  return <StoriesClientPage initialPrs={dashboardPRs} />;
 }
