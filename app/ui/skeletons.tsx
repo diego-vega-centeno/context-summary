@@ -1,7 +1,8 @@
 import { statusConfig } from "@/lib/data/status-data";
 import { PRStatus } from "@/types";
 import SyncButton from "./SyncButton";
-import { Plus } from "lucide-react";
+import { ArrowLeft, Plus, RefreshCw } from "lucide-react";
+import Button from "./Button";
 
 const status: PRStatus[] = ["open", "stale", "merged", "closed"];
 const shimmer =
@@ -127,5 +128,34 @@ export function StoriesClientPageSkeleton() {
         </div>
       </div>
     </main>
+  );
+}
+
+export function StoryBoardSkeleton() {
+  return (
+    <div className="flex flex-1 flex-col justify-between p-6 px-20 min-w-md max-w-4xl mx-auto">
+      <div className="space-y-4">
+        <div className="flex justify-between items-center mb-3">
+          <Button href={"/stories"} variant="withIcon" icon={ArrowLeft}>
+            PR stories
+          </Button>
+          <div className="flex items-center gap-2">
+            <span className="text-muted-foreground text-xs">Synced</span>
+            <button
+              type="button"
+              className="inline-flex items-center justify-center rounded-md text-foreground hover:bg-highlight hover:text-foreground h-8 px-2 border-1 border-border"
+            >
+              <RefreshCw className="w-4 h-4 mr-2" />
+              Refresh
+            </button>
+          </div>
+        </div>
+        <div className="w-full flex justify-center">
+          <div
+            className={`${shimmer} relative overflow-hidden p-5 border-1 border-border rounded-lg w-full h-[250px]`}
+          ></div>
+        </div>
+      </div>
+    </div>
   );
 }
