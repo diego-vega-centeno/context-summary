@@ -64,7 +64,14 @@ export interface TrackedPRWithSummary extends TrackedPR {
   summary: PRSummary | null;
 }
 
-export type PRMiniCardType = Pick<
+export type PRDashboardType = Pick<
   TrackedPR,
-  "id" | "title" | "status" | "pr_number" | "repo_name"
+  | "id"
+  | "title"
+  | "status"
+  | "pr_number"
+  | "repo_name"
+  | "repo_owner"
+  | "author"
+  | "last_activity_at"
 > & { current_state: string | null };

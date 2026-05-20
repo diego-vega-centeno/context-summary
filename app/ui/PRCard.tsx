@@ -1,11 +1,11 @@
-import { type TrackedPRWithSummary } from "@/types/index";
+import { type PRDashboardType } from "@/types/index";
 import { Clock, RefreshCw } from "lucide-react";
 import { status_data } from "@/lib/data/status-data";
 import { formatRelativeDate } from "@/lib/utils";
 import Link from "next/link";
 
 interface PRCardProps {
-  pr: TrackedPRWithSummary;
+  pr: PRDashboardType;
   refreshingPR: string | null;
   refreshPR: (id: string) => Promise<void>;
 }
@@ -47,7 +47,7 @@ export default function PRCard({ pr, refreshingPR, refreshPR }: PRCardProps) {
           <div className="py-2 text-muted-foreground">{`${pr.repo_owner}/${pr.repo_name} \u00B7 #${pr.pr_number} \u00B7 ${pr.author}`}</div>
         </div>
         <div className="text-foreground py-2">
-          {pr.summary?.summary_json.current_state}
+          {pr.current_state}
         </div>
         <hr className="border-border" />
         <div className="flex items-center pt-2 text-xs text-muted-foreground">

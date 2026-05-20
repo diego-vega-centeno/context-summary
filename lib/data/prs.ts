@@ -1,4 +1,4 @@
-import { PRMiniCardType, TrackedPRWithSummary } from "@/types";
+import { PRDashboardType, TrackedPRWithSummary } from "@/types";
 import postgres from "postgres";
 import logger from "../logger";
 
@@ -32,17 +32,20 @@ async function fetchTrackedPRs(
 
 async function fetchDashboardPRs(
   userId: string,
-): Promise<PRMiniCardType[]> {
+): Promise<PRDashboardType[]> {
   try {
     logger.info("Fetching data...");
     await new Promise((resolve) => setTimeout(resolve, 3000));
-    const prs = await sql<PRMiniCardType[]>`
+    const prs = await sql<PRDashboardType[]>`
       SELECT
         p.id, 
         p.title,
         p.status,
         p.pr_number, 
         p.repo_name, 
+        p.repo_owner,
+        p.author,
+        p.last_activity_at,
         s.summary_json->>'current_state' AS current_state
       FROM tracked_prs  p
       LEFT JOIN pr_summaries s ON p.id = s.pr_id
