@@ -1,7 +1,7 @@
-import { PRMiniCardType } from "@/types";
+import { PRDashboardType } from "@/types";
 import Link from "next/link";
 
-export default function PRMiniCard({ pr }: { pr: PRMiniCardType }) {
+export default function PRMiniCard({ pr }: { pr: PRDashboardType }) {
   return (
     <Link
       href={`stories/${pr.id}`}
