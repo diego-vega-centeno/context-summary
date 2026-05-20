@@ -71,6 +71,7 @@ async function fetchStatusCounts(userId: string) {
 }
 
 async function fetchPRStoryById(id: string) {
+  await new Promise((resolve) => setTimeout(resolve, 3000));
   const data = await sql<TrackedPRWithSummary[]>`
     SELECT
       p.*,
