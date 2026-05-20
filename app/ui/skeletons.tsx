@@ -109,18 +109,20 @@ export function StoriesClientPageSkeleton() {
         </div>
         <div className="grid md:grid-cols-2 grid-cols-1 gap-2">
           <div className={"flex flex-col gap-2"}>
-            {Array.from({ length: 2 }, () => (
-              <div
-                className={`${shimmer} relative overflow-hidden w-full h-[200px] border-1 border-border rounded-lg`}
-              />
-            ))}
+            <div
+              className={`${shimmer} relative overflow-hidden w-full h-[200px] border-1 border-border rounded-lg`}
+            />
+            <div
+              className={`${shimmer} relative overflow-hidden w-full h-[200px] border-1 border-border rounded-lg`}
+            />
           </div>
           <div className={"flex flex-col gap-2"}>
-            {Array.from({ length: 2 }, () => (
-              <div
-                className={`${shimmer} relative overflow-hidden w-full h-[200px] border-1 border-border rounded-lg`}
-              />
-            ))}
+            <div
+              className={`${shimmer} relative overflow-hidden w-full h-[200px] border-1 border-border rounded-lg`}
+            />
+            <div
+              className={`${shimmer} relative overflow-hidden w-full h-[200px] border-1 border-border rounded-lg`}
+            />
           </div>
         </div>
       </div>
