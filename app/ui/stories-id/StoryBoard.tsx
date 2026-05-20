@@ -10,8 +10,8 @@ import {
 } from "lucide-react";
 import SyncButton from "@/app/ui/SyncButton";
 import { formatRelativeDate } from "@/lib/utils";
-import PRMainSection from "@/app/ui/PRMainSection";
-import StorySection from "@/app/ui/StorySection";
+import PRMainSection from "@/app/ui/stories-id/PRMainSection";
+import StorySection from "@/app/ui/stories-id/StorySection";
 import { fetchPRStoryById } from "@/lib/data/prs";
 
 export default async function StoryBoard({ id }: { id: string }) {
