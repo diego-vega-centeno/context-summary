@@ -7,13 +7,6 @@ import {
 import { type PRStatus } from "@/types/index";
 import { getPRsByStatus, dummyPRs } from "@/lib/data/dummy-data";
 
-const prs = {
-  open: getPRsByStatus("open"),
-  merged: getPRsByStatus("merged"),
-  closed: getPRsByStatus("closed"),
-  stale: getPRsByStatus("stale"),
-};
-
 const statusConfig: Record<
   PRStatus | "total",
   {
@@ -49,4 +42,4 @@ const statusConfig: Record<
   },
 };
 
-export { prs, statusConfig };
+export { statusConfig };
