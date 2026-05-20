@@ -9,7 +9,7 @@ async function fetchTrackedPRs(
 ): Promise<TrackedPRWithSummary[]> {
   try {
     logger.info("Fetching data...");
-    await new Promise((resolve) => setTimeout(resolve, 3000));
+    // await new Promise((resolve) => setTimeout(resolve, 3000));
     const prs = await sql<TrackedPRWithSummary[]>`
       SELECT
         p.*,
@@ -33,7 +33,7 @@ async function fetchTrackedPRs(
 async function fetchDashboardPRs(userId: string): Promise<PRDashboardType[]> {
   try {
     logger.info("Fetching data...");
-    await new Promise((resolve) => setTimeout(resolve, 3000));
+    // await new Promise((resolve) => setTimeout(resolve, 3000));
     const prs = await sql<PRDashboardType[]>`
       SELECT
         p.id, 
@@ -58,7 +58,7 @@ async function fetchDashboardPRs(userId: string): Promise<PRDashboardType[]> {
 }
 
 async function fetchStatusCounts(userId: string) {
-  await new Promise((resolve) => setTimeout(resolve, 3000));
+  // await new Promise((resolve) => setTimeout(resolve, 3000));
 
   return await sql`
     SELECT status::text, count(*)::int FROM tracked_prs
@@ -71,7 +71,7 @@ async function fetchStatusCounts(userId: string) {
 }
 
 async function fetchPRStoryById(id: string) {
-  await new Promise((resolve) => setTimeout(resolve, 3000));
+  // await new Promise((resolve) => setTimeout(resolve, 3000));
   const data = await sql<TrackedPRWithSummary[]>`
     SELECT
       p.*,
