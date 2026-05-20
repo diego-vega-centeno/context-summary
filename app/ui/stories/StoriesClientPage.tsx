@@ -87,7 +87,7 @@ export default function StoriesClientPage({
           />
           {status.map((status) => (
             <div
-              className={`flex items-center gap-2 px-2 rounded-xl text-sm hover:cursor-pointer border-1 border-border font-semibold ${statusSelected === status ? "bg-white text-black" : "hover:bg-hover hover:text-white text-muted-foreground"}`}
+              className={`min-h-9 flex items-center gap-2 px-2 rounded-xl text-sm hover:cursor-pointer border-1 border-border font-semibold ${statusSelected === status ? "bg-white text-black" : "hover:bg-hover hover:text-white text-muted-foreground"}`}
               key={status}
               onClick={() => setStatusSelected(status as PRStatus)}
             >
