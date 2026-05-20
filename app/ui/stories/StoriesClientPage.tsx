@@ -2,7 +2,7 @@
 import { PRDashboardType, type PRStatus } from "@/types/index";
 import { Plus } from "lucide-react";
 import { useMemo, useState } from "react";
-import { useDebounce } from "@/lib/data/hooks/use-debounce";
+import { useDebounce } from "@/hooks/useDebounce";
 import PRCard from "@/app/ui/stories/PRCard";
 
 const status: (PRStatus | "total")[] = [
