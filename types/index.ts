@@ -75,3 +75,23 @@ export type PRDashboardType = Pick<
   | "author"
   | "last_activity_at"
 > & { current_state: string | null };
+
+export interface PRTimeline {
+  metadata: {
+    id: number;
+    repo_owner: string;
+    repo_name: string;
+    title: string;
+    description: string;
+    author: string;
+    state: string;
+    created_at: string;
+  };
+  events: Array<{
+    type: string;
+    user: string;
+    state?: string;
+    content?: string;
+    timestamp: string;
+  }>;
+}
