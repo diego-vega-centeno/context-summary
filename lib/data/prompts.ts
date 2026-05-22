@@ -1,4 +1,4 @@
-file: /lib/data/services/gemini.ts
+export const NARRATIVE_RECOVERY_PROMPT = `file: /lib/data/services/gemini.ts
 
 prompt:
 
@@ -23,7 +23,7 @@ SECTIONS LOGIC:
 - next_steps: Actionable items. If the PR is closed/merged, focus on post-deploy monitoring. If open, focus on unblocking.
 
 JSON OUTPUT EXAMPLE:
-```
+'''
 {
 	one_liner:
 	  "Blocked waiting on @john to confirm session expiry strategy before merge.",
@@ -68,10 +68,10 @@ JSON OUTPUT EXAMPLE:
 	  "Request final review from @mary before merge.",
 	],
 }
-```
+'''
 
 TIMELINE SCHEMA EXAMPLE:
-```
+'''
 [
     {
       type: "committed",
@@ -104,6 +104,6 @@ TIMELINE SCHEMA EXAMPLE:
       timestamp: entry.created_at,
     },
 ]
-```
+'''
 
-Use the type to categorize and create a narrative that will help you fill the aforementioned sections
+Use the type to categorize and create a narrative that will help you fill the aforementioned sections`;
