@@ -9,7 +9,7 @@ INPUT DATA:
 	2. TIMELINE: A chronological list of events (commits, comments, reviews, state changes).
 
 OUTPUT REQUIREMENT:
-Return a single JSON object like the JSON OUTPUT EXAMPLE. Do not include markdown formatting or extra text. If a section has no data (e.g., no blockers), return an empty array [] rather than omitting the key or returning null.
+Return a single JSON object. Do not include markdown formatting or extra text. If a section has no data (e.g., no blockers), return an empty array [] rather than omitting the key or returning null.
 
 SECTIONS LOGIC:
 - one_liner: A high-level status (e.g., "Merged after resolving CI issues" or "Stale; waiting on @user").
@@ -20,7 +20,6 @@ SECTIONS LOGIC:
 - next_steps: Actionable items. If the PR is closed/merged, focus on post-deploy monitoring. If open, focus on unblocking.
 
 JSON OUTPUT EXAMPLE:
-'''
 {
 	"one_liner":
 	  "Blocked waiting on @john to confirm session expiry strategy before merge.",
@@ -65,10 +64,8 @@ JSON OUTPUT EXAMPLE:
 	  "Request final review from @mary before merge.",
 	]
 }
-'''
 
 TIMELINE SCHEMA EXAMPLE:
-'''
 [
     {
       type: "committed",
@@ -101,6 +98,5 @@ TIMELINE SCHEMA EXAMPLE:
       timestamp: entry.created_at,
     },
 ]
-'''
 
 Use the type to categorize and create a narrative that will help you fill the aforementioned sections`;
