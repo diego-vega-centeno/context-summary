@@ -1,16 +1,13 @@
 import { fetchPRIssuesTimeline, fetchPRPulls } from "../data/services/github";
 import { writeFile, readFile } from "node:fs/promises";
 import { PRTimeline } from "@/types";
-import { timeStamp } from "node:console";
+import { generatePRSummary } from "../data/services/gemini";
+import logger from "../logger";
 
-export async function makePRTimeline(
-  owner: string,
-  repo: string,
-  number: number,
-) {
+export async function makePRTimeline(owner: string, repo: string, id: number) {
   // const [metadataRes, timelineRes] = await Promise.all([
-  //   fetchPRPulls(owner, repo, number),
-  //   fetchPRIssuesTimeline(owner, repo, number),
+  //   fetchPRPulls(owner, repo, id),
+  //   fetchPRIssuesTimeline(owner, repo, id),
   // ]);
   // await writeFile(
   //   "metadataRes-test.json",
@@ -94,8 +91,18 @@ export async function makePRTimeline(
   return timeline;
 }
 
-const timeline = await makePRTimeline("vercel", "next.js", 93949);
-await writeFile(
-  "./lib/action/timeline.json",
-  JSON.stringify(timeline, null, 2),
-);
+async function makePRStory(owner: string, repo: string, id: number) {
+  logger.info("Making PR timeline");
+  const timeline = await makePRTimeline(owner, repo, id);
+  await writeFile(
+    "./lib/action/timeline.json",
+    JSON.stringify(timeline, null, 2),
+  );
+  logger.info("Generating PR summary");
+  const prSummary = await generatePRSummary(timeline);
+  await writeFile("./lib/action/summary.json", JSON.stringify(prSummary, null, 2));
+  return prSummary;
+}
+
+const prStory = await makePRStory("vercel", "next.js", 93949);
+console.log(prStory);
