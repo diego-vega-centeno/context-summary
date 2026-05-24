@@ -1,10 +1,16 @@
 import { fetchPRIssuesTimeline, fetchPRPulls } from "../data/services/github";
 import { writeFile, readFile } from "node:fs/promises";
-import { TrackedPRWithEvents, TrackedPRWithSummary } from "@/types";
+import {
+  TrackedPRWithEvents,
+  TrackedPRWithSummary,
+  PRTimelineEvent,
+} from "@/types";
 import { makePRSummary } from "../data/services/gemini";
 import logger from "../logger";
 
-export function makePREvents(timeline: Record<string, any>[]) {
+export function makePREvents(
+  timeline: Record<string, any>[],
+): PRTimelineEvent[] {
   const events = timeline
     .map((entry: Record<string, any>) => {
       switch (entry.event) {
@@ -50,39 +56,16 @@ export function makePREvents(timeline: Record<string, any>[]) {
           break;
       }
     })
-    .filter(Boolean);
+    .filter(Boolean) as PRTimelineEvent[];
 
   return events;
 }
 
-async function makePRWithSummary(owner: string, repo: string, id: number) {
-  const timelineResFile = `./lib/action/summary-tests/${owner}-${repo}-${id}-timelineResFile.json`;
-  const metadataResFile = `./lib/action/summary-tests/${owner}-${repo}-${id}-metadataResFile.json`;
-
-  //* Fetch PR metadata
-  console.log("Fetch PR metadata and timeline");
-  const [metadataRes, timelineRes] = await Promise.all([
-    fetchPRPulls(owner, repo, id),
-    fetchPRIssuesTimeline(owner, repo, id),
-  ]);
-  await writeFile(
-    timelineResFile,
-    JSON.stringify(timelineRes, null, 2),
-    "utf-8",
-  );
-  await writeFile(
-    metadataResFile,
-    JSON.stringify(metadataRes, null, 2),
-    "utf-8",
-  );
-
-  //* Make PR timeline
-  console.log("Making PR events");
-  const events = makePREvents(timelineRes);
-
-  //* Make PR with timeline
-  console.log("Making PR with timeline");
-  const prWithEvents = {
+function makePRWithEvents(
+  metadataRes: Record<string, any>,
+  events: PRTimelineEvent[],
+): TrackedPRWithEvents {
+  return {
     metadata: {
       pr_number: metadataRes.number,
       repo_owner: metadataRes.head.repo.owner.login,
@@ -90,12 +73,31 @@ async function makePRWithSummary(owner: string, repo: string, id: number) {
       author: metadataRes.user.login,
       title: metadataRes.title,
       description: metadataRes.body,
-      status: metadataRes.state,
+      status: metadataRes.merged ? "merged" : metadataRes.state,
       created_at: metadataRes.created_at,
-      last_activity_at:metadataRes.updated_at
+      last_activity_at: metadataRes.updated_at,
     },
     events: events,
   };
+}
+
+async function makePRWithSummary(owner: string, repo: string, id: number) {
+  // const prWithEventsFile = `./lib/action/summary-tests/${owner}-${repo}-${id}-prWithEvents.json`;
+
+  //* Fetch PR metadata
+  console.log("Fetch PR metadata and timeline");
+  const [metadataRes, timelineRes] = await Promise.all([
+    fetchPRPulls(owner, repo, id),
+    fetchPRIssuesTimeline(owner, repo, id),
+  ]);
+
+  //* Make PR timeline
+  console.log("Making PR events");
+  const events = makePREvents(timelineRes);
+
+  //* Make PR with timeline
+  console.log("Making PR with events");
+  const prWithEvents = makePRWithEvents(metadataRes, events);
 
   //* Making PR summary
   console.log("Making PR summary");
