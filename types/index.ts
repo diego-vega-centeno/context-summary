@@ -76,7 +76,7 @@ export type PRDashboardType = Pick<
   | "last_activity_at"
 > & { current_state: string | null };
 
-export interface TrackedPRWithTimeline {
+export interface TrackedPRWithEvents {
   metadata: {
     id: number;
     repo_owner: string;
@@ -87,7 +87,7 @@ export interface TrackedPRWithTimeline {
     state: string;
     created_at: string;
   };
-  timeline: Array<{
+  events: Array<{
     type: string;
     user: string;
     state?: string;
