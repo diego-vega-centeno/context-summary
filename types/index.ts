@@ -88,11 +88,13 @@ export interface TrackedPRWithEvents {
     created_at: string;
     last_activity_at: string;
   };
-  events: Array<{
-    type: string;
-    user: string;
-    state?: string;
-    content?: string;
-    timestamp: string;
-  }>;
+  events: PRTimelineEvent[];
+}
+
+export interface PRTimelineEvent {
+  type: string;
+  user: string;
+  state?: string;
+  content?: string;
+  timestamp: string;
 }
