@@ -27,5 +27,5 @@ CREATE TABLE IF NOT EXISTS pr_summaries (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   pr_id UUID REFERENCES tracked_prs(id) ON DELETE CASCADE,
   summary_json JSONB NOT NULL,
-  generated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  generated_at TIMESTAMP
 );
