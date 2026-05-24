@@ -78,14 +78,15 @@ export type PRDashboardType = Pick<
 
 export interface TrackedPRWithEvents {
   metadata: {
-    id: number;
+    pr_number: number;
     repo_owner: string;
     repo_name: string;
     title: string;
     description: string;
     author: string;
-    state: string;
+    status: string;
     created_at: string;
+    last_activity_at: string;
   };
   events: Array<{
     type: string;

@@ -84,14 +84,15 @@ async function makePRWithSummary(owner: string, repo: string, id: number) {
   console.log("Making PR with timeline");
   const prWithEvents = {
     metadata: {
-      id: metadataRes.id,
+      pr_number: metadataRes.id,
       repo_owner: metadataRes.head.repo.owner.login,
       repo_name: metadataRes.head.repo.name,
       author: metadataRes.user.login,
       title: metadataRes.title,
       description: metadataRes.body,
-      state: metadataRes.state,
+      status: metadataRes.state,
       created_at: metadataRes.created_at,
+      last_activity_at:metadataRes.updated_at
     },
     events: events,
   };
