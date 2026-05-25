@@ -2,14 +2,10 @@ import { fetchPRIssuesTimeline, fetchPRPulls } from "../data/services/github";
 import { writeFile, readFile } from "node:fs/promises";
 import {
   PRWithEvents,
-  TrackedPRWithSummary,
   PRTimelineEvent,
   PRWithSummaryJSON,
 } from "@/types";
 import { makePRSummary } from "../data/services/gemini";
-import logger from "../logger";
-import { fetchPRGithubIdentifiers, updatePRData } from "../data/prs";
-import { revalidatePath } from "next/cache";
 
 export function makePREvents(
   timeline: Record<string, any>[],
@@ -64,15 +60,15 @@ export function makePREvents(
   return events;
 }
 
-function makePRWithEvents(
+export function makePRWithEvents(
   metadataRes: Record<string, any>,
   events: PRTimelineEvent[],
 ): PRWithEvents {
   return {
     metadata: {
       pr_number: metadataRes.number,
-      repo_owner: metadataRes.head.repo.owner.login,
-      repo_name: metadataRes.head.repo.name,
+      repo_owner: metadataRes.base.repo.owner.login,
+      repo_name: metadataRes.base.repo.name,
       author: metadataRes.user.login,
       title: metadataRes.title,
       description: metadataRes.body,
@@ -84,7 +80,7 @@ function makePRWithEvents(
   };
 }
 
-async function makePRWithSummary(
+export async function makePRWithSummary(
   owner: string,
   repo: string,
   id: number,
@@ -116,33 +112,14 @@ async function makePRWithSummary(
   };
 }
 
-let owner = "vercel",
-  repo = "next.js",
-  id = 93949;
-const prWithSummary = await makePRWithSummary(owner, repo, id);
+// let owner = "vercel",
+//   repo = "next.js",
+//   id = 93949;
+// const prWithSummary = await makePRWithSummary(owner, repo, id);
 
-await writeFile(
-  `./lib/action/summary-tests/${owner}-${repo}-${id}-prWithSummary.json`,
-  JSON.stringify(prWithSummary, null, 2),
-  "utf-8",
-);
+// await writeFile(
+//   `./lib/action/summary-tests/${owner}-${repo}-${id}-prWithSummary.json`,
+//   JSON.stringify(prWithSummary, null, 2),
+//   "utf-8",
+// );
 
-export async function syncPR(prId: string) {
-  try {
-    const prIdentifiers = await fetchPRGithubIdentifiers(prId);
-    if (!prIdentifiers) throw new Error("PR not found in database");
-
-    const prWithSummary = await makePRWithSummary(
-      prIdentifiers.repo_owner,
-      prIdentifiers.repo_name,
-      prIdentifiers.pr_number,
-    );
-    await updatePRData(prId, prWithSummary);
-
-    revalidatePath("/dashboard");
-    revalidatePath(`/stories/${prId}`);
-  } catch (error) {
-    console.error("Sync Error:", error);
-    return { success: false, error: "Failed to sync PR" };
-  }
-}
