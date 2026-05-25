@@ -1,4 +1,4 @@
-import { PRDashboardType, TrackedPRWithSummary } from "@/types";
+import { PRDashboardType, PRWithSummaryJSON, TrackedPRWithSummary } from "@/types";
 import postgres from "postgres";
 import logger from "../logger";
 
@@ -87,11 +87,68 @@ async function fetchPRStoryById(id: string) {
   return data[0];
 }
 
-async function fetchPRSummary(prId: string) {}
+async function upsertPRSummary(prId: string, summaryJSON: any) {
+  try {
+    return await sql`
+    INSERT INTO pr_summaries (pr_id, summary_json, generated_at)
+    VALUES (${prId}, ${JSON.stringify(summaryJSON)}, NOW())
+    ON CONFLICT (pr_id) DO UPDATE
+    SET 
+      summary_json = EXCLUDED.summary_json,
+      generated_at = EXCLUDED.generated_at;
+  `;
+  } catch (error) {
+    logger.info("Database error:", error);
+    throw new Error("Failed to upsert PR summary");
+  }
+}
+
+async function fetchPRGithubIdentifiers(
+  prId: string,
+): Promise<
+  { repo_owner: string; repo_name: string; pr_number: number } | undefined
+> {
+  const data = await sql<
+    { repo_owner: string; repo_name: string; pr_number: number }[]
+  >`
+  SELECT (repo_owner, repo_name, pr_number) FROM tracked_prs WHERE id = ${prId}`;
+  return data[0];
+}
+
+async function updatePRData(prId: string, prWithSummaryJSON: PRWithSummaryJSON) {
+  try {
+    let status = prWithSummaryJSON.metadata.status;
+
+    const lastActivity = new Date(prWithSummaryJSON.metadata.last_activity_at);
+    const sevenDaysAgo = new Date();
+    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+
+    if (status === "open" && lastActivity < sevenDaysAgo) {
+      status = "stale";
+    }
+
+    await sql.begin(async (sql) => {
+      await sql`
+            UPDATE tracked_prs
+            SET title = ${prWithSummaryJSON.metadata.title}, status = ${status},
+                last_activity_at = ${prWithSummaryJSON.metadata.last_activity_at}, last_synced_at = NOW()
+            WHERE id = ${prId}
+          `;
+
+      await upsertPRSummary(prId, prWithSummaryJSON.summaryJSON);
+    });
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw error;
+  }
+}
 
 export {
   fetchTrackedPRs,
   fetchStatusCounts,
   fetchDashboardPRs,
   fetchPRStoryById,
+  upsertPRSummary,
+  fetchPRGithubIdentifiers,
+  updatePRData,
 };
