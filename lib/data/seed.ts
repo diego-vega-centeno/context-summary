@@ -79,7 +79,7 @@ export async function seedTrackingPRs() {
       created_at TIMESTAMP,
       last_activity_at TIMESTAMP,
       last_synced_at TIMESTAMP,
-      added_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      added_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
       UNIQUE (user_id, repo_owner, repo_name, pr_number)
     )
@@ -120,6 +120,8 @@ async function seedPRSummaries() {
   return insertedPRSummaries;
 }
 
-// seedUsers().then(() => sql.end());
-// seedTrackingPRs().then(() => sql.end());
-seedPRSummaries().then(() => sql.end());
+seedUsers()
+  .then(() => seedTrackingPRs())
+  .then(() => seedPRSummaries())
+  .then(() => sql.end())
+  .catch((error) => console.error(error));
