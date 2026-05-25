@@ -1,11 +1,11 @@
-import { fetchPRIssuesTimeline, fetchPRPulls } from "../data/services/github";
+import { fetchPRIssuesTimeline, fetchPRPulls } from "../services/github";
 import { writeFile, readFile } from "node:fs/promises";
 import {
   PRWithEvents,
   PRTimelineEvent,
   PRWithSummaryJSON,
 } from "@/types";
-import { makePRSummary } from "../data/services/gemini";
+import { makePRSummary } from "../services/gemini";
 
 export function makePREvents(
   timeline: Record<string, any>[],
