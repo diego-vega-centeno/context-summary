@@ -31,3 +31,5 @@ CREATE TABLE IF NOT EXISTS pr_summaries (
   summary_json JSONB NOT NULL,
   generated_at TIMESTAMP
 );
+
+CREATE TYPE pr_status AS ENUM ('open', 'closed', 'merged', 'stale');
