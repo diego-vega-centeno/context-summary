@@ -76,19 +76,14 @@ export type PRDashboardType = Pick<
   | "last_activity_at"
 > & { current_state: string | null };
 
-export interface TrackedPRWithEvents {
-  metadata: {
-    pr_number: number;
-    repo_owner: string;
-    repo_name: string;
-    title: string;
-    description: string;
-    author: string;
-    status: string;
-    created_at: string;
-    last_activity_at: string;
-  };
+export interface PRWithEvents {
+  metadata: MetadataType;
   events: PRTimelineEvent[];
+}
+
+export interface PRWithSummaryJSON {
+  metadata: MetadataType;
+  summaryJSON: SummaryJSON;
 }
 
 export interface PRTimelineEvent {
@@ -97,4 +92,16 @@ export interface PRTimelineEvent {
   state?: string;
   content?: string;
   timestamp: string;
+}
+
+export interface MetadataType {
+  pr_number: number;
+  repo_owner: string;
+  repo_name: string;
+  title: string;
+  description: string;
+  author: string;
+  status: string;
+  created_at: string;
+  last_activity_at: string;
 }
