@@ -1,4 +1,8 @@
-import { PRDashboardType, PRWithSummaryJSON, TrackedPRWithSummary } from "@/types";
+import {
+  PRDashboardType,
+  PRWithSummaryJSON,
+  TrackedPRWithSummary,
+} from "@/types";
 import postgres from "postgres";
 import logger from "../logger";
 
@@ -111,11 +115,14 @@ async function fetchPRGithubIdentifiers(
   const data = await sql<
     { repo_owner: string; repo_name: string; pr_number: number }[]
   >`
-  SELECT (repo_owner, repo_name, pr_number) FROM tracked_prs WHERE id = ${prId}`;
+  SELECT repo_owner, repo_name, pr_number FROM tracked_prs WHERE id = ${prId}`;
   return data[0];
 }
 
-async function updatePRData(prId: string, prWithSummaryJSON: PRWithSummaryJSON) {
+async function updatePRData(
+  prId: string,
+  prWithSummaryJSON: PRWithSummaryJSON,
+) {
   try {
     let status = prWithSummaryJSON.metadata.status;
 
@@ -143,6 +150,56 @@ async function updatePRData(prId: string, prWithSummaryJSON: PRWithSummaryJSON) 
   }
 }
 
+async function addPRData(prWithSummary: PRWithSummaryJSON) {
+  const userId = "7f759600-988e-4a81-9878-439523293021";
+  const metadata = prWithSummary.metadata;
+
+  let status = metadata.status;
+  const lastActivity = new Date(metadata.last_activity_at);
+  const sevenDaysAgo = new Date();
+  sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+  if (status === "open" && lastActivity < sevenDaysAgo) status = "stale";
+
+  try {
+    const result = await sql`
+      INSERT INTO tracked_prs (
+        user_id,
+        repo_owner,
+        repo_name,
+        pr_number,
+        title,
+        status,
+        author,
+        created_at,
+        last_activity_at,
+        last_synced_at,
+        added_at
+      )
+      VALUES (
+      ${userId},
+      ${metadata.repo_owner},
+      ${metadata.repo_name},
+      ${metadata.pr_number},
+      ${metadata.title},
+      ${status},
+      ${metadata.author},
+      ${metadata.created_at},
+      ${metadata.last_activity_at},
+      NOW(),
+      NOW())
+      RETURNING id
+    `;
+    const prId = result[0].id;
+
+    await upsertPRSummary(prId, prWithSummary.summaryJSON);
+
+    return prId
+  } catch (error) {
+    logger.info("Failed to add PR:", error);
+    throw error;
+  }
+}
+
 export {
   fetchTrackedPRs,
   fetchStatusCounts,
@@ -150,5 +207,6 @@ export {
   fetchPRStoryById,
   upsertPRSummary,
   fetchPRGithubIdentifiers,
+  addPRData,
   updatePRData,
 };
