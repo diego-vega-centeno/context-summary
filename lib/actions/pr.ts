@@ -1,3 +1,4 @@
+"use server";
 import { addPRData, fetchPRGithubIdentifiers, updatePRData } from "../data/prs";
 import { revalidatePath } from "next/cache";
 import { makePRWithSummary } from "../data/transformers";
