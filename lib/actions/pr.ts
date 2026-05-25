@@ -1,6 +1,6 @@
 import { addPRData, fetchPRGithubIdentifiers, updatePRData } from "../data/prs";
 import { revalidatePath } from "next/cache";
-import { makePRWithSummary } from "./sync";
+import { makePRWithSummary } from "../data/transformers";
 
 export async function syncPR(prId: string) {
   try {
