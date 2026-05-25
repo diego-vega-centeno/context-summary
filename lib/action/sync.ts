@@ -1,12 +1,15 @@
 import { fetchPRIssuesTimeline, fetchPRPulls } from "../data/services/github";
 import { writeFile, readFile } from "node:fs/promises";
 import {
-  TrackedPRWithEvents,
+  PRWithEvents,
   TrackedPRWithSummary,
   PRTimelineEvent,
+  PRWithSummaryJSON,
 } from "@/types";
 import { makePRSummary } from "../data/services/gemini";
 import logger from "../logger";
+import { fetchPRGithubIdentifiers, updatePRData } from "../data/prs";
+import { revalidatePath } from "next/cache";
 
 export function makePREvents(
   timeline: Record<string, any>[],
@@ -64,7 +67,7 @@ export function makePREvents(
 function makePRWithEvents(
   metadataRes: Record<string, any>,
   events: PRTimelineEvent[],
-): TrackedPRWithEvents {
+): PRWithEvents {
   return {
     metadata: {
       pr_number: metadataRes.number,
@@ -81,7 +84,11 @@ function makePRWithEvents(
   };
 }
 
-async function makePRWithSummary(owner: string, repo: string, id: number) {
+async function makePRWithSummary(
+  owner: string,
+  repo: string,
+  id: number,
+): Promise<PRWithSummaryJSON> {
   // const prWithEventsFile = `./lib/action/summary-tests/${owner}-${repo}-${id}-prWithEvents.json`;
 
   //* Fetch PR metadata
@@ -101,13 +108,11 @@ async function makePRWithSummary(owner: string, repo: string, id: number) {
 
   //* Making PR summary
   console.log("Making PR summary");
-  const prSummary = await makePRSummary(prWithEvents as TrackedPRWithEvents);
+  const prSummary = await makePRSummary(prWithEvents as PRWithEvents);
 
   return {
     metadata: prWithEvents.metadata,
-    summary: {
-      summary_json: prSummary,
-    },
+    summaryJSON: prSummary,
   };
 }
 
@@ -121,3 +126,23 @@ await writeFile(
   JSON.stringify(prWithSummary, null, 2),
   "utf-8",
 );
+
+export async function syncPR(prId: string) {
+  try {
+    const prIdentifiers = await fetchPRGithubIdentifiers(prId);
+    if (!prIdentifiers) throw new Error("PR not found in database");
+
+    const prWithSummary = await makePRWithSummary(
+      prIdentifiers.repo_owner,
+      prIdentifiers.repo_name,
+      prIdentifiers.pr_number,
+    );
+    await updatePRData(prId, prWithSummary);
+
+    revalidatePath("/dashboard");
+    revalidatePath(`/stories/${prId}`);
+  } catch (error) {
+    console.error("Sync Error:", error);
+    return { success: false, error: "Failed to sync PR" };
+  }
+}
