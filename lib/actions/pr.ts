@@ -2,6 +2,8 @@
 import { addPRData, fetchPRGithubIdentifiers, updatePRData } from "../data/prs";
 import { revalidatePath } from "next/cache";
 import { makePRWithSummary } from "../data/transformers";
+import sql from "../db";
+import logger from "../logger";
 
 export async function syncPR(prId: string) {
   try {
@@ -18,23 +20,43 @@ export async function syncPR(prId: string) {
     revalidatePath("/dashboard");
     revalidatePath(`/stories/${prId}`);
   } catch (error) {
-    console.error("Sync Error:", error);
+    logger.error("Sync Error:", error);
     return { success: false, error: "Failed to sync PR" };
   }
 }
 
 export async function addPR(owner: string, repo: string, prNumber: number) {
   try {
-    console.log("Making PR with summary");
+    logger.info("Making PR with summary");
     const prWithSummary = await makePRWithSummary(owner, repo, prNumber);
 
-    console.log("Adding PR with summary to database");
+    logger.info("Adding PR with summary to database");
     const prId = await addPRData(prWithSummary);
 
     revalidatePath("/dashboard");
     revalidatePath(`/stories/${prId}`);
   } catch (error) {
-    console.error("Sync Error:", error);
+    logger.error("Sync Error:", error);
     return { success: false, error: "Failed to sync PR" };
+  }
+}
+
+export async function syncActivePRs(userId: string) {
+  try {
+    const activePRs = await sql`
+        SELECT id FROM tracked_prs
+        WHERE user_id = ${userId} AND status IN ('open', 'stale')
+      `;
+    for (const pr of activePRs) {
+      logger.debug(`Syncing PR: ${pr.id}`);
+      await syncPR(pr.id);
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+    }
+
+    revalidatePath("/dashboard");
+    return { success: true, count: activePRs.length };
+  } catch (error) {
+    logger.debug("Batch Sync Error:", error);
+    return { success: false, error: "Failed to complete background sync" };
   }
 }
