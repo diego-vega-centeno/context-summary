@@ -9,10 +9,7 @@ import sql from "../db";
 async function fetchTrackedPRs(
   userId: string,
 ): Promise<TrackedPRWithSummary[]> {
-  try {
-    logger.info("Fetching data...");
-    // await new Promise((resolve) => setTimeout(resolve, 3000));
-    const prs = await sql<TrackedPRWithSummary[]>`
+  return await sql<TrackedPRWithSummary[]>`
       SELECT
         p.*,
         json_build_object(
@@ -24,19 +21,10 @@ async function fetchTrackedPRs(
       LEFT JOIN pr_summaries s ON p.id = s.pr_id
       WHERE user_id=${userId}
     `;
-
-    return prs;
-  } catch (error) {
-    logger.error("Database error: ", error);
-    throw new Error("Failed to fetch PRs.");
-  }
 }
 
 async function fetchDashboardPRs(userId: string): Promise<PRDashboardType[]> {
-  try {
-    logger.info("Fetching data...");
-    // await new Promise((resolve) => setTimeout(resolve, 3000));
-    const prs = await sql<PRDashboardType[]>`
+  return await sql<PRDashboardType[]>`
       SELECT
         p.id, 
         p.title,
@@ -51,17 +39,9 @@ async function fetchDashboardPRs(userId: string): Promise<PRDashboardType[]> {
       LEFT JOIN pr_summaries s ON p.id = s.pr_id
       WHERE user_id=${userId}
     `;
-
-    return prs;
-  } catch (error) {
-    logger.error("Database error: ", error);
-    throw new Error("Failed to fetch PRs.");
-  }
 }
 
 async function fetchStatusCounts(userId: string) {
-  // await new Promise((resolve) => setTimeout(resolve, 3000));
-
   return await sql`
     SELECT status::text, count(*)::int FROM tracked_prs
     WHERE user_id = ${userId}
@@ -73,7 +53,6 @@ async function fetchStatusCounts(userId: string) {
 }
 
 async function fetchPRStoryById(id: string) {
-  // await new Promise((resolve) => setTimeout(resolve, 3000));
   const data = await sql<TrackedPRWithSummary[]>`
     SELECT
       p.*,
@@ -90,8 +69,7 @@ async function fetchPRStoryById(id: string) {
 }
 
 async function upsertPRSummary(prId: string, summaryJSON: any) {
-  try {
-    return await sql`
+  return await sql`
     INSERT INTO pr_summaries (pr_id, summary_json, generated_at)
     VALUES (${prId}, ${summaryJSON}, NOW())
     ON CONFLICT (pr_id) DO UPDATE
@@ -99,10 +77,6 @@ async function upsertPRSummary(prId: string, summaryJSON: any) {
       summary_json = EXCLUDED.summary_json,
       generated_at = EXCLUDED.generated_at;
   `;
-  } catch (error) {
-    logger.info("Database error:", error);
-    throw new Error("Failed to upsert PR summary");
-  }
 }
 
 async function fetchPRGithubIdentifiers(
@@ -121,31 +95,26 @@ async function updatePRData(
   prId: string,
   prWithSummaryJSON: PRWithSummaryJSON,
 ) {
-  try {
-    let status = prWithSummaryJSON.metadata.status;
+  let status = prWithSummaryJSON.metadata.status;
 
-    const lastActivity = new Date(prWithSummaryJSON.metadata.last_activity_at);
-    const sevenDaysAgo = new Date();
-    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+  const lastActivity = new Date(prWithSummaryJSON.metadata.last_activity_at);
+  const sevenDaysAgo = new Date();
+  sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
 
-    if (status === "open" && lastActivity < sevenDaysAgo) {
-      status = "stale";
-    }
-
-    await sql.begin(async (sql) => {
-      await sql`
-            UPDATE tracked_prs
-            SET title = ${prWithSummaryJSON.metadata.title}, status = ${status},
-                last_activity_at = ${prWithSummaryJSON.metadata.last_activity_at}, last_synced_at = NOW()
-            WHERE id = ${prId}
-          `;
-
-      await upsertPRSummary(prId, prWithSummaryJSON.summaryJSON);
-    });
-  } catch (error) {
-    console.error("Database Error:", error);
-    throw error;
+  if (status === "open" && lastActivity < sevenDaysAgo) {
+    status = "stale";
   }
+
+  await sql.begin(async (sql) => {
+    await sql`
+      UPDATE tracked_prs
+      SET title = ${prWithSummaryJSON.metadata.title}, status = ${status},
+          last_activity_at = ${prWithSummaryJSON.metadata.last_activity_at}, last_synced_at = NOW()
+      WHERE id = ${prId}
+    `;
+
+    await upsertPRSummary(prId, prWithSummaryJSON.summaryJSON);
+  });
 }
 
 async function addPRData(prWithSummary: PRWithSummaryJSON) {
@@ -158,8 +127,7 @@ async function addPRData(prWithSummary: PRWithSummaryJSON) {
   sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
   if (status === "open" && lastActivity < sevenDaysAgo) status = "stale";
 
-  try {
-    const result = await sql`
+  const result = await sql`
       INSERT INTO tracked_prs (
         user_id,
         repo_owner,
@@ -187,15 +155,11 @@ async function addPRData(prWithSummary: PRWithSummaryJSON) {
       NOW())
       RETURNING id
     `;
-    const prId = result[0].id;
+  const prId = result[0].id;
 
-    await upsertPRSummary(prId, prWithSummary.summaryJSON);
+  await upsertPRSummary(prId, prWithSummary.summaryJSON);
 
-    return prId
-  } catch (error) {
-    logger.info("Failed to add PR:", error);
-    throw error;
-  }
+  return prId;
 }
 
 export {
