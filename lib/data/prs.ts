@@ -5,8 +5,7 @@ import {
 } from "@/types";
 import postgres from "postgres";
 import logger from "../logger";
-
-const sql = postgres(process.env.POSTGRES_URL!);
+import sql from "../db";
 
 async function fetchTrackedPRs(
   userId: string,
