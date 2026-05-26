@@ -1,3 +1,9 @@
+DO $$ BEGIN
+  CREATE TYPE pr_status AS ENUM ('open', 'closed', 'merged', 'stale');
+EXCEPTION
+  WHEN duplicate_object THEN null;
+END $$;
+
 CREATE TABLE IF NOT EXISTS users (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   oauth_id TEXT UNIQUE,
@@ -31,5 +37,3 @@ CREATE TABLE IF NOT EXISTS pr_summaries (
   summary_json JSONB NOT NULL,
   generated_at TIMESTAMP
 );
-
-CREATE TYPE pr_status AS ENUM ('open', 'closed', 'merged', 'stale');
