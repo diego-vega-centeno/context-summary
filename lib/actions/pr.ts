@@ -70,7 +70,7 @@ export async function syncActivePRs(userId: string) {
     revalidatePath("/dashboard");
     return { success: true, count: activePRs.length };
   } catch (error) {
-    logger.debug("Batch Sync Error:", error);
+    logger.error("Batch Sync Error:", error);
     return {
       success: false,
       error:
