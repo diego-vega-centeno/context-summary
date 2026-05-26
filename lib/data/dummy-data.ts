@@ -2,11 +2,11 @@ import { TrackedPRWithSummary } from "@/types/index";
 
 export const users = [
   {
-    id: '7f759600-988e-4a81-9878-439523293021',
-    oauth_id: '-',
-    name: 'User',
-    email: 'user@nextmail.com',
-    password: '123456',
+    id: "7f759600-988e-4a81-9878-439523293021",
+    oauth_id: "-",
+    name: "User",
+    email: "user@nextmail.com",
+    password: "123456",
   },
 ];
 
@@ -24,14 +24,14 @@ export const dummyPRs: TrackedPRWithSummary[] = [
     title: "Refactor auth token handling to support refresh flow",
     status: "open",
     author: "carlos_dev",
-    created_at: "2024-03-01T09:00:00Z",
-    last_activity_at: "2024-03-10T14:30:00Z",
-    last_synced_at: "2024-03-10T15:00:00Z",
-    added_at: "2024-03-02T08:00:00Z",
+    created_at: new Date("2024-03-01T09:00:00Z"),
+    last_activity_at: new Date("2024-03-10T14:30:00Z"),
+    last_synced_at: new Date("2024-03-10T15:00:00Z"),
+    added_at: new Date("2024-03-02T08:00:00Z"),
     summary: {
       id: "e0f6c26d-49d7-4001-9f93-01826075d9e9",
       pr_id: "88268875-108e-4f58-8671-50e5021e16f3",
-      generated_at: "2024-03-10T15:01:00Z",
+      generated_at: new Date("2024-03-10T15:01:00Z"),
       summary_json: {
         one_liner:
           "Blocked waiting on @john to confirm session expiry strategy before merge.",
@@ -88,14 +88,14 @@ export const dummyPRs: TrackedPRWithSummary[] = [
     title: "Add real-time notification panel with websocket support",
     status: "open",
     author: "sofia_m",
-    created_at: "2024-03-05T11:00:00Z",
-    last_activity_at: "2024-03-11T09:15:00Z",
-    last_synced_at: "2024-03-11T10:00:00Z",
-    added_at: "2024-03-06T08:00:00Z",
+    created_at: new Date("2024-03-05T11:00:00Z"),
+    last_activity_at: new Date("2024-03-11T09:15:00Z"),
+    last_synced_at: new Date("2024-03-11T10:00:00Z"),
+    added_at: new Date("2024-03-06T08:00:00Z"),
     summary: {
       id: "c9664551-768a-4933-92f7-7b8229f3d97e",
       pr_id: "f478631d-b355-460d-9659-197e412a149c",
-      generated_at: "2024-03-11T10:01:00Z",
+      generated_at: new Date("2024-03-11T10:01:00Z"),
       summary_json: {
         one_liner:
           "Active review ongoing — debating websocket vs SSE approach.",
@@ -145,14 +145,14 @@ export const dummyPRs: TrackedPRWithSummary[] = [
     title: "Rate limiting middleware for public API endpoints",
     status: "open",
     author: "dev_rami",
-    created_at: "2024-03-08T08:30:00Z",
-    last_activity_at: "2024-03-11T16:00:00Z",
-    last_synced_at: "2024-03-11T16:30:00Z",
-    added_at: "2024-03-08T09:00:00Z",
+    created_at: new Date("2024-03-08T08:30:00Z"),
+    last_activity_at: new Date("2024-03-11T16:00:00Z"),
+    last_synced_at: new Date("2024-03-11T16:30:00Z"),
+    added_at: new Date("2024-03-08T09:00:00Z"),
     summary: {
       id: "55403061-2679-4674-883a-44621c4b7261",
       pr_id: "67885b14-0f2c-473d-9d47-69634e9e4f5a",
-      generated_at: "2024-03-11T16:31:00Z",
+      generated_at: new Date("2024-03-11T16:31:00Z"),
       summary_json: {
         one_liner:
           "Implementation complete, waiting on security team sign-off before merge.",
@@ -211,14 +211,14 @@ export const dummyPRs: TrackedPRWithSummary[] = [
     title: "Migrate database connection pool to PgBouncer",
     status: "merged",
     author: "john_arch",
-    created_at: "2024-02-10T10:00:00Z",
-    last_activity_at: "2024-02-20T17:00:00Z",
-    last_synced_at: "2024-03-11T10:00:00Z",
-    added_at: "2024-02-11T08:00:00Z",
+    created_at: new Date("2024-02-10T10:00:00Z"),
+    last_activity_at: new Date("2024-02-20T17:00:00Z"),
+    last_synced_at: new Date("2024-03-11T10:00:00Z"),
+    added_at: new Date("2024-02-11T08:00:00Z"),
     summary: {
       id: "45330386-3f6e-4e5a-8b43-68892415170d",
       pr_id: "9633e070-55e1-4545-9781-309d7373d573",
-      generated_at: "2024-03-11T10:01:00Z",
+      generated_at: new Date("2024-03-11T10:01:00Z"),
       summary_json: {
         one_liner:
           "Successfully merged after resolving connection leak issue discovered during load testing.",
@@ -272,14 +272,14 @@ export const dummyPRs: TrackedPRWithSummary[] = [
     title: "Implement offline mode with local data sync",
     status: "merged",
     author: "lin_fe",
-    created_at: "2024-01-15T09:00:00Z",
-    last_activity_at: "2024-02-01T11:00:00Z",
-    last_synced_at: "2024-03-11T10:00:00Z",
-    added_at: "2024-01-16T08:00:00Z",
+    created_at: new Date("2024-01-15T09:00:00Z"),
+    last_activity_at: new Date("2024-02-01T11:00:00Z"),
+    last_synced_at: new Date("2024-03-11T10:00:00Z"),
+    added_at: new Date("2024-01-16T08:00:00Z"),
     summary: {
       id: "85215033-689e-4a6c-9742-50853517269e",
       pr_id: "d3663a86-778a-4416-8798-963a48e78077",
-      generated_at: "2024-03-11T10:01:00Z",
+      generated_at: new Date("2024-03-11T10:01:00Z"),
       summary_json: {
         one_liner:
           "Merged after 3 weeks of development — offline mode now live in v2.4.",
@@ -327,14 +327,14 @@ export const dummyPRs: TrackedPRWithSummary[] = [
     title: "Add support for annual subscription billing cycle",
     status: "closed",
     author: "petra_k",
-    created_at: "2024-02-01T10:00:00Z",
-    last_activity_at: "2024-02-14T12:00:00Z",
-    last_synced_at: "2024-03-11T10:00:00Z",
-    added_at: "2024-02-02T08:00:00Z",
+    created_at: new Date("2024-02-01T10:00:00Z"),
+    last_activity_at: new Date("2024-02-14T12:00:00Z"),
+    last_synced_at: new Date("2024-03-11T10:00:00Z"),
+    added_at: new Date("2024-02-02T08:00:00Z"),
     summary: {
       id: "77965074-6725-4f4d-91a5-829215089223",
       pr_id: "f734493a-8772-4d2c-81f1-303c7270e557",
-      generated_at: "2024-03-11T10:01:00Z",
+      generated_at: new Date("2024-03-11T10:01:00Z"),
       summary_json: {
         one_liner:
           "Closed without merge — billing logic moved to a third-party provider instead.",
@@ -385,14 +385,14 @@ export const dummyPRs: TrackedPRWithSummary[] = [
     title: "Add Kafka consumer for real-time event processing",
     status: "stale",
     author: "marco_b",
-    created_at: "2024-01-20T10:00:00Z",
-    last_activity_at: "2024-02-10T09:00:00Z",
-    last_synced_at: "2024-03-11T10:00:00Z",
-    added_at: "2024-01-21T08:00:00Z",
+    created_at: new Date("2024-01-20T10:00:00Z"),
+    last_activity_at: new Date("2024-02-10T09:00:00Z"),
+    last_synced_at: new Date("2024-03-11T10:00:00Z"),
+    added_at: new Date("2024-01-21T08:00:00Z"),
     summary: {
       id: "16541624-9548-4384-9642-169864275143",
       pr_id: "475b66d4-d576-4a46-88d4-531075778891",
-      generated_at: "2024-03-11T10:01:00Z",
+      generated_at: new Date("2024-03-11T10:01:00Z"),
       summary_json: {
         one_liner:
           "Stale for 29 days — blocked on infrastructure team provisioning Kafka cluster.",
@@ -441,14 +441,14 @@ export const dummyPRs: TrackedPRWithSummary[] = [
     title: "Migrate full-text search from Elasticsearch to Typesense",
     status: "stale",
     author: "ana_search",
-    created_at: "2024-01-05T09:00:00Z",
-    last_activity_at: "2024-01-28T14:00:00Z",
-    last_synced_at: "2024-03-11T10:00:00Z",
-    added_at: "2024-01-06T08:00:00Z",
+    created_at: new Date("2024-01-05T09:00:00Z"),
+    last_activity_at: new Date("2024-01-28T14:00:00Z"),
+    last_synced_at: new Date("2024-03-11T10:00:00Z"),
+    added_at: new Date("2024-01-06T08:00:00Z"),
     summary: {
       id: "68112101-7023-4484-9133-728795551322",
       pr_id: "2a346e45-2f9a-4712-888e-6715f606368d",
-      generated_at: "2024-03-11T10:01:00Z",
+      generated_at: new Date("2024-03-11T10:01:00Z"),
       summary_json: {
         one_liner:
           "Stale for 42 days — migration paused after performance regression found in edge case queries.",
