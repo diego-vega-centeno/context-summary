@@ -11,10 +11,10 @@ export interface TrackedPR {
   title: string;
   status: PRStatus;
   author: string;
-  created_at: string; // ISO timestamptz
-  last_activity_at: string; // ISO timestamptz
-  last_synced_at: string; // ISO timestamptz
-  added_at: string; // ISO timestamptz
+  created_at: Date; // ISO timestamptz
+  last_activity_at: Date; // ISO timestamptz
+  last_synced_at: Date; // ISO timestamptz
+  added_at: Date; // ISO timestamptz
 }
 
 // Summary JSON Nested Types
