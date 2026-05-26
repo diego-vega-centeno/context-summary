@@ -19,9 +19,16 @@ export async function syncPR(prId: string) {
 
     revalidatePath("/dashboard");
     revalidatePath(`/stories/${prId}`);
+    return { success: true, data: "Synced PR" };
   } catch (error) {
-    logger.error("Sync Error:", error);
-    return { success: false, error: "Failed to sync PR" };
+    logger.error("Sync PR Error:", error);
+    return {
+      success: false,
+      error:
+        error instanceof Error
+          ? error.message
+          : "An unexpected error occurred.",
+    };
   }
 }
 
@@ -36,8 +43,14 @@ export async function addPR(owner: string, repo: string, prNumber: number) {
     revalidatePath("/dashboard");
     revalidatePath(`/stories/${prId}`);
   } catch (error) {
-    logger.error("Sync Error:", error);
-    return { success: false, error: "Failed to sync PR" };
+    logger.error("Add PR Error:", error);
+    return {
+      success: false,
+      error:
+        error instanceof Error
+          ? error.message
+          : "An unexpected error occurred.",
+    };
   }
 }
 
@@ -57,6 +70,12 @@ export async function syncActivePRs(userId: string) {
     return { success: true, count: activePRs.length };
   } catch (error) {
     logger.debug("Batch Sync Error:", error);
-    return { success: false, error: "Failed to complete background sync" };
+    return {
+      success: false,
+      error:
+        error instanceof Error
+          ? error.message
+          : "An unexpected error occurred.",
+    };
   }
 }
