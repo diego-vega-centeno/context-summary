@@ -14,7 +14,6 @@ export default function SyncButton({
 
   async function refreshPRs() {
     setRefreshing(true);
-    await new Promise((r) => setTimeout(r, 2000));
     const result = await syncPR(prId);
     if (result?.success === false) {
       console.error(result.error);
