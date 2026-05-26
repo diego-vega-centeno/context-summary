@@ -5,6 +5,7 @@ import { type TrackedPRWithSummary } from "@/types/index";
 import Link from "next/link";
 
 export default function PRMainSection({ pr }: { pr: TrackedPRWithSummary }) {
+;
   return (
     <div className="p-5 border-1 border-border rounded-lg w-full">
       <div className="flex justify-between text-sm items-center py-2">
@@ -15,7 +16,7 @@ export default function PRMainSection({ pr }: { pr: TrackedPRWithSummary }) {
             {pr.status}
           </div>
           <div className="text-muted-foreground">
-            Last activity {formatRelativeDate(pr.last_activity_at)}
+            Last activity {formatRelativeDate(pr.last_activity_at.toString())}
           </div>
         </div>
         <Link
@@ -48,7 +49,7 @@ export default function PRMainSection({ pr }: { pr: TrackedPRWithSummary }) {
         <div>
           <div className="flex flex-col">
             <div className="text-muted-foreground">Last activity</div>
-            <div className="font-bold">{pr.repo_name}</div>
+            <div className="font-bold">{pr.last_activity_at.toLocaleDateString()}</div>
           </div>
         </div>
       </div>

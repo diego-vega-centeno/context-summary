@@ -39,9 +39,9 @@ export default async function StoryBoard({ id }: { id: string }) {
           </Button>
           <div className="flex items-center gap-2">
             <span className="text-muted-foreground text-xs">
-              Synced <span>{formatRelativeDate(pr.last_synced_at)}</span>
+              Synced <span>{formatRelativeDate(pr.last_synced_at.toString())}</span>
             </span>
-            <SyncButton text="Refresh" />
+            <SyncButton prId={id} text="Refresh" />
           </div>
         </div>
         <div className="w-full flex justify-center">
