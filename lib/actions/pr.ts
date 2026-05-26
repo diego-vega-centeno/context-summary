@@ -25,7 +25,10 @@ export async function syncPR(prId: string) {
 
 export async function addPR(owner: string, repo: string, prNumber: number) {
   try {
+    console.log("Making PR with summary");
     const prWithSummary = await makePRWithSummary(owner, repo, prNumber);
+
+    console.log("Adding PR with summary to database");
     const prId = await addPRData(prWithSummary);
 
     revalidatePath("/dashboard");
