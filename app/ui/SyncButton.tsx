@@ -1,13 +1,24 @@
 "use client";
 import { RefreshCw } from "lucide-react";
 import { useState } from "react";
+import { syncPR } from "@/lib/actions/pr";
 
-export default function SyncButton({ text }: { text: string }) {
+export default function SyncButton({
+  prId,
+  text,
+}: {
+  prId: string;
+  text: string;
+}) {
   const [refreshing, setRefreshing] = useState(false);
 
   async function refreshPRs() {
     setRefreshing(true);
     await new Promise((r) => setTimeout(r, 2000));
+    const result = await syncPR(prId);
+    if (result?.success === false) {
+      console.error(result.error);
+    }
     setRefreshing(false);
   }
   return (
