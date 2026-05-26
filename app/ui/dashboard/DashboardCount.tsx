@@ -25,7 +25,7 @@ export default async function DashboardCount() {
           </h1>
           <h2 className="text-muted-foreground text-sm">Last synced</h2>
         </div>
-        <SyncButton text="Sync all" />
+        <SyncButton prId="all" text="Sync all" />
       </div>
       <div className="grid md:grid-cols-[repeat(auto-fit,minmax(170px,1fr))] grid-cols-2 gap-2">
         {columns.map((status) => {
