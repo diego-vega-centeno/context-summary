@@ -11,10 +11,10 @@ export interface TrackedPR {
   title: string;
   status: PRStatus;
   author: string;
-  created_at: Date; // ISO timestamptz
-  last_activity_at: Date; // ISO timestamptz
-  last_synced_at: Date; // ISO timestamptz
-  added_at: Date; // ISO timestamptz
+  created_at: Date;
+  last_activity_at: Date;
+  last_synced_at: Date;
+  added_at: Date;
 }
 
 // Summary JSON Nested Types
@@ -54,7 +54,7 @@ export interface PRSummary {
   id: string;
   pr_id: string;
   summary_json: SummaryJSON;
-  generated_at: string; // ISO timestamptz
+  generated_at: Date; // ISO timestamptz
 }
 
 // Combined type — PR + its summary
