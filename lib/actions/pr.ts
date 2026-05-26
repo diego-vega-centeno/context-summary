@@ -42,7 +42,7 @@ export async function addPR(owner: string, repo: string, prNumber: number) {
 
     revalidatePath("/dashboard");
     revalidatePath(`/stories/${prId}`);
-    return { success: true, data: "Added PR" };
+    return { success: true, data: prId };
   } catch (error) {
     logger.error("Add PR Error:", error);
     return {
