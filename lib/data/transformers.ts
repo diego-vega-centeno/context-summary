@@ -6,6 +6,7 @@ import {
   PRWithSummaryJSON,
 } from "@/types";
 import { makePRSummary } from "../services/gemini";
+import logger from "../logger";
 
 export function makePREvents(
   timeline: Record<string, any>[],
@@ -88,22 +89,22 @@ export async function makePRWithSummary(
   // const prWithEventsFile = `./lib/action/summary-tests/${owner}-${repo}-${id}-prWithEvents.json`;
 
   //* Fetch PR metadata
-  console.log("Fetch PR metadata and timeline");
+  logger.debug("Fetch PR metadata and timeline");
   const [metadataRes, timelineRes] = await Promise.all([
     fetchPRPulls(owner, repo, id),
     fetchPRIssuesTimeline(owner, repo, id),
   ]);
 
   //* Make PR timeline
-  console.log("Making PR events");
+  logger.debug("Making PR events");
   const events = makePREvents(timelineRes);
 
   //* Make PR with timeline
-  console.log("Making PR with events");
+  logger.debug("Making PR with events");
   const prWithEvents = makePRWithEvents(metadataRes, events);
 
   //* Making PR summary
-  console.log("Making PR summary");
+  logger.debug("Making PR summary");
   const prSummary = await makePRSummary(prWithEvents as PRWithEvents);
 
   return {
