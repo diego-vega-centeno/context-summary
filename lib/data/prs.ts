@@ -94,7 +94,7 @@ async function upsertPRSummary(prId: string, summaryJSON: any) {
   try {
     return await sql`
     INSERT INTO pr_summaries (pr_id, summary_json, generated_at)
-    VALUES (${prId}, ${JSON.stringify(summaryJSON)}, NOW())
+    VALUES (${prId}, ${summaryJSON}, NOW())
     ON CONFLICT (pr_id) DO UPDATE
     SET 
       summary_json = EXCLUDED.summary_json,
