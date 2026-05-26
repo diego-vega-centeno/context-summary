@@ -2,6 +2,7 @@
 import { RefreshCw } from "lucide-react";
 import { useState } from "react";
 import { syncPR } from "@/lib/actions/pr";
+import logger from "@/lib/logger";
 
 export default function SyncButton({
   prId,
@@ -16,7 +17,7 @@ export default function SyncButton({
     setRefreshing(true);
     const result = await syncPR(prId);
     if (result?.success === false) {
-      console.error(result.error);
+      logger.error(result.error);
     }
     setRefreshing(false);
   }

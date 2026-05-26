@@ -1,6 +1,7 @@
 import { GoogleGenAI } from "@google/genai";
 import { PRWithEvents, SummaryJSON } from "@/types";
 import { NARRATIVE_RECOVERY_PROMPT } from "../data/prompts";
+import logger from "../logger";
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const ai = new GoogleGenAI({
@@ -22,7 +23,7 @@ export async function makePRSummary(
     const summary = JSON.parse(response.text!);
     return summary;
   } catch (error) {
-    console.log("Gemini AI Error:", error);
+    logger.log("Gemini AI Error:", error);
     throw new Error("Failed to generate development narrative.");
   }
 }

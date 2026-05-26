@@ -1,9 +1,10 @@
 import { addPR } from "@/lib/actions/pr";
+import logger from "@/lib/logger";
 
 async function runTest() {
-  console.log("Starting test sync...");
+  logger.log("Starting test sync...");
   const res = await addPR("vercel", "next.js", 93949);
-  console.log("Test Result:", res);
+  logger.log("Test Result:", res);
   process.env.POSTGRES_URL = 
   process.exit(0);
 }

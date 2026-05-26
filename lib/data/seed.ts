@@ -4,6 +4,7 @@ import { dummyPRs, users } from "@/lib/data/dummy-data";
 
 // for local postgreSQL
 import sql from "../db";
+import logger from "../logger";
 
 async function seedUsers() {
   await sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
@@ -29,7 +30,7 @@ async function seedUsers() {
 
   const insertedUsers = await Promise.all(
     users.map(async (user) => {
-      console.log(`Seeding user ${user.name}...`);
+      logger.log(`Seeding user ${user.name}...`);
       const hashedPassword = await bcrypt.hash(user.password, 4);
       return sql`
         INSERT INTO users (id, name, email, password)
@@ -124,4 +125,4 @@ seedUsers()
   .then(() => seedTrackingPRs())
   .then(() => seedPRSummaries())
   .then(() => sql.end())
-  .catch((error) => console.error(error));
+  .catch((error) => logger.error(error));

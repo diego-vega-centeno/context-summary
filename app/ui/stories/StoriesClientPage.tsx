@@ -4,6 +4,7 @@ import { Plus } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useDebounce } from "@/hooks/useDebounce";
 import PRCard from "@/app/ui/stories/PRCard";
+import logger from "@/lib/logger";
 
 const status: (PRStatus | "total")[] = [
   "total",
@@ -49,7 +50,7 @@ export default function StoriesClientPage({
   }, [statusSelected, debouncedSearchInput]);
 
   async function addPR() {
-    console.log("add PR");
+    logger.log("add PR");
   }
 
   async function refreshPR(id: string) {
