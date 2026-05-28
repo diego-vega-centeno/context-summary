@@ -5,6 +5,7 @@ import { useMemo, useState } from "react";
 import { useDebounce } from "@/hooks/useDebounce";
 import PRCard from "@/app/ui/stories/PRCard";
 import logger from "@/lib/logger";
+import Link from "next/link";
 
 const status: (PRStatus | "total")[] = [
   "total",
@@ -69,14 +70,14 @@ export default function StoriesClientPage({
             </h1>
             <h2 className="text-muted-foreground text-sm">Last synced</h2>
           </div>
-          <button
-            type="button"
+          <Link
+            href="/stories/add"
             className={`inline-flex items-center justify-center rounded-md hover:bg-highlight hover:text-foreground h-7 px-2 border-1 border-border bg-foreground text-background`}
             onClick={addPR}
           >
             <Plus className="w-5 h-5 mr-1" />
             Add PR
-          </button>
+          </Link>
         </div>
         <div className="w-full flex gap-3 mb-8 flex-wrap">
           <input
