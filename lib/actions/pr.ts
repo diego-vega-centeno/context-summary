@@ -21,6 +21,7 @@ export async function syncPR(prId: string) {
     await updatePRData(prId, prWithSummary);
 
     revalidatePath("/dashboard");
+    revalidatePath(`/stories`)
     revalidatePath(`/stories/${prId}`);
     return { success: true, data: "Synced PR" };
   } catch (error) {
@@ -72,7 +73,7 @@ export async function addPR(
 
     logger.info("Adding PR to database");
     const prId = await addPRData(prWithSummary);
-    
+
   } catch (error) {
     logger.error("Add PR error:", error);
 
