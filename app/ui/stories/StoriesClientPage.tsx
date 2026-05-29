@@ -6,6 +6,8 @@ import { useDebounce } from "@/hooks/useDebounce";
 import PRCard from "@/app/ui/stories/PRCard";
 import logger from "@/lib/logger";
 import Link from "next/link";
+import { syncPR } from "@/lib/actions/pr";
+import { useRouter } from "next/navigation";
 
 const status: (PRStatus | "total")[] = [
   "total",
@@ -20,6 +22,7 @@ export default function StoriesClientPage({
 }: {
   initialPrs: PRDashboardType[];
 }) {
+  const router = useRouter();
   const [refreshingPR, setRefreshingPR] = useState<null | string>(null);
   const [searchInput, setSearchInput] = useState("");
   const [statusSelected, setStatusSelected] = useState<PRStatus | "total">(
@@ -50,13 +53,10 @@ export default function StoriesClientPage({
     return basePRs;
   }, [statusSelected, debouncedSearchInput]);
 
-  async function addPR() {
-    logger.log("add PR");
-  }
-
   async function refreshPR(id: string) {
     setRefreshingPR(id);
-    await new Promise((r) => setTimeout(r, 2000));
+    const result = await syncPR(id);
+    if (result.success) router.refresh();
     setRefreshingPR(null);
   }
 
@@ -73,7 +73,6 @@ export default function StoriesClientPage({
           <Link
             href="/stories/add"
             className={`inline-flex items-center justify-center rounded-md hover:bg-highlight hover:text-foreground h-7 px-2 border-1 border-border bg-foreground text-background`}
-            onClick={addPR}
           >
             <Plus className="w-5 h-5 mr-1" />
             Add PR
