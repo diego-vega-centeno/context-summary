@@ -1,5 +1,5 @@
 "use server";
-import { fetchPRGithubIdentifiers, updatePRData } from "../data/prs";
+import { addPRData, fetchPRGithubIdentifiers, updatePRData } from "../data/prs";
 import { revalidatePath } from "next/cache";
 import { makePRWithSummary } from "../data/transformers";
 import sql from "../db";
@@ -71,7 +71,8 @@ export async function addPR(
     const prWithSummary = await makePRWithSummary(owner, repo, prNumber);
 
     logger.info("Adding PR to database");
-    // const prId = await addPRData(prWithSummary);
+    const prId = await addPRData(prWithSummary);
+    
   } catch (error) {
     logger.error("Add PR error:", error);
 
