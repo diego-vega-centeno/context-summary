@@ -105,3 +105,9 @@ export interface MetadataType {
   created_at: string;
   last_activity_at: string;
 }
+
+export interface ActionReturn {
+  success: boolean;
+  error?: Record<string, any>[];
+  data?: string | number;
+}
