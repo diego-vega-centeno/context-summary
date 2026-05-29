@@ -53,7 +53,6 @@ export function DashboardCountSkeleton() {
           </h1>
           <h2 className="text-muted-foreground text-sm">Last synced</h2>
         </div>
-        <SyncButton text="Sync all" />
       </div>
       <div
         className={` grid md:grid-cols-[repeat(auto-fit,minmax(170px,1fr))] grid-cols-2 gap-2`}

@@ -52,7 +52,7 @@ export default function PRCard({ pr, refreshingPR, refreshPR }: PRCardProps) {
         <hr className="border-border" />
         <div className="flex items-center pt-2 text-xs text-muted-foreground">
           <Clock className="inline-block mr-2 w-4" />
-          <span>Last activity {formatRelativeDate(pr.last_activity_at)}</span>
+          <span>Last activity {formatRelativeDate(pr.last_activity_at.toString())}</span>
         </div>
       </div>
     </Link>
