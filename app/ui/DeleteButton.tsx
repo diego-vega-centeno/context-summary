@@ -17,12 +17,15 @@ export default function DeleteButton({
 
   async function refreshPRs() {
     setRefreshing(true);
-    const result = await deletePR(prId);
-    if (result?.success === false) {
-      logger.error(result.error);
+    if (window.confirm("Are you sure you want to delete this PR?")) {
+      console.log("deleted");
+      const result = await deletePR(prId);
+      if (result?.success === false) {
+        logger.error(result.error);
+      }
+      setRefreshing(false);
+      router.push("/stories");
     }
-    setRefreshing(false);
-    router.push("/stories");
   }
   return (
     <button
