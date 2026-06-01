@@ -21,7 +21,7 @@ export async function syncPR(prId: string) {
     await updatePRData(prId, prWithSummary);
 
     revalidatePath("/dashboard");
-    revalidatePath(`/stories`)
+    revalidatePath(`/stories`);
     revalidatePath(`/stories/${prId}`);
     return { success: true, data: "Synced PR" };
   } catch (error) {
@@ -118,6 +118,21 @@ export async function syncActivePRs(userId: string) {
     return { success: true, count: activePRs.length };
   } catch (error) {
     logger.error("Batch Sync Error:", error);
+    return {
+      success: false,
+      error:
+        error instanceof Error
+          ? error.message
+          : "An unexpected error occurred.",
+    };
+  }
+}
+
+export async function deletePR(id: string) {
+  try {
+    await sql`DELETE FROM tracked_prs WHERE id = ${id}`;
+  } catch (error) {
+    logger.error("Delete PR Error:", error);
     return {
       success: false,
       error:

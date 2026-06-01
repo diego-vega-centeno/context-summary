@@ -13,6 +13,7 @@ import { formatRelativeDate } from "@/lib/utils";
 import PRMainSection from "@/app/ui/stories-id/PRMainSection";
 import StorySection from "@/app/ui/stories-id/StorySection";
 import { fetchPRStoryById } from "@/lib/data/prs";
+import DeleteButton from "../DeleteButton";
 
 export default async function StoryBoard({ id }: { id: string }) {
   const pr = await fetchPRStoryById(id);
@@ -39,9 +40,11 @@ export default async function StoryBoard({ id }: { id: string }) {
           </Button>
           <div className="flex items-center gap-2">
             <span className="text-muted-foreground text-xs">
-              Synced <span>{formatRelativeDate(pr.last_synced_at.toString())}</span>
+              Synced{" "}
+              <span>{formatRelativeDate(pr.last_synced_at.toString())}</span>
             </span>
             <SyncButton prId={id} text="Refresh" />
+            <DeleteButton prId={id} text="Delete" />
           </div>
         </div>
         <div className="w-full flex justify-center">
