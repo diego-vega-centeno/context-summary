@@ -131,6 +131,9 @@ export async function syncActivePRs(userId: string) {
 export async function deletePR(id: string) {
   try {
     await sql`DELETE FROM tracked_prs WHERE id = ${id}`;
+    revalidatePath("/dashboard");
+    revalidatePath("/stories");
+    return { success: true, data: "Deleted PR" };
   } catch (error) {
     logger.error("Delete PR Error:", error);
     return {
