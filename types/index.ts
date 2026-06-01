@@ -108,6 +108,6 @@ export interface MetadataType {
 
 export interface ActionReturn {
   success: boolean;
-  error?: Record<string, any>[];
+  error?: Array<{ message: string; code?: string }>;
   data?: string | number;
 }
