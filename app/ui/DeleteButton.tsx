@@ -18,7 +18,6 @@ export default function DeleteButton({
   async function refreshPRs() {
     setRefreshing(true);
     if (window.confirm("Are you sure you want to delete this PR?")) {
-      console.log("deleted");
       const result = await deletePR(prId);
       if (result?.success === false) {
         logger.error(result.error);
