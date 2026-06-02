@@ -15,13 +15,15 @@ import StorySection from "@/app/ui/stories-id/StorySection";
 import { fetchPRStoryById } from "@/lib/data/prs";
 import DeleteButton from "../DeleteButton";
 import { notFound } from "next/navigation";
+import z from "zod";
 
 export default async function StoryBoard({ id }: { id: string }) {
+  const isUuid = z.string().uuid().safeParse(id);
+  if (!isUuid.success) notFound();
+
   const pr = await fetchPRStoryById(id);
 
-  if (!pr) {
-    notFound();
-  }
+  if (!pr) notFound();
 
   return (
     <div className="flex flex-1 flex-col justify-between p-6 px-20 min-w-md max-w-4xl mx-auto">
