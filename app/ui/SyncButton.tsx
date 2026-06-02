@@ -17,10 +17,10 @@ export default function SyncButton({
     setRefreshing(true);
     const result = await syncPR(prId);
     if (result?.success) {
-      toast.success("Summary updated!");
+      toast.success("Summary updated!", { duration: 2000 });
     } else {
       toast(result.error, {
-        cancel: {
+        action: {
           label: "Close",
           onClick: () => null,
         },
