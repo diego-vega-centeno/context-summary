@@ -24,6 +24,7 @@ async function fetchTrackedPRs(
 }
 
 async function fetchDashboardPRs(userId: string): Promise<PRDashboardType[]> {
+  // throw new Error("some error")
   return await sql<PRDashboardType[]>`
       SELECT
         p.id, 
@@ -53,6 +54,7 @@ async function fetchStatusCounts(userId: string) {
 }
 
 async function fetchPRStoryById(id: string) {
+  // throw new Error("some error")
   const data = await sql<TrackedPRWithSummary[]>`
     SELECT
       p.*,

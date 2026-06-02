@@ -22,9 +22,9 @@ export default function DeleteButton({
       if (result?.success === false) {
         logger.error(result.error);
       }
-      setRefreshing(false);
       router.push("/stories");
     }
+    setRefreshing(false);
   }
   return (
     <button
