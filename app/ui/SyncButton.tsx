@@ -2,7 +2,7 @@
 import { RefreshCw } from "lucide-react";
 import { useState } from "react";
 import { syncPR } from "@/lib/actions/pr";
-import logger from "@/lib/logger";
+import { toast } from "sonner";
 
 export default function SyncButton({
   prId,
@@ -16,8 +16,15 @@ export default function SyncButton({
   async function refreshPRs() {
     setRefreshing(true);
     const result = await syncPR(prId);
-    if (result?.success === false) {
-      logger.error(result.error);
+    if (result?.success) {
+      toast.success("Summary updated!");
+    } else {
+      toast(result.error, {
+        cancel: {
+          label: "Cancel",
+          onClick: () => null,
+        },
+      });
     }
     setRefreshing(false);
   }

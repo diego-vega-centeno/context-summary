@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
+import { Toaster } from "sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,7 +26,10 @@ export default function RootLayout({
       className={`${geistSans.variable} antialiased`}
     >
       <body className="flex flex-col">
-        <ThemeProvider attribute="class">{children}</ThemeProvider>
+        <ThemeProvider attribute="class">
+          {children}
+          <Toaster position="top-center" />
+        </ThemeProvider>
       </body>
     </html>
   );
