@@ -12,7 +12,7 @@ export async function fetchPRIssuesTimeline(
     },
   );
 
-  if (!res.ok) throw new Error(`GitHub API error: ${res.status}`);
+  if (!res.ok) throw new Error(`GitHub API error: ${res.status} - ${res.statusText}`);
 
   return res.json();
 }
@@ -30,8 +30,8 @@ export async function fetchPRPulls(
       },
     },
   );
-
-  if (!res.ok) throw new Error(`GitHub API error: ${res.status}`);
+  console.log(res);
+  if (!res.ok) throw new Error(`GitHub API error: ${res.status} - ${res.statusText}`);
 
   return res.json();
 }
