@@ -21,7 +21,7 @@ export default function SyncButton({
     } else {
       toast(result.error, {
         cancel: {
-          label: "Cancel",
+          label: "Close",
           onClick: () => null,
         },
       });
