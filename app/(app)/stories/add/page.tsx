@@ -27,7 +27,7 @@ export default function AddPRPage() {
               </p>
             ))}
           <Button type="submit" disabled={isPending}>
-            {isPending ? "Analyzing Narrative..." : "Add PR"}
+            {isPending ? "Analyzing summary..." : "Add PR"}
           </Button>
         </div>
       </form>
