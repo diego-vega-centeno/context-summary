@@ -58,10 +58,11 @@ export default function StoriesClientPage({
     setRefreshingPR(id);
     const result = await syncPR(id);
     if (result?.success) {
+      toast.success("Summary updated!", { duration: 2000 });
       router.refresh();
     } else {
       toast(result.error, {
-        cancel: {
+        action: {
           label: "Close",
           onClick: () => null,
         },
