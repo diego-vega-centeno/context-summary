@@ -8,6 +8,7 @@ import logger from "@/lib/logger";
 import Link from "next/link";
 import { syncPR } from "@/lib/actions/pr";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 const status: (PRStatus | "total")[] = [
   "total",
@@ -56,7 +57,16 @@ export default function StoriesClientPage({
   async function refreshPR(id: string) {
     setRefreshingPR(id);
     const result = await syncPR(id);
-    if (result.success) router.refresh();
+    if (result?.success) {
+      router.refresh();
+    } else {
+      toast(result.error, {
+        cancel: {
+          label: "Close",
+          onClick: () => null,
+        },
+      });
+    }
     setRefreshingPR(null);
   }
 
