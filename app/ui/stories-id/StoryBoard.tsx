@@ -14,21 +14,13 @@ import PRMainSection from "@/app/ui/stories-id/PRMainSection";
 import StorySection from "@/app/ui/stories-id/StorySection";
 import { fetchPRStoryById } from "@/lib/data/prs";
 import DeleteButton from "../DeleteButton";
+import { notFound } from "next/navigation";
 
 export default async function StoryBoard({ id }: { id: string }) {
   const pr = await fetchPRStoryById(id);
 
   if (!pr) {
-    return (
-      <div className="p-6 flex flex-col items-center justify-center min-h-screen gap-4">
-        <GitPullRequest className="w-12 h-12 text-muted-foreground/40" />
-        <h2 className="text-foreground">PR not found</h2>
-        <Button variant="withIcon" href="/stories">
-          <ArrowLeft className="w-4 h-4" />
-          Back to PR Stories
-        </Button>
-      </div>
-    );
+    notFound();
   }
 
   return (
