@@ -22,6 +22,8 @@ export function ThemeToggle({
 
   return (
     <button
+      type="button"
+      aria-label="Toggle theme"
       className={clsx(
         "flex items-center justify-left whitespace-nowrap",
         className,
