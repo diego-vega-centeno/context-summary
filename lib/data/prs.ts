@@ -1,7 +1,6 @@
 import {
   PRDashboardType,
   PRWithSummaryJSON,
-  SummaryJSON,
   TrackedPRWithSummary,
 } from "@/types";
 import sql from "../db";

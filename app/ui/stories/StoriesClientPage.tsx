@@ -51,7 +51,7 @@ export default function StoriesClientPage({
       );
     }
     return basePRs;
-  }, [statusSelected, debouncedSearchInput, initialPrs, prs]);
+  }, [statusSelected, debouncedSearchInput]);
 
   async function refreshPR(id: string) {
     setRefreshingPR(id);

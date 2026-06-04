@@ -1,5 +1,4 @@
 import { fetchPRIssuesTimeline, fetchPRPulls } from "../services/github";
-import { writeFile, readFile } from "node:fs/promises";
 import {
   PRWithEvents,
   PRTimelineEvent,

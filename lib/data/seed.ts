@@ -1,5 +1,4 @@
 import bcrypt from "bcrypt";
-import postgres from "postgres";
 import { dummyPRs, users } from "@/lib/data/dummy-data";
 
 // for local postgreSQL
