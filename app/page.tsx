@@ -7,7 +7,7 @@ import {
   Timeline,
 } from "lucide-react";
 import Button from "@/app/ui/Button";
-import { ThemeToggle } from "@/app/ui/ThemeToggle";
+import { ThemeToggle } from "@/app/ui/ThemeToggleClient";
 
 export default function LandingPage() {
   return (
@@ -30,7 +30,9 @@ export default function LandingPage() {
           style={{ fontSize: "3rem", fontWeight: 700, lineHeight: 1.15 }}
         >
           Stop asking{" "}
-          <span className="text-muted-foreground">&quot;what&apos;s the status?&quot;</span>
+          <span className="text-muted-foreground">
+            &quot;what&apos;s the status?&quot;
+          </span>
           <br />
           Start understanding{" "}
           <span
@@ -51,8 +53,8 @@ export default function LandingPage() {
           Summary context ingests your GitHub pull requests and reconstructs the
           development narrative
           <br />
-          Who made decisions, what&apos;s blocking things, and exactly what needs to
-          happen next. Not just status but the progress with context.
+          Who made decisions, what&apos;s blocking things, and exactly what
+          needs to happen next. Not just status but the progress with context.
         </p>
 
         <div className="flex items-center gap-4">

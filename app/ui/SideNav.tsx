@@ -1,8 +1,8 @@
 "use client";
 import Button from "./Button";
 import NavLinks from "./NavLinks";
-import { ThemeToggle } from "./ThemeToggle";
 import { Settings, LogOut } from "lucide-react";
+import { ThemeToggle } from "@/app/ui/ThemeToggleClient";
 
 export default function SideNav() {
   return (
@@ -11,7 +11,8 @@ export default function SideNav() {
         <NavLinks />
       </div>
       <div className="flex flex-col gap-2 border-t-2 border-highlight p-2">
-        <ThemeToggle showLabels className="w-full px-1" />
+        {/* <ThemeToggle showLabels className="w-full px-1" /> */}
+        <ThemeToggle showLabels className="w-full px-1"/>
         <Button icon={Settings} variant={"withIcon"} className="w-full">
           Settings
         </Button>
