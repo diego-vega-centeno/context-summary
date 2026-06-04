@@ -1,7 +1,6 @@
 "use client";
 import Button from "@/app/ui/Button";
 import { addPR } from "@/lib/actions/pr";
-import { ActionReturn } from "@/types";
 import { useActionState } from "react";
 
 export default function AddPRPage() {
