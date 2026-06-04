@@ -4,7 +4,6 @@ import { Plus } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useDebounce } from "@/hooks/useDebounce";
 import PRCard from "@/app/ui/stories/PRCard";
-import logger from "@/lib/logger";
 import Link from "next/link";
 import { syncPR } from "@/lib/actions/pr";
 import { useRouter } from "next/navigation";
@@ -52,7 +51,7 @@ export default function StoriesClientPage({
       );
     }
     return basePRs;
-  }, [statusSelected, debouncedSearchInput]);
+  }, [statusSelected, debouncedSearchInput, initialPrs, prs]);
 
   async function refreshPR(id: string) {
     setRefreshingPR(id);

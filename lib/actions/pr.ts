@@ -72,7 +72,7 @@ export async function addPR(
     const prWithSummary = await makePRWithSummary(owner, repo, prNumber);
 
     logger.info("Adding PR to database");
-    const prId = await addPRData(prWithSummary);
+    await addPRData(prWithSummary);
 
   } catch (error) {
     logger.error("Add PR error:", error);
