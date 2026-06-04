@@ -21,7 +21,7 @@ export default function AddPRPage() {
             className="w-full bg-sidebar-background p-2 rounded-md text-sm"
           />
           {state?.error &&
-            state.error.map((err: any) => (
+            state.error.map((err) => (
               <p key={err.code} className="text-red-500 text-sm">
                 {err.message}
               </p>

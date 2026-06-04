@@ -30,7 +30,7 @@ export default function LandingPage() {
           style={{ fontSize: "3rem", fontWeight: 700, lineHeight: 1.15 }}
         >
           Stop asking{" "}
-          <span className="text-muted-foreground">"what's the status?"</span>
+          <span className="text-muted-foreground">&quot;what&apos;s the status?&quot;</span>
           <br />
           Start understanding{" "}
           <span
@@ -51,7 +51,7 @@ export default function LandingPage() {
           Summary context ingests your GitHub pull requests and reconstructs the
           development narrative
           <br />
-          Who made decisions, what's blocking things, and exactly what needs to
+          Who made decisions, what&apos;s blocking things, and exactly what needs to
           happen next. Not just status but the progress with context.
         </p>
 
