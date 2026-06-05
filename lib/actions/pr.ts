@@ -52,9 +52,9 @@ const prParams = z.object({
 });
 
 export async function addPR(
-  prevState: any,
+  prevState: ActionReturn,
   formData: FormData,
-): Promise<ActionReturn | void> {
+): Promise<ActionReturn> {
   try {
     logger.info("Getting pr data from URL");
     const formURL = formData.get("url");
@@ -73,7 +73,6 @@ export async function addPR(
 
     logger.info("Adding PR to database");
     await addPRData(prWithSummary);
-
   } catch (error) {
     logger.error("Add PR error:", error);
 

@@ -1,10 +1,12 @@
 "use client";
 import Button from "@/app/ui/Button";
 import { addPR } from "@/lib/actions/pr";
+import { ActionReturn } from "@/types";
 import { useActionState } from "react";
 
 export default function AddPRPage() {
-  const [state, formAction, isPending] = useActionState(addPR, null);
+  const initialState: ActionReturn = { success: false, error: [] };
+  const [state, formAction, isPending] = useActionState(addPR, initialState);
   return (
     <div className="flex justify-center px-40 p-6">
       <form action={formAction} className="w-full" aria-live="polite">
