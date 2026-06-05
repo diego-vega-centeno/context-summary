@@ -1,7 +1,6 @@
 import Button from "@/app/ui/Button";
 import {
   ArrowLeft,
-  GitPullRequest,
   Hammer,
   Lightbulb,
   ShieldAlert,

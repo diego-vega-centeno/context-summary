@@ -5,7 +5,8 @@ import { ActionReturn } from "@/types";
 import { useActionState } from "react";
 
 export default function AddPRPage() {
-  const [state, formAction, isPending] = useActionState(addPR, null);
+  const initialState: ActionReturn = { success: false, error: [] };
+  const [state, formAction, isPending] = useActionState(addPR, initialState);
   return (
     <div className="flex justify-center px-40 p-6">
       <form action={formAction} className="w-full" aria-live="polite">
@@ -21,7 +22,7 @@ export default function AddPRPage() {
             className="w-full bg-sidebar-background p-2 rounded-md text-sm"
           />
           {state?.error &&
-            state.error.map((err: any) => (
+            state.error.map((err) => (
               <p key={err.code} className="text-red-500 text-sm">
                 {err.message}
               </p>

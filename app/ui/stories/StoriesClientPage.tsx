@@ -4,7 +4,6 @@ import { Plus } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useDebounce } from "@/hooks/useDebounce";
 import PRCard from "@/app/ui/stories/PRCard";
-import logger from "@/lib/logger";
 import Link from "next/link";
 import { syncPR } from "@/lib/actions/pr";
 import { useRouter } from "next/navigation";
@@ -30,17 +29,20 @@ export default function StoriesClientPage({
     "total",
   );
   const debouncedSearchInput = useDebounce(searchInput, 300);
-  const prs = {
-    total: initialPrs,
-    open: initialPrs.filter((pr) => pr.status === "open"),
-    merged: initialPrs.filter((pr) => pr.status === "merged"),
-    closed: initialPrs.filter((pr) => pr.status === "closed"),
-    stale: initialPrs.filter((pr) => pr.status === "stale"),
-  };
+
+  const prs = useMemo(() => {
+    return {
+      total: initialPrs,
+      open: initialPrs.filter((pr) => pr.status === "open"),
+      merged: initialPrs.filter((pr) => pr.status === "merged"),
+      closed: initialPrs.filter((pr) => pr.status === "closed"),
+      stale: initialPrs.filter((pr) => pr.status === "stale"),
+    };
+  }, [initialPrs]);
 
   const filteredPRs = useMemo(() => {
     const basePRs =
-      statusSelected === "total" ? initialPrs : prs[statusSelected];
+      statusSelected === "total" ? prs.total : prs[statusSelected];
     if (debouncedSearchInput) {
       const query = debouncedSearchInput.trim().toLowerCase();
       return basePRs.filter(
@@ -52,7 +54,7 @@ export default function StoriesClientPage({
       );
     }
     return basePRs;
-  }, [statusSelected, debouncedSearchInput]);
+  }, [statusSelected, debouncedSearchInput, prs]);
 
   async function refreshPR(id: string) {
     setRefreshingPR(id);

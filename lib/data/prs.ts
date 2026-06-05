@@ -3,7 +3,6 @@ import {
   PRWithSummaryJSON,
   TrackedPRWithSummary,
 } from "@/types";
-import logger from "../logger";
 import sql from "../db";
 
 async function fetchTrackedPRs(

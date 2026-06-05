@@ -1,6 +1,5 @@
 import { statusConfig } from "@/lib/data/status-data";
 import { PRStatus } from "@/types";
-import SyncButton from "./SyncButton";
 import { ArrowLeft, Plus, RefreshCw } from "lucide-react";
 import Button from "./Button";
 
