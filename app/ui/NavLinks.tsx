@@ -1,3 +1,4 @@
+"use client";
 import Button from "@/app/ui/Button";
 import { LayoutDashboard, BookOpenText } from "lucide-react";
 import { usePathname } from "next/navigation";
