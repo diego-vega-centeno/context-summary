@@ -11,7 +11,6 @@ export default function SideNav() {
         <NavLinks />
       </div>
       <div className="flex flex-col gap-2 border-t-2 border-highlight p-2">
-        {/* <ThemeToggle showLabels className="w-full px-1" /> */}
         <ThemeToggle showLabels className="w-full px-1" />
         <Button icon={Settings} variant={"withIcon"} className="w-full">
           Settings
