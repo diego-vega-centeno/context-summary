@@ -2,6 +2,7 @@ import {
   PRDashboardType,
   PRWithSummaryJSON,
   TrackedPRWithSummary,
+  User,
 } from "@/types";
 import sql from "../db";
 
@@ -163,6 +164,11 @@ async function addPRData(prWithSummary: PRWithSummaryJSON) {
   return prId;
 }
 
+async function getUser(email: string): Promise<User | undefined> {
+  const user = await sql<User[]>`SELECT * FROM users WHERE email=${email}`;
+  return user[0];
+}
+
 export {
   fetchTrackedPRs,
   fetchStatusCounts,
@@ -172,4 +178,5 @@ export {
   fetchPRGithubIdentifiers,
   addPRData,
   updatePRData,
+  getUser,
 };
