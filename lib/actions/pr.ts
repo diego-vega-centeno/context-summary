@@ -52,7 +52,7 @@ const prParams = z.object({
 });
 
 export async function addPR(
-  prevState: ActionReturn,
+  prevState: ActionReturn | null,
   formData: FormData,
 ): Promise<ActionReturn> {
   try {

@@ -91,7 +91,7 @@ export interface PRTimelineEvent {
   user: string;
   state?: string;
   content?: string;
-  timestamp: string;
+  timestamp: Date;
 }
 
 export interface MetadataType {
@@ -102,12 +102,22 @@ export interface MetadataType {
   description: string;
   author: string;
   status: string;
-  created_at: string;
-  last_activity_at: string;
+  created_at: Date;
+  last_activity_at: Date;
 }
 
 export interface ActionReturn {
   success: boolean;
   error?: Array<{ message: string; code?: string }>;
   data?: string | number;
+}
+
+export interface User {
+  id: string;
+  oauth_id: string;
+  oauth_provider: string;
+  name: string;
+  email: string;
+  password: string;
+  created_at: Date;
 }
