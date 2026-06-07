@@ -1,22 +1,17 @@
 "use client";
 
 import Button from "@/app/ui/Button";
-import { useState } from "react";
-import { LoaderCircle } from "lucide-react";
+import { useActionState } from "react";
+import { LoaderCircle, CircleAlert } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { authenticate } from "@/lib/actions/pr";
 
 export default function LoginPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
-
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    setLoading(true);
-    await new Promise((r) => setTimeout(r, 1000));
-    setLoading(false);
-  }
+  const [state, formAction, isPending] = useActionState(
+    authenticate,
+    undefined,
+  );
 
   const GoogleIcon = () => (
     <Image src="/google-icon.svg" alt="Google" width={20} height={20} />
@@ -30,19 +25,18 @@ export default function LoginPage() {
           Sign in to your account
         </div>
         <div className="pt-3">
-          <form className="space-y-3" onSubmit={handleSubmit}>
+          <form className="space-y-3" action={formAction}>
             <div className="flex flex-col gap-1.5 text-sm">
               <label htmlFor="email" className="font-semibold">
                 Email
               </label>
               <input
                 id="email"
+                name="email"
                 className="border border-highlight w-full bg-sidebar-background p-2 rounded-md h-9 outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50 transition-[color,box-shadow] "
                 type="email"
                 placeholder="your@email.com"
                 autoComplete="email"
-                onChange={(e) => setEmail(e.target.value)}
-                value={email}
               />
             </div>
             <div className="flex flex-col gap-1.5 text-sm">
@@ -51,20 +45,25 @@ export default function LoginPage() {
               </label>
               <input
                 id="password"
+                name="password"
                 className="border border-highlight w-full bg-sidebar-background p-2 rounded-md h-9 outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50 transition-[color,box-shadow]"
                 type="password"
                 placeholder="*********"
                 autoComplete="current-password"
-                onChange={(e) => setPassword(e.target.value)}
-                value={password}
               />
             </div>
-            <Button className="w-full" type="submit" disabled={loading}>
-              {loading && (
+            <Button className="w-full" type="submit" disabled={isPending}>
+              {isPending && (
                 <LoaderCircle className="h-4 w-4 mr-2 animate-spin" />
               )}
               Sign in
             </Button>
+            {state && (
+              <div className="flex items-center h-8 space-x-1">
+                <CircleAlert className="h-4 w-4 text-red-500" />
+                <div className="text-sm text-red-500">{state}</div>
+              </div>
+            )}
           </form>
         </div>
         <div className="text-muted-foreground text-sm text-center p-3">
