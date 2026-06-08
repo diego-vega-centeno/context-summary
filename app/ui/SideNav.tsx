@@ -3,6 +3,7 @@ import NavLinks from "./NavLinks";
 import { Settings, LogOut } from "lucide-react";
 import { ThemeToggle } from "@/app/ui/ThemeToggleClient";
 import { signOut } from "@/auth";
+import { redirect } from "next/navigation";
 
 export default function SideNav() {
   return (
@@ -18,10 +19,12 @@ export default function SideNav() {
         <form
           action={async () => {
             "use server";
-            await signOut({ redirectTo: "/" });
+            await signOut({ redirect: false });
+            redirect("/");
           }}
         >
           <Button
+            type="submit"
             variant={"withIcon"}
             icon={LogOut}
             className="w-full justify-start text-warning font-bold"
