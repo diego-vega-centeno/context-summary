@@ -14,7 +14,10 @@ export const authConfig = {
       if (isProtectedRoute) {
         if (isLoggedIn) return true;
         return false;
-      } else if (isLoggedIn && nextUrl.pathname === "/login") {
+      } else if (
+        isLoggedIn &&
+        ["/login", "/register"].includes(nextUrl.pathname)
+      ) {
         return Response.redirect(new URL("/dashboard", nextUrl));
       }
       return true;
