@@ -169,6 +169,21 @@ async function getUser(email: string): Promise<User | undefined> {
   return user[0];
 }
 
+async function createUser({
+  name,
+  email,
+  password,
+}: {
+  name: string;
+  email: string;
+  password: string;
+}) {
+  await sql`
+    INSERT INTO users (name, email, password)
+    VALUES (${name}, ${email}, ${password})
+  `;
+}
+
 export {
   fetchTrackedPRs,
   fetchStatusCounts,
@@ -179,4 +194,5 @@ export {
   addPRData,
   updatePRData,
   getUser,
+  createUser,
 };
