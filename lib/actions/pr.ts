@@ -13,7 +13,7 @@ import logger from "../logger";
 import { z } from "zod";
 import { redirect } from "next/navigation";
 import { ActionReturn } from "@/types";
-import { signIn } from "@/auth";
+import { signIn, signOut } from "@/auth";
 import { AuthError } from "next-auth";
 import bcrypt from "bcryptjs";
 
@@ -159,7 +159,10 @@ export async function authenticate(
   formData: FormData,
 ) {
   try {
-    await signIn("credentials", formData);
+    await signIn("credentials", {
+      ...Object.fromEntries(formData),
+      redirectTo: "/dashboard",
+    });
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {
@@ -237,4 +240,8 @@ export async function register(
     };
   }
   redirect("/login");
+}
+
+export async function logout() {
+  await signOut();
 }
