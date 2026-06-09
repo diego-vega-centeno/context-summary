@@ -1,5 +1,10 @@
 "use server";
-import { addPRData, fetchPRGithubIdentifiers, updatePRData } from "../data/prs";
+import {
+  addPRData,
+  fetchPRGithubIdentifiers,
+  getUser,
+  updatePRData,
+} from "../data/prs";
 import { revalidatePath } from "next/cache";
 import { makePRWithSummary } from "../data/transformers";
 import sql from "../db";
@@ -9,6 +14,7 @@ import { redirect } from "next/navigation";
 import { ActionReturn } from "@/types";
 import { signIn } from "@/auth";
 import { AuthError } from "next-auth";
+import bcrypt from "bcrypt";
 
 export async function syncPR(prId: string) {
   try {
@@ -164,4 +170,64 @@ export async function authenticate(
     }
     throw error;
   }
+}
+
+export async function register(
+  prevState: ActionReturn | undefined,
+  formData: FormData,
+) {
+  try {
+    const validatedFields = z
+      .object({
+        email: z
+          .string()
+          .nonempty({ message: "Username cannot be empty" })
+          .email(),
+        name: z
+          .string()
+          .nonempty({ message: "Username cannot be empty" })
+          .min(3,{ message: "Name needs to be at least 3 characters" }),
+        password: z
+          .string()
+          .nonempty({ message: "Username cannot be empty" })
+          .min(6,{ message: "Password needs to be at least 6 characters" }),
+      })
+      .safeParse(Object.fromEntries(formData.entries()));
+
+    if (!validatedFields.success) {
+      return {
+        success: false,
+        error: [{ code: "ZodError", message: "Zod validation error" }],
+        data: validatedFields.error.flatten().fieldErrors,
+      };
+    }
+
+    const { name, email, password } = validatedFields.data;
+    const existingUser = await getUser(email);
+    if (existingUser) {
+      return {
+        success: false,
+        data: { email: ["User with this email already exists."] },
+      };
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // await createUser({ name, email, password: hashedPassword });
+  } catch (error) {
+    logger.error("Register Error:", error);
+    return {
+      success: false,
+      error: [
+        {
+          code: "error",
+          message:
+            error instanceof Error
+              ? error.message
+              : "An unexpected error occurred.",
+        },
+      ],
+    };
+  }
+  // redirect("/login");
 }
