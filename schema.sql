@@ -4,6 +4,12 @@ EXCEPTION
   WHEN duplicate_object THEN null;
 END $$;
 
+DO $$ BEGIN
+  CREATE TYPE oauth_provider_type AS ENUM ('google', 'github');
+EXCEPTION
+  WHEN duplicate_object THEN null;
+END $$;
+
 CREATE TABLE IF NOT EXISTS users (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   oauth_id TEXT UNIQUE,
