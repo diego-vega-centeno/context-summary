@@ -2,8 +2,7 @@ import Button from "./Button";
 import NavLinks from "./NavLinks";
 import { Settings, LogOut } from "lucide-react";
 import { ThemeToggle } from "@/app/ui/ThemeToggleClient";
-import { signOut } from "@/auth";
-import { redirect } from "next/navigation";
+import { logout } from "@/lib/actions/pr";
 
 export default function SideNav() {
   return (
@@ -16,13 +15,7 @@ export default function SideNav() {
         <Button icon={Settings} variant={"withIcon"} className="w-full">
           Settings
         </Button>
-        <form
-          action={async () => {
-            "use server";
-            await signOut({ redirect: false });
-            redirect("/");
-          }}
-        >
+        <form action={logout}>
           <Button
             type="submit"
             variant={"withIcon"}
