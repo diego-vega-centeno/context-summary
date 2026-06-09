@@ -1,6 +1,7 @@
 "use server";
 import {
   addPRData,
+  createUser,
   fetchPRGithubIdentifiers,
   getUser,
   updatePRData,
@@ -219,7 +220,7 @@ export async function register(
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // await createUser({ name, email, password: hashedPassword });
+    await createUser({ name, email, password: hashedPassword });
   } catch (error) {
     logger.error("Register Error:", error);
     return {
@@ -235,5 +236,5 @@ export async function register(
       ],
     };
   }
-  // redirect("/login");
+  redirect("/login");
 }
