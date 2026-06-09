@@ -66,7 +66,7 @@ export default function LoginPage() {
             )}
           </form>
         </div>
-        <div className="text-muted-foreground text-sm text-center p-3">
+        <div className="text-muted-foreground text-sm text-center p-3 pb-4">
           Don&apos;t have an account?{" "}
           <Link href="/register" className="text-white underline">
             Register
@@ -83,7 +83,7 @@ export default function LoginPage() {
             variant={"withIcon"}
             icon={GoogleIcon}
             href={"/oauth/google"}
-            className="w-full flex items-center justify-center bg-muted-background p-2"
+            className="w-full flex items-center justify-center bg-muted-background p-2 text-sm"
           >
             Sign in with Google
           </Button>
