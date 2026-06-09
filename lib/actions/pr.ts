@@ -14,7 +14,7 @@ import { redirect } from "next/navigation";
 import { ActionReturn } from "@/types";
 import { signIn } from "@/auth";
 import { AuthError } from "next-auth";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 
 export async function syncPR(prId: string) {
   try {
