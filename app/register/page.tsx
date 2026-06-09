@@ -29,6 +29,7 @@ export default function RegisterPage() {
                 type="email"
                 placeholder="your@email.com"
                 autoComplete="email"
+                defaultValue={state?.data?.formValues?.email}
               />
             </div>
             {state?.data?.email && (
@@ -45,6 +46,7 @@ export default function RegisterPage() {
                 type="text"
                 placeholder="your name"
                 autoComplete="name"
+                defaultValue={state?.data?.formValues?.name}
               />
               {state?.data?.name && (
                 <p className="mt-2 text-sm text-red-500">
@@ -63,6 +65,7 @@ export default function RegisterPage() {
                 type="password"
                 placeholder="*********"
                 autoComplete="current-password"
+                defaultValue={state?.data?.formValues?.password}
               />
               {state?.data?.password && (
                 <p className="mt-2 text-sm text-red-500">
