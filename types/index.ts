@@ -106,12 +106,13 @@ export interface MetadataType {
   last_activity_at: Date;
 }
 
-export type FieldErrors = Record<string, string[] | undefined>;
-
 export interface ActionReturn {
   success: boolean;
   error?: Array<{ message: string; code?: string }>;
-  data?: FieldErrors;
+  data?: {
+    formValues?: Record<string, any>;
+    [key: string]: any;
+  };
 }
 
 export interface User {
