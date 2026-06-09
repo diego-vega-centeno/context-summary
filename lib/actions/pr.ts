@@ -186,11 +186,11 @@ export async function register(
         name: z
           .string()
           .nonempty({ message: "Username cannot be empty" })
-          .min(3,{ message: "Name needs to be at least 3 characters" }),
+          .min(3, { message: "Name needs to be at least 3 characters" }),
         password: z
           .string()
           .nonempty({ message: "Username cannot be empty" })
-          .min(6,{ message: "Password needs to be at least 6 characters" }),
+          .min(6, { message: "Password needs to be at least 6 characters" }),
       })
       .safeParse(Object.fromEntries(formData.entries()));
 
@@ -198,7 +198,10 @@ export async function register(
       return {
         success: false,
         error: [{ code: "ZodError", message: "Zod validation error" }],
-        data: validatedFields.error.flatten().fieldErrors,
+        data: {
+          ...validatedFields.error.flatten().fieldErrors,
+          formValues: Object.fromEntries(formData.entries()),
+        },
       };
     }
 
@@ -207,7 +210,10 @@ export async function register(
     if (existingUser) {
       return {
         success: false,
-        data: { email: ["User with this email already exists."] },
+        data: {
+          email: ["User with this email already exists."],
+          formValues: Object.fromEntries(formData.entries()),
+        },
       };
     }
 
