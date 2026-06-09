@@ -68,8 +68,8 @@ export default function LoginPage() {
         </div>
         <div className="text-muted-foreground text-sm text-center p-3">
           Don&apos;t have an account?{" "}
-          <Link href="/" className="text-white underline">
-            Sign up
+          <Link href="/register" className="text-white underline">
+            Register
           </Link>
         </div>
         <div className="relative">
