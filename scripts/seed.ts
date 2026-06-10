@@ -2,8 +2,8 @@ import bcrypt from "bcryptjs";
 import { dummyPRs, users } from "@/lib/data/dummy-data";
 
 // for local postgreSQL
-import sql from "../db";
-import logger from "../logger";
+import sql from "../lib/db";
+import logger from "../lib/logger";
 
 async function seedUsers() {
   await sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
