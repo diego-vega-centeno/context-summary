@@ -3,19 +3,26 @@ import { RefreshCw } from "lucide-react";
 import { useState } from "react";
 import { syncPR } from "@/lib/actions/pr";
 import { toast } from "sonner";
+import { success } from "zod";
 
 export default function SyncButton({
   prId,
   text,
 }: {
-  prId: string;
+  prId: string | string[];
   text: string;
 }) {
   const [refreshing, setRefreshing] = useState(false);
 
   async function refreshPRs() {
     setRefreshing(true);
-    const result = await syncPR(prId);
+    let result;
+    if (Array.isArray(prId)) {
+      const promiseResults = await Promise.all(prId.map((id) => syncPR(id)));
+      result = { success: true, data: promiseResults };
+    } else {
+      result = await syncPR(prId);
+    }
     if (result?.success) {
       toast.success("Summary updated!", { duration: 2000 });
     } else {
