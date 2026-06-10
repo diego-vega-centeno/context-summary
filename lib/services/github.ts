@@ -30,7 +30,6 @@ export async function fetchPRPulls(
       },
     },
   );
-  console.log(res);
   if (!res.ok) throw new Error(`GitHub API error: ${res.status} - ${res.statusText}`);
 
   return res.json();
