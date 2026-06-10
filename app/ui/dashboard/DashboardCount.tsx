@@ -25,7 +25,6 @@ export default async function DashboardCount() {
           <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight">
             Dashboard
           </h1>
-          <h2 className="text-muted-foreground text-sm">Last synced</h2>
         </div>
         <SyncButton prId="all" text="Sync all" />
       </div>
