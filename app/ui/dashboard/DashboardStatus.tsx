@@ -3,6 +3,7 @@ import { statusConfig } from "@/lib/data/status-data";
 import { PRStatus } from "@/types";
 import PRMiniCard from "./PRMiniCard";
 import { auth } from "@/auth";
+import SyncButton from "../SyncButton";
 
 const columns: PRStatus[] = ["open", "stale", "merged", "closed"];
 
@@ -18,12 +19,17 @@ export default async function DashboardStatus() {
     stale: dashboardPRs.filter((pr) => pr.status === "stale"),
   };
 
+  const syncAllPRs = [...prs["open"], ...prs["stale"]].map((pr) => pr.id);
+
   return (
     <>
       <h2 className="pt-8 max-w-xs text-3xl font-semibold leading-10 tracking-tight">
         Status board
       </h2>
-      <div className="py-4 text-sm text-muted-foreground">
+      <div className="py-2">
+        <SyncButton prId={syncAllPRs} text="Sync all" />
+      </div>
+      <div className="py-1 text-sm text-muted-foreground">
         click to view full story
       </div>
       <div className="grid md:grid-cols-[repeat(auto-fit,minmax(200px,1fr))] grid-cols-2 gap-2">
