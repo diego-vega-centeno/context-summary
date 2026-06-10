@@ -2,12 +2,14 @@ import { fetchDashboardPRs } from "@/lib/data/prs";
 import { statusConfig } from "@/lib/data/status-data";
 import { PRStatus } from "@/types";
 import PRMiniCard from "./PRMiniCard";
+import { auth } from "@/auth";
 
 const columns: PRStatus[] = ["open", "stale", "merged", "closed"];
 
 export default async function DashboardStatus() {
-  const userId = "7f759600-988e-4a81-9878-439523293021";
-  const dashboardPRs = await fetchDashboardPRs(userId);
+  const session = await auth();
+  if (!session) return <div>Not logged in</div>;
+  const dashboardPRs = await fetchDashboardPRs(session.user?.id!);
 
   const prs = {
     open: dashboardPRs.filter((pr) => pr.status === "open"),

@@ -5,6 +5,7 @@ import {
   User,
 } from "@/types";
 import sql from "../db";
+import { auth } from "@/auth";
 
 async function fetchTrackedPRs(
   userId: string,
@@ -120,7 +121,9 @@ async function updatePRData(
 }
 
 async function addPRData(prWithSummary: PRWithSummaryJSON) {
-  const userId = "7f759600-988e-4a81-9878-439523293021";
+  const session = await auth();
+  if (!session) throw new Error("Unauthorized");
+  const userId = session.user?.id!;
   const metadata = prWithSummary.metadata;
 
   let status = metadata.status;

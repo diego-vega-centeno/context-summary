@@ -2,13 +2,15 @@ import SyncButton from "@/app/ui/SyncButton";
 import StatsCard from "./StatsCard";
 import { PRStatus } from "@/types";
 import { fetchStatusCounts } from "@/lib/data/prs";
+import { auth } from "@/auth";
 
 const columns = ["total", "open", "stale", "merged", "closed"];
 
 export default async function DashboardCount() {
-  const statusCounts = await fetchStatusCounts(
-    "7f759600-988e-4a81-9878-439523293021",
-  );
+  const session = await auth();
+  if (!session) return <div>Not logged in</div>;
+
+  const statusCounts = await fetchStatusCounts(session.user?.id!);
   const countMap: Partial<Record<PRStatus | "total", string>> = {};
   statusCounts.forEach((pr) => {
     if (columns.includes(pr.status)) {
