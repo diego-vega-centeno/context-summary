@@ -3,7 +3,7 @@ import { authConfig } from "./auth.config";
 import Credentials from "next-auth/providers/credentials";
 import z from "zod";
 import bcrypt from "bcryptjs";
-import { getUser } from "./lib/data/prs";
+import { createUser, getUser, getOauthUser } from "./lib/data/prs";
 import logger from "./lib/logger";
 import Google from "next-auth/providers/google";
 
@@ -40,4 +40,25 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
       },
     }),
   ],
+  callbacks: {
+    ...authConfig.callbacks,
+    async signIn({ user, account }) {
+      if (account?.provider === "google") {
+        try {
+          const oauthUser = await getOauthUser(user.id!);
+          if (!oauthUser) {
+            await createUser({
+              name: user.name!,
+              oauth_id: user.id!,
+              oauth_provider: "google",
+            });
+          }
+        } catch (error) {
+          logger.error("Error creating Google user:", error);
+          return false;
+        }
+      }
+      return true;
+    },
+  },
 });
