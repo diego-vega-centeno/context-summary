@@ -5,10 +5,18 @@ import z from "zod";
 import bcrypt from "bcryptjs";
 import { getUser } from "./lib/data/prs";
 import logger from "./lib/logger";
+import Google from "next-auth/providers/google";
 
-export const { auth, signIn, signOut } = NextAuth({
+export const { auth, signIn, signOut, handlers } = NextAuth({
   ...authConfig,
   providers: [
+    Google({
+      authorization: {
+        params: {
+          scope: "openid profile",
+        },
+      },
+    }),
     Credentials({
       async authorize(credentials) {
         try {
