@@ -1,11 +1,10 @@
 "use client";
-
 import Button from "@/app/ui/Button";
 import { useActionState } from "react";
 import { LoaderCircle, CircleAlert } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { authenticate } from "@/lib/actions/pr";
+import { authenticate, signInWithGoogle } from "@/lib/actions/pr";
 
 export default function LoginPage() {
   const [state, formAction, isPending] = useActionState(
@@ -79,14 +78,18 @@ export default function LoginPage() {
           </div>
         </div>
         <div>
-          <Button
-            variant={"withIcon"}
-            icon={GoogleIcon}
-            href={"/oauth/google"}
-            className="w-full flex items-center justify-center bg-muted-background p-2 text-sm"
+          <form
+            action={signInWithGoogle}
           >
-            Sign in with Google
-          </Button>
+            <Button
+              type="submit"
+              variant={"withIcon"}
+              icon={GoogleIcon}
+              className="w-full flex items-center justify-center bg-muted-background p-2 text-sm"
+            >
+              Sign in with Google
+            </Button>
+          </form>
         </div>
       </div>
     </div>

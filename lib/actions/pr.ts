@@ -245,3 +245,7 @@ export async function register(
 export async function logout() {
   await signOut();
 }
+
+export async function signInWithGoogle() {
+  await signIn("google");
+}
