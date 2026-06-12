@@ -3,6 +3,11 @@ import StoriesClientPage from "@/app/ui/stories/StoriesClientPage";
 import { Suspense } from "react";
 import { StoriesClientPageSkeleton } from "@/app/ui/skeletons";
 import { auth } from "@/auth";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Stories",
+};
 
 export default async function StoriesPage() {
   return (

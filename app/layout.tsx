@@ -10,8 +10,16 @@ const geistSans = Geist({
 });
 
 export const metadata: Metadata = {
-  title: "Summary Context",
+  title: {
+    template: "%s | Summary Context",
+    default: "Summary Context",
+  },
   description: "Get the a summary of status with context",
+  keywords: ["Next.js", "React", "JavaScript"],
+  openGraph: {
+    title: "Summary Context",
+    description: "Get the a summary of status",
+  },
 };
 
 export default function RootLayout({
