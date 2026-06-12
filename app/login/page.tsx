@@ -67,7 +67,7 @@ export default function LoginPage() {
         </div>
         <div className="text-muted-foreground text-sm text-center p-3 pb-4">
           Don&apos;t have an account?{" "}
-          <Link href="/register" className="text-white underline">
+          <Link href="/register" className="text-black underline dark:text-white">
             Register
           </Link>
         </div>
