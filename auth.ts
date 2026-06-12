@@ -42,14 +42,15 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
   ],
   callbacks: {
     ...authConfig.callbacks,
-    async signIn({ user, account }) {
+    async signIn({ user, account, profile }) {
       if (account?.provider === "google") {
+        const googleId = profile?.sub;
         try {
-          const oauthUser = await getOauthUser(user.id!);
+          const oauthUser = await getOauthUser(googleId!);
           if (!oauthUser) {
             await createUser({
               name: user.name!,
-              oauth_id: user.id!,
+              oauth_id: googleId!,
               oauth_provider: "google",
             });
           }
@@ -59,6 +60,21 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
         }
       }
       return true;
+    },
+    async jwt({ token, user, account, profile }) {
+      if (user) {
+        let dbUser;
+        if (account?.provider === "google") {
+          dbUser = await getOauthUser(profile?.sub!);
+        } else {
+          dbUser = await getUser(user.email!);
+        }
+        if (dbUser) {
+          console.log("HHH");
+          token.id = dbUser.id;
+        }
+      }
+      return token;
     },
   },
 });
