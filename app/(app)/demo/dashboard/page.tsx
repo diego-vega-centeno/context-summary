@@ -5,26 +5,13 @@ import {
   DashboardCountSkeleton,
 } from "@/app/ui/skeletons";
 import { Metadata } from "next";
-import { PRDashboardType, PRStatus } from "@/types";
+import { PRStatus } from "@/types";
 import StatsCard from "@/app/ui/dashboard/StatsCard";
 import { RefreshCw } from "lucide-react";
 import { statusConfig } from "@/lib/data/status-data";
 import PRMiniCard from "@/app/ui/dashboard/PRMiniCard";
 
 const columns = ["open", "stale", "merged", "closed"];
-
-const dashboardPrs: PRDashboardType[] = dummyPRs.map((pr) => ({
-  id: pr.id,
-  title: pr.title,
-  status: pr.status,
-  pr_number: pr.pr_number,
-  repo_name: pr.repo_name,
-  repo_owner: pr.repo_owner,
-  author: pr.author,
-  last_activity_at: pr.last_activity_at,
-  current_state:
-    pr.summary?.summary_json.current_state ?? "No summary available",
-}));
 
 (dummyPRs as any).forEach((pr: any) => {
   pr.current_state =
