@@ -19,8 +19,10 @@ const status: (PRStatus | "total")[] = [
 
 export default function StoriesClientPage({
   initialPrs,
+  demo,
 }: {
   initialPrs: PRDashboardType[];
+  demo?: boolean;
 }) {
   const router = useRouter();
   const [refreshingPR, setRefreshingPR] = useState<null | string>(null);
@@ -57,6 +59,7 @@ export default function StoriesClientPage({
   }, [statusSelected, debouncedSearchInput, prs]);
 
   async function refreshPR(id: string) {
+    if (demo) return;
     setRefreshingPR(id);
     const result = await syncPR(id);
     if (result?.success) {

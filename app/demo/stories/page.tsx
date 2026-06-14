@@ -26,5 +26,5 @@ export default async function StoriesPage() {
 }
 
 async function StoriesClientPageWrapper() {
-  return <StoriesClientPage initialPrs={dummyPRs as any} />;
+  return <StoriesClientPage initialPrs={dummyPRs as any} demo={true} />;
 }
