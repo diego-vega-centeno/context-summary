@@ -5,6 +5,7 @@ import {
   Clock,
   Zap,
   Timeline,
+  GitPullRequest,
 } from "lucide-react";
 import Button from "@/app/ui/Button";
 import { ThemeToggle } from "@/app/ui/ThemeToggleClient";
@@ -120,33 +121,42 @@ export default function LandingPage() {
 
       <section className="border-t border-border px-6 py-16 bg-primary">
         <div className="max-w-2xl mx-auto">
-          <div className="rounded-xl border p-6 shadow-sm bg-background">
+          <div className="rounded-xl border p-4 shadow-sm bg-background">
+            <div
+              className={`inline-flex items-center border-1 rounded-xl bg-green-700/50 dark:bg-green-700 border-green-700 px-2 mb-2 text-sm`}
+            >
+              <GitPullRequest className="inline-block w-6 pr-2" />
+              <span>open</span>
+            </div>
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded bg-orange-100 dark:bg-orange-950 flex items-center justify-center">
-                  <Clock className="w-4 h-4 text-orange-600 dark:text-orange-400" />
-                </div>
                 <div>
                   <p className="text-sm font-medium text-foreground">
-                    PR #234 — Auth refactor
+                    Rate limiting middleware for public API endpoints
                   </p>
                   <p className="text-xs text-muted-foreground">
-                    acme-corp/api-gateway
+                    stackwise/api-gateway &#183; #412 &#183; dev_rami
                   </p>
                 </div>
               </div>
-              {
+
+              {/* {
                 <div className="text-xs py-2 px-3 rounded-full text-muted-foreground bg-muted-background">
                   STALE 17d
                 </div>
-              }
+              } */}
             </div>
             <p className="text-md text-foreground mb-3">
               <span className="font-medium">Current status: </span>
-              Blocked waiting on @john decision about session handling
-              architecture
+              Implementation complete and tested. 3 approvals from engineering.
+              Blocked on mandatory security review.
             </p>
-            <div className="flex gap-2 flex-wrap">
+            <hr className="border-border" />
+            <div className="flex items-center pt-2 text-xs text-muted-foreground">
+              <Clock className="inline-block mr-2 w-4" />
+              <span>Last activity 27mo ago</span>
+            </div>
+            {/* <div className="flex gap-2 flex-wrap">
               {[
                 "2 approvals",
                 "1 requested change",
@@ -159,7 +169,7 @@ export default function LandingPage() {
                   {tag}
                 </span>
               ))}
-            </div>
+            </div> */}
           </div>
           <p className="text-center text-xs text-muted-foreground mt-4">
             Example card automatically reconstructed by AI
