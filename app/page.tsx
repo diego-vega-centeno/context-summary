@@ -59,8 +59,8 @@ export default function LandingPage() {
         </p>
 
         <div className="flex items-center gap-4">
-          <Button size="lg" href="/dashboard" className="gap-2">
-            Get Started Free
+          <Button size="lg" href="/demo/dashboard" className="gap-2">
+            Demo
             <ArrowRight className="w-4 h-4" />
           </Button>
           <Button size="lg" href="/login" className="gap-2">
