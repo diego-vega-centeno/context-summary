@@ -124,3 +124,9 @@ export interface User {
   password: string;
   created_at: Date;
 }
+
+export interface UserAuth {
+  name: string;
+  email: string;
+  id: string;
+}
