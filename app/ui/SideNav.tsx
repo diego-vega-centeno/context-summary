@@ -12,7 +12,7 @@ export default function SideNav() {
       </div>
       <div className="flex flex-col gap-2 border-t-2 border-highlight p-2">
         <ThemeToggle showLabels className="w-full px-1" />
-        <Button icon={Settings} variant={"withIcon"} className="w-full">
+        <Button href="/settings" icon={Settings} variant={"withIcon"} className="w-full">
           Settings
         </Button>
         <form action={logout}>
