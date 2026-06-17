@@ -7,7 +7,7 @@ import { createUser, getUser, getOauthUser } from "./lib/data/prs";
 import logger from "./lib/logger";
 import Google from "next-auth/providers/google";
 
-export const { auth, signIn, signOut, handlers } = NextAuth({
+export const { auth, signIn, signOut, handlers, unstable_update } = NextAuth({
   ...authConfig,
   providers: [
     Google({
@@ -61,7 +61,7 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
       }
       return true;
     },
-    async jwt({ token, user, account, profile }) {
+    async jwt({ token, trigger, session, user, account, profile }) {
       if (user) {
         let dbUser;
         if (account?.provider === "google") {
@@ -70,9 +70,12 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
           dbUser = await getUser(user.email!);
         }
         if (dbUser) {
-          console.log("HHH");
           token.id = dbUser.id;
         }
+      }
+
+      if (trigger === "update" && session?.user?.name) {
+        token.name = session.user.name;
       }
       return token;
     },

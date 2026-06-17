@@ -3,6 +3,7 @@ import {
   PRWithSummaryJSON,
   TrackedPRWithSummary,
   User,
+  UserAuth,
 } from "@/types";
 import sql from "../db";
 import { auth } from "@/auth";
@@ -177,6 +178,13 @@ async function getOauthUser(id: string): Promise<User | undefined> {
   return user[0];
 }
 
+async function getUserById(id: string): Promise<UserAuth> {
+  const user = await sql<
+    UserAuth[]
+  >`SELECT id, email, name FROM users WHERE id=${id}`;
+  return user[0];
+}
+
 async function createUser({
   name,
   email,
@@ -214,5 +222,6 @@ export {
   updatePRData,
   getUser,
   createUser,
-  getOauthUser
+  getOauthUser,
+  getUserById,
 };
