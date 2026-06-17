@@ -1,6 +1,6 @@
 import { auth } from "@/auth";
 import SettingsForm from "@/app/ui/settings/SettingsForm";
-import { getUserById } from "@/lib/data/prs";
+import { getUserById } from "@/lib/data/user";
 import { UserAuth } from "@/types";
 
 export default async function SettingsPage() {

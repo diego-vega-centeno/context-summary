@@ -1,11 +1,10 @@
 "use server";
 import {
   addPRData,
-  createUser,
   fetchPRGithubIdentifiers,
-  getUser,
   updatePRData,
 } from "../data/prs";
+import { createUser, getUser } from "../data/user";
 import { revalidatePath } from "next/cache";
 import { makePRWithSummary } from "../data/transformers";
 import sql from "../db";

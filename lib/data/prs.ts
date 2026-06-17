@@ -168,49 +168,6 @@ async function addPRData(prWithSummary: PRWithSummaryJSON) {
   return prId;
 }
 
-async function getUser(email: string): Promise<User | undefined> {
-  const user = await sql<User[]>`SELECT * FROM users WHERE email=${email}`;
-  return user[0];
-}
-
-async function getOauthUser(id: string): Promise<User | undefined> {
-  const user = await sql<User[]>`SELECT * FROM users WHERE oauth_id=${id}`;
-  return user[0];
-}
-
-async function getUserById(id: string): Promise<UserAuth> {
-  const user = await sql<
-    UserAuth[]
-  >`SELECT id, email, name FROM users WHERE id=${id}`;
-  return user[0];
-}
-
-async function createUser({
-  name,
-  email,
-  password,
-  oauth_id,
-  oauth_provider,
-}: {
-  name: string;
-  email?: string;
-  password?: string;
-  oauth_id?: string;
-  oauth_provider?: string;
-}) {
-  if (oauth_provider && oauth_id) {
-    await sql`
-      INSERT INTO users (name, oauth_id, oauth_provider)
-      VALUES (${name}, ${oauth_id}, ${oauth_provider})
-    `;
-  } else if (email && password) {
-    await sql`
-      INSERT INTO users (name, email, password)
-      VALUES (${name}, ${email}, ${password})
-    `;
-  }
-}
-
 export {
   fetchTrackedPRs,
   fetchStatusCounts,
@@ -220,8 +177,4 @@ export {
   fetchPRGithubIdentifiers,
   addPRData,
   updatePRData,
-  getUser,
-  createUser,
-  getOauthUser,
-  getUserById,
 };

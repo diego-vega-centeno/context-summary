@@ -3,7 +3,7 @@ import { authConfig } from "./auth.config";
 import Credentials from "next-auth/providers/credentials";
 import z from "zod";
 import bcrypt from "bcryptjs";
-import { createUser, getUser, getOauthUser } from "./lib/data/prs";
+import { createUser, getUser, getOauthUser } from "./lib/data/user";
 import logger from "./lib/logger";
 import Google from "next-auth/providers/google";
 
