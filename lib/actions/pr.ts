@@ -1,9 +1,5 @@
 "use server";
-import {
-  addPRData,
-  fetchPRGithubIdentifiers,
-  updatePRData,
-} from "../data/prs";
+import { addPRData, fetchPRGithubIdentifiers, updatePRData } from "../data/prs";
 import { createUser, getUser } from "../data/user";
 import { revalidatePath } from "next/cache";
 import { makePRWithSummary } from "../data/transformers";
@@ -239,6 +235,27 @@ export async function register(
     };
   }
   redirect("/login");
+}
+
+export async function removeAllPRs(id: string) {
+  try {
+    await sql`
+      DELETE FROM tracked_prs
+      WHERE user_id = ${id}
+    `;
+    revalidatePath("/dashboard");
+    revalidatePath(`/stories`);
+    return { success: true, data: "Entire PR list deleted" };
+  } catch (error) {
+    logger.error("Remove all PRs error:", error);
+    return {
+      success: false,
+      error:
+        error instanceof Error
+          ? error.message
+          : "An unexpected error occurred.",
+    };
+  }
 }
 
 export async function logout() {

@@ -12,6 +12,8 @@ import {
 } from "lucide-react";
 import * as Select from "@radix-ui/react-select";
 import { useTheme } from "next-themes";
+import { removeAllPRs } from "@/lib/actions/pr";
+import { toast } from "sonner";
 
 const SelectItem = function SelectItem({
   children,
@@ -31,6 +33,35 @@ const SelectItem = function SelectItem({
     </Select.Item>
   );
 };
+
+async function deleteAllPRs(id: string) {
+  if (window.confirm("Delete all tracked PRs? This cannot be undone.")) {
+    const result = await removeAllPRs(id);
+    if (result?.success) {
+      toast.success("Entire PR list deleted", {
+        duration: 3000,
+        style: {
+          background: "#ef4444",
+          color: "white",
+          border: "1px solid black",
+        },
+      });
+    } else {
+      toast(result.error, {
+        duration: 3000,
+        action: {
+          label: "Close",
+          onClick: () => null,
+        },
+        style: {
+          background: "#ef4444",
+          color: "white",
+          border: "1px solid black",
+        },
+      });
+    }
+  }
+}
 
 export default function SettingsForm({ user }: { user: UserAuth }) {
   const [state, formAction, isPending] = useActionState(updateUserSettings, {
@@ -172,13 +203,17 @@ export default function SettingsForm({ user }: { user: UserAuth }) {
       >
         <div className="flex items-center justify-between">
           <div className="">
-            <div>Remove all tracked PRs</div>
+            <div>Delete all tracked PRs</div>
             <div className="text-muted-foreground">
               Clears your entire PR list. Cannot be undone.
             </div>
           </div>
-          <Button type="button" className="bg-red-500/50 dark:text-white">
-            Remove all
+          <Button
+            type="button"
+            onClick={() => deleteAllPRs(user.id)}
+            className="bg-red-500/50 dark:text-white"
+          >
+            Delete all
           </Button>
         </div>
         <div className="flex items-center justify-between">
