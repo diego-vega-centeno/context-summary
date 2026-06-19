@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import * as Select from "@radix-ui/react-select";
 import { useTheme } from "next-themes";
-import { removeAllPRs } from "@/lib/actions/pr";
+import { deleteAllPRs } from "@/lib/actions/pr";
 import { toast } from "sonner";
 
 const SelectItem = function SelectItem({
@@ -34,9 +34,9 @@ const SelectItem = function SelectItem({
   );
 };
 
-async function deleteAllPRs(id: string) {
+async function deleteAllPRsOnClick(id: string) {
   if (window.confirm("Delete all tracked PRs? This cannot be undone.")) {
-    const result = await removeAllPRs(id);
+    const result = await deleteAllPRs(id);
     if (result?.success) {
       toast.success("Entire PR list deleted", {
         duration: 3000,
@@ -210,7 +210,7 @@ export default function SettingsForm({ user }: { user: UserAuth }) {
           </div>
           <Button
             type="button"
-            onClick={() => deleteAllPRs(user.id)}
+            onClick={() => deleteAllPRsOnClick(user.id)}
             className="bg-red-500/50 dark:text-white"
           >
             Delete all

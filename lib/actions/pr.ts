@@ -237,7 +237,7 @@ export async function register(
   redirect("/login");
 }
 
-export async function removeAllPRs(id: string) {
+export async function deleteAllPRs(id: string) {
   try {
     await sql`
       DELETE FROM tracked_prs
