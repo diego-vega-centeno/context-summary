@@ -165,44 +165,34 @@ export default function SettingsForm({ user }: { user: UserAuth }) {
           <input type="hidden" name="staleDays" value={staleDays} />
         </div>
       </SettingsSection>
-      {/* <Card className="border-destructive/40">
-          <CardHeader>
-            <CardTitle className="text-destructive">Danger zone</CardTitle>
-            <CardDescription>
-              Irreversible actions — proceed with care
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="flex flex-col gap-3">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-foreground">
-                  Remove all tracked PRs
-                </p>
-                <p className="text-xs text-muted-foreground mt-0.5">
-                  Clears your entire PR list. Cannot be undone.
-                </p>
-              </div>
-              <Button variant="destructive" size="sm">
-                Remove all
-              </Button>
+      <SettingsSection
+        title="Danger zone"
+        description="Irreversible actions — proceed with care"
+        classNameTitle="dark:text-red-500/80"
+      >
+        <div className="flex items-center justify-between">
+          <div className="">
+            <div>Remove all tracked PRs</div>
+            <div className="text-muted-foreground">
+              Clears your entire PR list. Cannot be undone.
             </div>
-            <Separator />
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-foreground">
-                  Delete account
-                </p>
-                <p className="text-xs text-muted-foreground mt-0.5">
-                  Permanently deletes your account and all data.
-                </p>
-              </div>
-              <Button variant="destructive" size="sm">
-                Delete account
-              </Button>
+          </div>
+          <Button type="button" className="bg-red-500/50 dark:text-white">
+            Remove all
+          </Button>
+        </div>
+        <div className="flex items-center justify-between">
+          <div>
+            <div className="">Delete account</div>
+            <div className="text-muted-foreground">
+              Permanently deletes your account and all data.
             </div>
-          </CardContent>
-        </Card> */}
-
+          </div>
+          <Button type="button" className="bg-red-500/50 dark:text-white">
+            Delete account
+          </Button>
+        </div>
+      </SettingsSection>
       <div className="flex justify-end">
         <Button
           type="submit"
