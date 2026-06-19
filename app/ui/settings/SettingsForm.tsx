@@ -165,33 +165,6 @@ export default function SettingsForm({ user }: { user: UserAuth }) {
           <input type="hidden" name="staleDays" value={staleDays} />
         </div>
       </SettingsSection>
-      {/* <Card>
-          <CardHeader>
-            <CardTitle>Notifications</CardTitle>
-            <CardDescription>Configure when you receive alerts</CardDescription>
-          </CardHeader>
-          <CardContent className="flex flex-col gap-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-foreground">
-                  Email on stale PR
-                </p>
-                <p className="text-xs text-muted-foreground mt-0.5">
-                  Get notified when a tracked PR goes stale
-                </p>
-              </div>
-              <Switch checked={emailNotifs} onCheckedChange={setEmailNotifs} />
-            </div>
-            {emailNotifs && (
-              <div className="flex items-start gap-2 p-3 rounded-lg bg-muted/60 border border-border text-xs text-muted-foreground">
-                <AlertTriangle className="w-3.5 h-3.5 mt-0.5 shrink-0" />
-                Email notifications require a connected Supabase project with
-                email configured.
-              </div>
-            )}
-          </CardContent>
-        </Card> */}
-
       {/* <Card className="border-destructive/40">
           <CardHeader>
             <CardTitle className="text-destructive">Danger zone</CardTitle>
@@ -237,7 +210,6 @@ export default function SettingsForm({ user }: { user: UserAuth }) {
           className="gap-2 min-w-28"
         >
           {isPending && <LoaderCircle className="h-4 w-4 mr-2 animate-spin" />}
-          {/* {saved && <Check className="w-4 h-4" />} */}
           {isSuccess ? "Saved!" : isPending ? "Saving..." : "Save changes"}
         </Button>
       </div>
