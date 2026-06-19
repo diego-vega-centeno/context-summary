@@ -8,7 +8,7 @@ import {
   GitPullRequest,
 } from "lucide-react";
 import Button from "@/app/ui/Button";
-import { ThemeToggle } from "@/app/ui/ThemeToggleClient";
+import ThemeToggle from "@/app/ui/ThemeToggle";
 
 export default function LandingPage() {
   return (

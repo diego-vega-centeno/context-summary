@@ -1,7 +1,7 @@
 import Button from "./Button";
 import NavLinks from "./NavLinks";
 import { Settings, LogOut } from "lucide-react";
-import { ThemeToggle } from "@/app/ui/ThemeToggleClient";
+import ThemeToggle  from "@/app/ui/ThemeToggle";
 import { logout } from "@/lib/actions/pr";
 
 export default function SideNav() {

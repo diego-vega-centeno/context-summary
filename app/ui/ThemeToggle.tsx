@@ -2,6 +2,7 @@
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import clsx from "clsx";
+import { useEffect, useState } from "react";
 
 export default function ThemeToggle({
   showLabels = false,
@@ -11,7 +12,11 @@ export default function ThemeToggle({
   className?: string;
 }) {
   const { theme, setTheme } = useTheme();
-
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  if (!mounted) {
+    return <div className="h-7 w-7" />;
+  }
   return (
     <button
       type="button"
