@@ -4,7 +4,33 @@ import { SettingsSection } from "./SettingsSection";
 import { updateUserSettings } from "@/lib/actions/user";
 import { useActionState, useEffect, useState } from "react";
 import Button from "../Button";
-import { LoaderCircle } from "lucide-react";
+import {
+  CheckIcon,
+  ChevronDownIcon,
+  ChevronUpIcon,
+  LoaderCircle,
+} from "lucide-react";
+import * as Select from "@radix-ui/react-select";
+import { useTheme } from "next-themes";
+
+const SelectItem = function SelectItem({
+  children,
+  ...props
+}: Select.SelectItemProps) {
+  return (
+    <Select.Item
+      className="cursor-pointer hover:bg-hover text-sm px-2 py-1 rounded-md focus:outline-none"
+      {...props}
+    >
+      <span className="flex items-center justify-between">
+        <Select.ItemText>{children}</Select.ItemText>
+        <Select.ItemIndicator>
+          <CheckIcon />
+        </Select.ItemIndicator>
+      </span>
+    </Select.Item>
+  );
+};
 
 export default function SettingsForm({ user }: { user: UserAuth }) {
   const [state, formAction, isPending] = useActionState(updateUserSettings, {
@@ -12,7 +38,9 @@ export default function SettingsForm({ user }: { user: UserAuth }) {
     data: {},
   });
   const [isSuccess, setIsSuccess] = useState(false);
-
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
   useEffect(() => {
     if (state?.success) {
       setIsSuccess(true);
@@ -20,6 +48,9 @@ export default function SettingsForm({ user }: { user: UserAuth }) {
     }
   }, [state]);
 
+  if (!mounted) {
+    return <div className="h-8 w-32" />;
+  }
   return (
     <form className="flex flex-col gap-5 text-sm" action={formAction}>
       <SettingsSection
@@ -59,28 +90,36 @@ export default function SettingsForm({ user }: { user: UserAuth }) {
           <input name="id" hidden defaultValue={user.id} />
         </div>
       </SettingsSection>
-      {/* <Card>
-          <CardHeader>
-            <CardTitle>Appearance</CardTitle>
-            <CardDescription>Customize how PR Context looks</CardDescription>
-          </CardHeader>
-          <CardContent className="flex flex-col gap-4">
-            <div className="flex flex-col gap-1.5">
-              <Label>Theme</Label>
-              <Select value={theme} onValueChange={setTheme}>
-                <SelectTrigger className="w-40">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
+      <SettingsSection title="Appearance" description="Theme">
+        <Select.Root value={theme} onValueChange={setTheme}>
+          <Select.Trigger
+            className="text-sm self-start inline-flex border 
+          border-border rounded-md px-2 py-1 gap-2 items-center
+          outline-none focus:shadow-[0_0_8px_2px_rgba(107,114,128,0.5)]
+          transition-shadow"
+          >
+            <Select.Value placeholder="Change theme" />
+            <Select.Icon>
+              <ChevronDownIcon />
+            </Select.Icon>
+          </Select.Trigger>
+          <Select.Portal>
+            <Select.Content
+              className="min-w-[8rem] bg-background border border-border rounded-md px-2 py-2"
+              position="popper"
+              sideOffset={4}
+            >
+              <Select.Viewport>
+                <Select.Group>
                   <SelectItem value="light">Light</SelectItem>
                   <SelectItem value="dark">Dark</SelectItem>
                   <SelectItem value="system">System</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </CardContent>
-        </Card> */}
-
+                </Select.Group>
+              </Select.Viewport>
+            </Select.Content>
+          </Select.Portal>
+        </Select.Root>
+      </SettingsSection>
       {/* <Card>
           <CardHeader>
             <CardTitle>Sync & Staleness</CardTitle>
