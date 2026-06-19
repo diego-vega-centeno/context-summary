@@ -5,10 +5,11 @@ import { UserAuth } from "@/types";
 export async function updateUserData(newUserData: {
   name: string;
   id: string;
+  staleDays: number;
 }) {
   await sql`
     UPDATE users
-    SET name = ${newUserData.name}
+    SET name = ${newUserData.name}, stale_days = ${newUserData.staleDays}
     WHERE id = ${newUserData.id}
   `;
 }
@@ -26,7 +27,7 @@ export async function getOauthUser(id: string): Promise<User | undefined> {
 export async function getUserById(id: string): Promise<UserAuth> {
   const user = await sql<
     UserAuth[]
-  >`SELECT id, email, name FROM users WHERE id=${id}`;
+  >`SELECT id, email, name, stale_days FROM users WHERE id=${id}`;
   return user[0];
 }
 

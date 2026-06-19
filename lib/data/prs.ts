@@ -99,15 +99,19 @@ async function updatePRData(
   prId: string,
   prWithSummaryJSON: PRWithSummaryJSON,
 ) {
+  const [{ stale_days }] = await sql`
+    SELECT u.stale_days
+    FROM tracked_prs tp
+    JOIN users u ON u.id = tp.user_id
+    WHERE tp.id = ${prId}
+  `;
+
   let status = prWithSummaryJSON.metadata.status;
-
   const lastActivity = new Date(prWithSummaryJSON.metadata.last_activity_at);
-  const sevenDaysAgo = new Date();
-  sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+  const staleThreshold = new Date();
+  staleThreshold.setDate(staleThreshold.getDate() - stale_days);
 
-  if (status === "open" && lastActivity < sevenDaysAgo) {
-    status = "stale";
-  }
+  if (status === "open" && lastActivity < staleThreshold) status = "stale";
 
   await sql.begin(async (sql) => {
     await sql`
@@ -129,9 +133,14 @@ async function addPRData(prWithSummary: PRWithSummaryJSON) {
 
   let status = metadata.status;
   const lastActivity = new Date(metadata.last_activity_at);
-  const sevenDaysAgo = new Date();
-  sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
-  if (status === "open" && lastActivity < sevenDaysAgo) status = "stale";
+  const staleThreshold = new Date();
+
+  const [{ stale_days }] = await sql`
+    SELECT stale_days FROM users WHERE id = ${userId}
+  `;
+
+  staleThreshold.setDate(staleThreshold.getDate() - stale_days);
+  if (status === "open" && lastActivity < staleThreshold) status = "stale";
 
   const result = await sql`
       INSERT INTO tracked_prs (

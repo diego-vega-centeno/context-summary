@@ -129,4 +129,5 @@ export interface UserAuth {
   name: string;
   email: string;
   id: string;
+  stale_days: number;
 }

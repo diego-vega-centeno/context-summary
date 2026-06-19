@@ -40,6 +40,8 @@ export default function SettingsForm({ user }: { user: UserAuth }) {
   const [isSuccess, setIsSuccess] = useState(false);
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const [staleDays, setStaleDays] = useState(String(user.stale_days ?? 7));
+
   useEffect(() => setMounted(true), []);
   useEffect(() => {
     if (state?.success) {
@@ -90,7 +92,7 @@ export default function SettingsForm({ user }: { user: UserAuth }) {
           <input name="id" hidden defaultValue={user.id} />
         </div>
       </SettingsSection>
-      <SettingsSection title="Appearance" description="Theme">
+      <SettingsSection title="Appearance" description="Theme selection">
         <Select.Root value={theme} onValueChange={setTheme}>
           <Select.Trigger
             className="text-sm self-start inline-flex border 
@@ -120,59 +122,49 @@ export default function SettingsForm({ user }: { user: UserAuth }) {
           </Select.Portal>
         </Select.Root>
       </SettingsSection>
-      {/* <Card>
-          <CardHeader>
-            <CardTitle>Sync & Staleness</CardTitle>
-            <CardDescription>
-              Configure how often PRs sync and when they're considered stale
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="flex flex-col gap-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-foreground">
-                  Background sync interval
-                </p>
-                <p className="text-xs text-muted-foreground mt-0.5">
-                  How often to poll GitHub for updates
-                </p>
-              </div>
-              <Select value={syncInterval} onValueChange={setSyncInterval}>
-                <SelectTrigger className="w-32">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="15">15 minutes</SelectItem>
-                  <SelectItem value="30">30 minutes</SelectItem>
-                  <SelectItem value="60">1 hour</SelectItem>
-                </SelectContent>
-              </Select>
+      <SettingsSection
+        title="Sync & Staleness"
+        description="Configure how often PRs sync and when they're considered stale"
+      >
+        <div className="flex items-center justify-between">
+          <div className="">
+            <div className="">Stale threshold</div>
+            <div className="text-muted-foreground">
+              Days of inactivity before a PR is marked stale
             </div>
-            <Separator />
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-foreground">
-                  Stale threshold
-                </p>
-                <p className="text-xs text-muted-foreground mt-0.5">
-                  Days of inactivity before a PR is marked stale
-                </p>
-              </div>
-              <Select value={staleDays} onValueChange={setStaleDays}>
-                <SelectTrigger className="w-32">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="3">3 days</SelectItem>
-                  <SelectItem value="7">7 days</SelectItem>
-                  <SelectItem value="14">14 days</SelectItem>
-                  <SelectItem value="30">30 days</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </CardContent>
-        </Card> */}
-
+          </div>
+          <Select.Root value={staleDays} onValueChange={setStaleDays}>
+            <Select.Trigger
+              className="text-sm self-start inline-flex border 
+          border-border rounded-md px-2 py-1 gap-2 items-center
+          outline-none focus:shadow-[0_0_8px_2px_rgba(107,114,128,0.5)]
+          transition-shadow"
+            >
+              <Select.Value placeholder="Change staleness" />
+              <Select.Icon>
+                <ChevronDownIcon />
+              </Select.Icon>
+            </Select.Trigger>
+            <Select.Portal>
+              <Select.Content
+                className="min-w-[8rem] bg-background border border-border rounded-md px-2 py-2"
+                position="popper"
+                sideOffset={4}
+              >
+                <Select.Viewport>
+                  <Select.Group>
+                    <SelectItem value="3">3 days</SelectItem>
+                    <SelectItem value="7">7 days</SelectItem>
+                    <SelectItem value="14">14 days</SelectItem>
+                    <SelectItem value="30">30 days</SelectItem>
+                  </Select.Group>
+                </Select.Viewport>
+              </Select.Content>
+            </Select.Portal>
+          </Select.Root>
+          <input type="hidden" name="staleDays" value={staleDays} />
+        </div>
+      </SettingsSection>
       {/* <Card>
           <CardHeader>
             <CardTitle>Notifications</CardTitle>

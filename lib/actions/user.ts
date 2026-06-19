@@ -12,6 +12,7 @@ export async function updateUserSettings(
   try {
     const name = formData.get("name") as string;
     const id = formData.get("id") as string;
+    const staleDays = Number(formData.get("staleDays"));
 
     if (!name || name.trim() === "") {
       return {
@@ -22,7 +23,16 @@ export async function updateUserSettings(
       };
     }
 
-    await updateUserData({ name: name, id: id });
+    if (!staleDays || isNaN(staleDays) || staleDays <= 0) {
+      return {
+        success: false,
+        data: {
+          staleDays: ["Invalid staleness value"],
+        },
+      };
+    }
+
+    await updateUserData({ name: name, id: id, staleDays: staleDays });
 
     await unstable_update({
       user: {
