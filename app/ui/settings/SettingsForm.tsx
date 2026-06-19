@@ -193,7 +193,7 @@ export default function SettingsForm({ user }: { user: UserAuth }) {
           </Button>
         </div>
       </SettingsSection>
-      <div className="flex justify-end">
+      <div className="flex justify-start">
         <Button
           type="submit"
           disabled={isPending || isSuccess}
