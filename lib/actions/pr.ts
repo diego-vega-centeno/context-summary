@@ -258,6 +258,27 @@ export async function deleteAllPRs(id: string) {
   }
 }
 
+export async function deleteUser(userId: string) {
+  try {
+    await sql`
+      DELETE FROM users
+      WHERE id = ${userId}
+    `;
+    revalidatePath("/dashboard");
+    revalidatePath(`/stories`);
+    return { success: true, data: "User account deleted" };
+  } catch (error) {
+    logger.error("Delete user account error: ", error);
+    return {
+      success: false,
+      error:
+        error instanceof Error
+          ? error.message
+          : "An unexpected error occurred.",
+    };
+  }
+}
+
 export async function logout() {
   await signOut();
 }

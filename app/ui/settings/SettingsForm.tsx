@@ -12,8 +12,9 @@ import {
 } from "lucide-react";
 import * as Select from "@radix-ui/react-select";
 import { useTheme } from "next-themes";
-import { deleteAllPRs } from "@/lib/actions/pr";
+import { deleteAllPRs, deleteUser } from "@/lib/actions/pr";
 import { toast } from "sonner";
+import { logout } from "@/lib/actions/pr";
 
 const SelectItem = function SelectItem({
   children,
@@ -46,6 +47,28 @@ async function deleteAllPRsOnClick(id: string) {
           border: "1px solid black",
         },
       });
+    } else {
+      toast(result.error, {
+        duration: 3000,
+        action: {
+          label: "Close",
+          onClick: () => null,
+        },
+        style: {
+          background: "#ef4444",
+          color: "white",
+          border: "1px solid black",
+        },
+      });
+    }
+  }
+}
+
+async function deleteUserOnClick(userId: string) {
+  if (window.confirm("Delete your account and all data?. Cannot be undone")) {
+    const result = await deleteUser(userId);
+    if (result?.success) {
+      await logout();
     } else {
       toast(result.error, {
         duration: 3000,
@@ -223,7 +246,11 @@ export default function SettingsForm({ user }: { user: UserAuth }) {
               Permanently deletes your account and all data.
             </div>
           </div>
-          <Button type="button" className="bg-red-500/50 dark:text-white">
+          <Button
+            type="button"
+            onClick={() => deleteUserOnClick(user.id)}
+            className="bg-red-500/50 dark:text-white"
+          >
             Delete account
           </Button>
         </div>
