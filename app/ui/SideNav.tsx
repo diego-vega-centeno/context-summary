@@ -9,7 +9,7 @@ export default async function SideNav() {
   const session = await auth();
   return (
     <aside className="h-full flex flex-col bg-sidebar-background text-sm">
-      <div className="h-12/13 p-2">
+      <div className="h-full p-2">
         <NavLinks />
       </div>
       <div className="flex flex-col gap-2 border-t-2 border-highlight p-2">
