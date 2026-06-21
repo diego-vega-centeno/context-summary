@@ -180,15 +180,15 @@ export async function register(
       .object({
         email: z
           .string()
-          .nonempty({ message: "Username cannot be empty" })
+          .nonempty({ message: "Email cannot be empty" })
           .email(),
         name: z
           .string()
-          .nonempty({ message: "Username cannot be empty" })
+          .nonempty({ message: "Name cannot be empty" })
           .min(3, { message: "Name needs to be at least 3 characters" }),
         password: z
           .string()
-          .nonempty({ message: "Username cannot be empty" })
+          .nonempty({ message: "Password cannot be empty" })
           .min(6, { message: "Password needs to be at least 6 characters" }),
       })
       .safeParse(Object.fromEntries(formData.entries()));
