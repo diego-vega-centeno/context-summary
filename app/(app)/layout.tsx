@@ -6,11 +6,11 @@ export default function AppLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="flex min-h-screen">
+    <div className="flex flex-col md:flex-row min-h-screen">
       <div className="md:w-64 max-h-screen">
         <SideNav />
       </div>
-      <div className="flex-1 max-h-screen min-w-xs overflow-auto">
+      <div className="flex-1 max-h-screen overflow-auto">
         {children}
       </div>
     </div>
