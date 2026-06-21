@@ -31,7 +31,7 @@ export default function AppLayout({
           </div>
         </aside>
       </div>
-      <div className="flex-1 max-h-screen min-w-xs overflow-auto">
+      <div className="flex-1 max-h-screen overflow-auto">
         {children}
       </div>
     </div>
