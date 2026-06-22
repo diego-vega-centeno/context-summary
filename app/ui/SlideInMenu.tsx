@@ -2,7 +2,6 @@
 import * as Dialog from "@radix-ui/react-dialog";
 import { X, Menu } from "lucide-react";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
 
 export default function SlideMenu({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -18,7 +17,7 @@ export default function SlideMenu({ children }: { children: React.ReactNode }) {
             <Menu className="h-5 w-5" />
           </button>
         </Dialog.Trigger>
-        <div>{pathname.split("/").filter(Boolean).slice(0, 2).join("/")}</div>
+        <div>{pathname.replace("/demo", "").split("/").filter(Boolean)[0]}</div>
       </div>
       <Dialog.Portal>
         <Dialog.Overlay className="fixed inset-0 z-40 bg-black/45 animate-overlayShow" />
