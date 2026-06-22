@@ -18,7 +18,7 @@ export default function SlideMenu({ children }: { children: React.ReactNode }) {
             <Menu className="h-5 w-5" />
           </button>
         </Dialog.Trigger>
-        <div>{pathname.replace("/", "")}</div>
+        <div>{pathname.split("/").filter(Boolean).slice(0, 2).join("/")}</div>
       </div>
       <Dialog.Portal>
         <Dialog.Overlay className="fixed inset-0 z-40 bg-black/45 animate-overlayShow" />
