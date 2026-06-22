@@ -180,7 +180,7 @@ export default function SettingsForm({ user }: { user: UserAuth }) {
         title="Sync & Staleness"
         description="Configure how often PRs sync and when they're considered stale"
       >
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between gap-2">
           <div className="">
             <div className="">Stale threshold</div>
             <div className="text-muted-foreground">
@@ -192,7 +192,7 @@ export default function SettingsForm({ user }: { user: UserAuth }) {
               className="text-sm self-start inline-flex border 
           border-border rounded-md px-2 py-1 gap-2 items-center
           outline-none focus:shadow-[0_0_8px_2px_rgba(107,114,128,0.5)]
-          transition-shadow"
+          transition-shadow min-w-[91px]"
             >
               <Select.Value placeholder="Change staleness" />
               <Select.Icon>
@@ -224,7 +224,7 @@ export default function SettingsForm({ user }: { user: UserAuth }) {
         description="Irreversible actions — proceed with care"
         classNameTitle="dark:text-red-500/80"
       >
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between gap-2">
           <div className="">
             <div>Delete all tracked PRs</div>
             <div className="text-muted-foreground">
@@ -234,7 +234,7 @@ export default function SettingsForm({ user }: { user: UserAuth }) {
           <Button
             type="button"
             onClick={() => deleteAllPRsOnClick(user.id)}
-            className="bg-red-500/50 dark:text-white"
+            className="bg-red-500/50 dark:text-white min-w-[77px]"
           >
             Delete all
           </Button>
@@ -249,7 +249,7 @@ export default function SettingsForm({ user }: { user: UserAuth }) {
           <Button
             type="button"
             onClick={() => deleteUserOnClick(user.id)}
-            className="bg-red-500/50 dark:text-white"
+            className="bg-red-500/50 dark:text-white min-w-[114px]"
           >
             Delete account
           </Button>
