@@ -27,7 +27,7 @@ export default async function StoryPage({ params }: Props) {
 
   return (
     <Suspense fallback={<StoryBoardSkeleton />}>
-      <div className="flex flex-1 flex-col justify-between p-6 px-20 min-w-md max-w-4xl mx-auto">
+      <div className="flex flex-1 flex-col justify-between px-4 py-6 md:p-6 md:px-20 max-w-4xl mx-auto">
         <div className="space-y-4">
           <div className="flex justify-between items-center mb-3">
             <Button href={"/demo/stories"} variant="withIcon" icon={ArrowLeft}>
