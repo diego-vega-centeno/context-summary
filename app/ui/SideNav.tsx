@@ -9,6 +9,9 @@ export default async function SideNav() {
   const session = await auth();
   return (
     <aside className="h-full flex flex-col bg-sidebar-background text-sm">
+      <div className="hidden md:block px-4 py-3 border-b bg-sidebar-background text-sm">
+        <div>Summary Context</div>
+      </div>
       <div className="h-full p-2">
         <NavLinks />
       </div>
@@ -22,7 +25,9 @@ export default async function SideNav() {
         >
           Settings
         </Button>
-        <div className="px-2 text-gray-500/80 dark:text-white/50">{session?.user && session.user?.email}</div>
+        <div className="px-2 text-gray-500/80 dark:text-white/50">
+          {session?.user && session.user?.email}
+        </div>
         <form action={logout}>
           <Button
             type="submit"
