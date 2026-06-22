@@ -102,3 +102,45 @@ html {
     transform: translateX(200%);
   }
 }
+
+@keyframes overlayShow {
+  0% {
+    opacity: '0';
+  }
+
+  100% {
+    opacity: '1'
+  }
+}
+
+@keyframes slideInLeft {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOutLeft {
+  0% {
+    transform: translateX(0)
+  }
+
+  100% {
+    transform: translateX(-100%)
+  }
+}
+
+.animate-overlayShow {
+  animation: overlayShow 200ms ease-out;
+}
+
+.animate-slideInLeft {
+  animation: slideInLeft 250ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.animate-slideOutLeft {
+  animation: slideOutLeft 200ms ease-in;
+}

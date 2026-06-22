@@ -77,7 +77,7 @@ export default function StoriesClientPage({
   }
 
   return (
-    <main className="flex flex-1 flex-col justify-between p-6 px-20 max-w-6xl mx-auto">
+    <main className="flex flex-1 flex-col justify-between p-6 md:px-20 max-w-6xl mx-auto">
       <div>
         <div className="flex justify-between items-center mb-3">
           <div>

@@ -12,6 +12,7 @@
     "@emotion/styled": "^11.14.1",
     "@google/genai": "^2.6.0",
     "@radix-ui/react-collapsible": "^1.1.12",
+    "@radix-ui/react-dialog": "^1.1.17",
     "@radix-ui/react-select": "^2.3.1",
     "bcryptjs": "^3.0.3",
     "class-variance-authority": "^0.7.1",
