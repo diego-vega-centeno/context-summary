@@ -10,12 +10,6 @@ export default async function SideNav() {
   const session = await auth();
   return (
     <aside className="h-full flex flex-col bg-sidebar-background text-sm">
-      {/* <div className="hidden md:flex items-center px-2 py-2 border-b bg-sidebar-background text-sm">
-        <div className="w-8 h-8 rounded-lg flex items-center justify-center">
-            <Timeline className="w-4 h-4" />
-        </div>
-        <div>Summary Context</div>
-      </div> */}
       <div className="hidden md:flex items-center px-2 py-2 border-b bg-sidebar-background text-sm">
         <Button
           href="/"
