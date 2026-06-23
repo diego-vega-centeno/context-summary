@@ -1,6 +1,6 @@
 import Button from "./Button";
 import NavLinks from "./NavLinks";
-import { Settings, LogOut, Timeline } from "lucide-react";
+import { LogOut, Timeline } from "lucide-react";
 import ThemeToggle from "@/app/ui/ThemeToggle";
 import { logout } from "@/lib/actions/pr";
 import { auth } from "@/auth";
@@ -23,14 +23,6 @@ export default async function SideNav() {
       </div>
       <div className="flex flex-col gap-2 border-t-2 border-highlight p-2">
         <ThemeToggle showLabels className="w-full px-1" />
-        <Button
-          href="/settings"
-          icon={Settings}
-          variant={"withIcon"}
-          className="w-full"
-        >
-          Settings
-        </Button>
         <div className="px-2 text-gray-500/80 dark:text-white/50">
           {session?.user && session.user?.email}
         </div>
