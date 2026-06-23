@@ -1,16 +1,29 @@
 import Button from "./Button";
 import NavLinks from "./NavLinks";
-import { Settings, LogOut } from "lucide-react";
+import { Settings, LogOut, Timeline } from "lucide-react";
 import ThemeToggle from "@/app/ui/ThemeToggle";
 import { logout } from "@/lib/actions/pr";
+import Link from "next/link";
 import { auth } from "@/auth";
 
 export default async function SideNav() {
   const session = await auth();
   return (
     <aside className="h-full flex flex-col bg-sidebar-background text-sm">
-      <div className="hidden md:block px-4 py-3 border-b bg-sidebar-background text-sm">
+      {/* <div className="hidden md:flex items-center px-2 py-2 border-b bg-sidebar-background text-sm">
+        <div className="w-8 h-8 rounded-lg flex items-center justify-center">
+            <Timeline className="w-4 h-4" />
+        </div>
         <div>Summary Context</div>
+      </div> */}
+      <div className="hidden md:flex items-center px-2 py-2 border-b bg-sidebar-background text-sm">
+        <Button
+          href="/"
+          variant={"withIcon"}
+          icon={() => <Timeline className="w-4 h-4" />}
+        >
+          Summary Context
+        </Button>
       </div>
       <div className="h-full p-2">
         <NavLinks />

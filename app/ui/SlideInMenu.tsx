@@ -1,7 +1,8 @@
 "use client";
 import * as Dialog from "@radix-ui/react-dialog";
-import { X, Menu } from "lucide-react";
+import { X, Menu, Timeline } from "lucide-react";
 import { usePathname } from "next/navigation";
+import Button from "./Button";
 
 export default function SlideMenu({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -26,7 +27,17 @@ export default function SlideMenu({ children }: { children: React.ReactNode }) {
             shadow-lg outline-none flex flex-col animate-slideInLeft"
         >
           <div className="flex items-center justify-between px-2 py-1 border-b bg-sidebar-background text-sm">
-            <Dialog.Title>Summary Context</Dialog.Title>
+            <div className="flex items-center">
+              <Dialog.Title>
+                <Button
+                  href="/"
+                  variant={"withIcon"}
+                  icon={() => <Timeline className="w-4 h-4" />}
+                >
+                  Summary Context
+                </Button>
+              </Dialog.Title>
+            </div>
             <Dialog.Close asChild>
               <button
                 aria-label="Close menu"
