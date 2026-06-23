@@ -3,7 +3,6 @@ import NavLinks from "./NavLinks";
 import { Settings, LogOut, Timeline } from "lucide-react";
 import ThemeToggle from "@/app/ui/ThemeToggle";
 import { logout } from "@/lib/actions/pr";
-import Link from "next/link";
 import { auth } from "@/auth";
 
 export default async function SideNav() {
