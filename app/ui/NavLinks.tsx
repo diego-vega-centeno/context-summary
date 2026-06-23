@@ -1,11 +1,12 @@
 "use client";
 import Button from "@/app/ui/Button";
-import { LayoutDashboard, BookOpenText } from "lucide-react";
+import { LayoutDashboard, BookOpenText, Settings } from "lucide-react";
 import { usePathname } from "next/navigation";
 
 const links = [
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
   { name: "PR stories", href: "/stories", icon: BookOpenText },
+  { name: "Settings", href: "/settings", icon: Settings },
 ];
 
 export default function NavLinks() {
