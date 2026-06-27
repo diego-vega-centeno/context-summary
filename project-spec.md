@@ -25,7 +25,6 @@ An AI-powered dashboard that ingests GitHub PR data and reconstructs the **devel
 ## MVP Scope — Constraints
 - Public GitHub repos only (no auth/token required)
 - User adds PRs by URL — no repo ownership needed
-- Single app-level auth via Supabase (multi-user, each user has their own tracked PRs)
 - No Jira/Bitbucket integration (post-MVP)
 - No private repo support (post-MVP)
 - No notifications (post-MVP)
@@ -59,14 +58,20 @@ An AI-powered dashboard that ingests GitHub PR data and reconstructs the **devel
 
 ### 4. Sync
 - Manual refresh per PR
-- Background polling via cron (every 30 min)
 - Last synced timestamp on each card
 - Status computed on sync, not on render
 
 ## Data Model
 
 ### `users`
-Handled entirely by Supabase Auth — no custom table needed.
+id                uuid, PK
+oauth_id          text
+oauth_provider    text  -- google / github
+name              varchar
+email             text
+password          text
+created_at        timestamptz
+stale_days        integer
 
 ### `tracked_prs`
 ```
@@ -84,14 +89,15 @@ last_synced_at    timestamptz
 added_at          timestamptz
 ```
 
-### `pr_raw_data`
+<!-- Not saving raw github data -->
+<!-- ### `pr_raw_data`
 ```
 id              uuid, PK
 pr_id           uuid, FK → tracked_prs
 raw_json        jsonb
 fetched_at      timestamptz
 ```
-Stores full GitHub API response. Allows re-running AI summarization without hitting GitHub again.
+Stores full GitHub API response. Allows re-running AI summarization without hitting GitHub again. -->
 
 ### `pr_summaries`
 ```
@@ -151,13 +157,6 @@ Two main views:
 
 **PR Story View** — full chronological narrative with collapsible sections. Where the core value lives.
 
-Card preview example:
-```
-PR #234 — Auth refactor          [STALE 12 days]
-Blocked: waiting on @john decision about session handling
-Last activity: 3 people discussed token expiry approach
-```
-
 ## UI/UX Decisions — Addendum
 
 ### General Layout
@@ -174,7 +173,9 @@ dark/light theme: next-themes
 - User email
 - Sign out
 
-### Route Structure
+
+<!-- Structure was updated -->
+<!-- ### Route Structure
 app/
 ├── page.tsx                          # Landing (simple hero + one CTA)
 ├── (auth)/
@@ -191,13 +192,14 @@ app/
     ├── prs/[id]/route.ts             # GET, DELETE
     ├── prs/[id]/sync/route.ts        # POST manual sync
     ├── summarize/[id]/route.ts       # POST Gemini summarization
-    └── cron/sync/route.ts            # GET Vercel cron job
+    └── cron/sync/route.ts            # GET Vercel cron job -->
 
 ### Page Descriptions
 
 Landing (app/)
 - Simple hero, one line explaining the app
-- Single CTA: "Get Started" → redirects to login then dashboard
+- Demo and login buttons
+- Example card
 
 Dashboard (dashboard/)
 - Stats row: total / open / merged / closed / stale as cards
@@ -206,8 +208,8 @@ Dashboard (dashboard/)
 
 PR Stories (stories/)
 - Cards grid (2 columns desktop, 1 mobile)
-- Each card shows: title, repo, status badge, stale indicator, one-liner, last synced
-- Filter bar: All / Open / Merged / Closed / Stale
+- Each card shows: title, repo, status badge, stale indicator, one-liner, last activity
+- Filter bar: Search / total / Open / Merged / Closed / Stale
 - "Add PR" button in header
 - Click card → full story view (full page navigation)
 
@@ -223,6 +225,7 @@ Story View (stories/[id]/)
     - Next steps
 - Manual refresh button + last synced timestamp
 - Direct URL accessible and shareable
+- Delete PR button
 
 ### Navigation Flow
 Landing → Dashboard (entry point after auth)
@@ -235,14 +238,7 @@ Story View → back button → PR Stories
 ### Key UX Decisions
 - Story view is full page (not drawer) — content needs space to breathe
 - Kanban on dashboard is layout only for MVP, no drag behavior
-- "PR Stories" naming reinforces the app differentiator over generic "PR List"
 - /stories/[id] URL reads naturally and is shareable
 - Auth pages have no sidenav (centered card layout)
-- Stale threshold: 7 days
-- Status computed on sync, not on dashboard render
-
-
-## What's Next to Discuss
-1. Application architecture — folder structure, API routes, sync strategy
-2. Gemini prompt design — critical, the narrative quality is the entire product
-3. GitHub API mapping — what endpoints to hit and what data feeds the prompt
+- Stale threshold: 7 days - changeable in settings
+- Status computed on sync
