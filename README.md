@@ -1,6 +1,6 @@
-# Summary Context
+# Context Summary
 
-**Summary Context** is an AI-powered dashboard that ingests GitHub Pull Request data and reconstructs the development narrative. Instead of just showing the current status, it uses Gemini to answer *"how did we get here?"* by recovering the story, key decisions made, blocking points, and recommended next steps.
+**Context Summary** is an AI-powered dashboard that ingests GitHub Pull Request data and reconstructs the development narrative. Instead of just showing the current status, it uses Gemini to answer *"how did we get here?"* by recovering the story, key decisions made, blocking points, and recommended next steps.
 
 For full product specs and requirements, refer to the [project-spec.md](file:///C:/Users/gonta/D/study/full%20stack/projects/summary-context/project-spec.md).
 
