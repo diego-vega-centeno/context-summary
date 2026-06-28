@@ -11,13 +11,13 @@ const geistSans = Geist({
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | Summary Context",
-    default: "Summary Context",
+    template: "%s | Context Summary",
+    default: "Context Summary",
   },
   description: "Get the a summary of status with context",
   keywords: ["Next.js", "React", "JavaScript"],
   openGraph: {
-    title: "Summary Context",
+    title: "Context Summary",
     description: "Get the a summary of status",
   },
 };

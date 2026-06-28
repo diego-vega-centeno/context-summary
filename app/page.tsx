@@ -18,7 +18,7 @@ export default function LandingPage() {
           <div className="w-8 h-8 rounded-lg flex items-center justify-center">
             <Timeline className="w-4 h-4" />
           </div>
-          <span className="font-semibold text-foreground">Summary context</span>
+          <span className="font-semibold text-foreground">Context Summary</span>
         </div>
         <div className="flex items-center gap-3">
           <ThemeToggle />
@@ -51,7 +51,7 @@ export default function LandingPage() {
           className="max-w-xxl text-muted-foreground mb-10"
           style={{ fontSize: "1.125rem", lineHeight: 1.7 }}
         >
-          Summary context ingests your GitHub pull requests and reconstructs the
+          Context Summary ingests your GitHub pull requests and reconstructs the
           development narrative
           <br />
           Who made decisions, what&apos;s blocking things, and exactly what
@@ -77,7 +77,7 @@ export default function LandingPage() {
       <section className="border-t border-border px-6 py-16">
         <div className="max-w-5xl mx-auto">
           <p className="text-center text-sm mb-10 uppercase tracking-wider">
-            What summary context helps you with
+            What context summary helps you with
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[

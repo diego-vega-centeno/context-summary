@@ -15,7 +15,7 @@ export default async function SideNav() {
           variant={"withIcon"}
           icon={() => <Timeline className="w-4 h-4" />}
         >
-          Summary Context
+          Context Summary
         </Button>
       </div>
       <div className="h-full p-2">

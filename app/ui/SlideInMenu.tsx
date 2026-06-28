@@ -34,7 +34,7 @@ export default function SlideMenu({ children }: { children: React.ReactNode }) {
                   variant={"withIcon"}
                   icon={() => <Timeline className="w-4 h-4" />}
                 >
-                  Summary Context
+                  Context Summary
                 </Button>
               </Dialog.Title>
             </div>
