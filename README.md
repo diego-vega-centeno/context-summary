@@ -2,7 +2,7 @@
 
 **Context Summary** is an AI-powered dashboard that ingests GitHub Pull Request data and reconstructs the development narrative. Instead of just showing the current status, it uses Gemini to answer *"how did we get here?"* by recovering the story, key decisions made, blocking points, and recommended next steps.
 
-For full product specs and requirements, refer to the [project-spec.md](file:///C:/Users/gonta/D/study/full%20stack/projects/summary-context/project-spec.md).
+For full product specs and requirements, refer to the [project-spec.md](file:///C:/Users/gonta/D/study/full%20stack/projects/context-summary/project-spec.md).
 
 ---
 
@@ -31,7 +31,7 @@ For full product specs and requirements, refer to the [project-spec.md](file:///
 
 ## Database Schema
 
-The database tables are defined in [schema.sql](file:///C:/Users/gonta/D/study/full%20stack/projects/summary-context/schema.sql):
+The database tables are defined in [schema.sql](file:///C:/Users/gonta/D/study/full%20stack/projects/context-summary/schema.sql):
 
 - **`users`**: Managed via credentials/oauth. Stores user settings such as custom stale threshold (`stale_days`).
 - **`tracked_prs`**: Holds repository information (`repo_owner`, `repo_name`, `pr_number`), title, status, and activity tracking timestamps.
