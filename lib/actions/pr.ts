@@ -44,7 +44,7 @@ const PRURLSchema = z.object({
   url: z
     .string()
     .regex(
-      /^https:\/\/github.com\/[^/]+\/[^/]+\/pull\/\d+$/,
+      /^https:\/\/github.com\/[^/]+\/[^/]+\/(pull|issues)\/\d+$/,
       "Please enter a valid GitHub Pull Request URL (e.g., https://github.com/owner/repo/pull/123)",
     ),
 });
