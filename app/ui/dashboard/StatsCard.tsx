@@ -1,11 +1,11 @@
 import { statusConfig } from "@/lib/data/status-data";
-import { PRStatus } from "@/types";
+import { WorkItemStatus } from "@/types";
 
 export default function StatsCard({
   status,
   count,
 }: {
-  status: PRStatus | "total";
+  status: WorkItemStatus | "total";
   count: string;
 }) {
   const IconComponent = statusConfig[status].icon;

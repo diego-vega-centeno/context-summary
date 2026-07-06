@@ -1,6 +1,6 @@
 import SyncButton from "@/app/ui/SyncButton";
 import StatsCard from "./StatsCard";
-import { PRStatus } from "@/types";
+import { WorkItemStatus } from "@/types";
 import { fetchStatusCounts } from "@/lib/data/prs";
 import { auth } from "@/auth";
 
@@ -11,10 +11,10 @@ export default async function DashboardCount() {
   if (!session) return <div>Not logged in</div>;
 
   const statusCounts = await fetchStatusCounts(session.user?.id!);
-  const countMap: Partial<Record<PRStatus | "total", string>> = {};
+  const countMap: Partial<Record<WorkItemStatus | "total", string>> = {};
   statusCounts.forEach((pr) => {
     if (columns.includes(pr.status)) {
-      countMap[pr.status as PRStatus | "total"] = pr.count;
+      countMap[pr.status as WorkItemStatus | "total"] = pr.count;
     }
   });
 
@@ -30,11 +30,11 @@ export default async function DashboardCount() {
       <div className="grid md:grid-cols-[repeat(auto-fit,minmax(170px,1fr))] grid-cols-2 gap-2">
         {columns.map((status) => {
           const count =
-            status in countMap ? countMap[status as PRStatus | "total"] : "0";
+            status in countMap ? countMap[status as WorkItemStatus | "total"] : "0";
           return (
             <div key={status}>
               <StatsCard
-                status={status as PRStatus | "total"}
+                status={status as WorkItemStatus | "total"}
                 count={count as string}
               />
             </div>

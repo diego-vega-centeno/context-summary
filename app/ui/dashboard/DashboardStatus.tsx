@@ -1,11 +1,11 @@
 import { fetchDashboardPRs } from "@/lib/data/prs";
 import { statusConfig } from "@/lib/data/status-data";
-import { PRStatus } from "@/types";
+import { WorkItemStatus } from "@/types";
 import PRMiniCard from "./PRMiniCard";
 import { auth } from "@/auth";
 import SyncButton from "../SyncButton";
 
-const columns: PRStatus[] = ["open", "stale", "merged", "closed"];
+const columns: WorkItemStatus[] = ["open", "stale", "merged", "closed"];
 
 export default async function DashboardStatus() {
   const session = await auth();

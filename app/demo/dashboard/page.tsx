@@ -5,7 +5,7 @@ import {
   DashboardCountSkeleton,
 } from "@/app/ui/skeletons";
 import { Metadata } from "next";
-import { PRStatus } from "@/types";
+import { WorkItemStatus } from "@/types";
 import StatsCard from "@/app/ui/dashboard/StatsCard";
 import { RefreshCw } from "lucide-react";
 import { statusConfig } from "@/lib/data/status-data";
@@ -46,8 +46,8 @@ export default async function DashboardPage() {
             {["total", "open", "stale", "merged", "closed"].map((status) => (
               <div key={status}>
                 <StatsCard
-                  status={status as PRStatus | "total"}
-                  count={String(prs[status as PRStatus | "total"].length)}
+                  status={status as WorkItemStatus | "total"}
+                  count={String(prs[status as WorkItemStatus | "total"].length)}
                 />
               </div>
             ))}
@@ -75,15 +75,15 @@ export default async function DashboardPage() {
                 <div className={"flex flex-col gap-2"} key={status}>
                   <div className="py-2">
                     <div
-                      className={`inline-block border rounded-xl ${statusConfig[status as PRStatus | "total"].color} px-3 py-1 text-sm`}
+                      className={`inline-block border rounded-xl ${statusConfig[status as WorkItemStatus | "total"].color} px-3 py-1 text-sm`}
                     >
                       {status}
                     </div>
                     <span className="pl-2">
-                      {prs[status as PRStatus | "total"].length}
+                      {prs[status as WorkItemStatus | "total"].length}
                     </span>
                   </div>
-                  {prs[status as PRStatus | "total"].map((pr) => (
+                  {prs[status as WorkItemStatus | "total"].map((pr) => (
                     <PRMiniCard key={pr.id} pr={pr as any} />
                   ))}
                 </div>

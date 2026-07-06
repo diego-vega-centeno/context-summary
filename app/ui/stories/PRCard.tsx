@@ -1,11 +1,11 @@
-import { type PRDashboardType } from "@/types/index";
+import { type WorkItemDashboardType } from "@/types/index";
 import { Clock, RefreshCw } from "lucide-react";
 import { statusConfig } from "@/lib/data/status-data";
 import { formatRelativeDate } from "@/lib/utils";
 import Link from "next/link";
 
 interface PRCardProps {
-  pr: PRDashboardType;
+  pr: WorkItemDashboardType;
   refreshingPR: string | null;
   refreshPR: (id: string) => Promise<void>;
 }

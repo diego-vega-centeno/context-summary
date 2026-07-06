@@ -1,15 +1,11 @@
-import { fetchPRIssuesTimeline, fetchPRPulls } from "../services/github";
-import {
-  PRWithEvents,
-  PRTimelineEvent,
-  PRWithSummaryJSON,
-} from "@/types";
-import { makePRSummary } from "../services/gemini";
+import { fetchWorkItemTimeline, fetchWorkItemData } from "../services/github";
+import { PromptSummaryInput, WorkItemTimelineEvent, WorkItemWithSummaryJSON } from "@/types";
+import { makeWorkItemSummary } from "../services/gemini";
 import logger from "../logger";
 
-export function makePREvents(
+export function makeWorkItemEvents(
   timeline: Record<string, any>[],
-): PRTimelineEvent[] {
+): WorkItemTimelineEvent[] {
   const events = timeline
     .map((entry: Record<string, any>) => {
       switch (entry.event) {
@@ -55,20 +51,24 @@ export function makePREvents(
           break;
       }
     })
-    .filter(Boolean) as PRTimelineEvent[];
+    .filter(Boolean) as WorkItemTimelineEvent[];
 
   return events;
 }
 
-export function makePRWithEvents(
+export function makePromptSummaryInput(
   metadataRes: Record<string, any>,
-  events: PRTimelineEvent[],
-): PRWithEvents {
+  events: WorkItemTimelineEvent[],
+  owner: string,
+  repo: string,
+  type: string,
+): PromptSummaryInput {
   return {
     metadata: {
       pr_number: metadataRes.number,
-      repo_owner: metadataRes.base.repo.owner.login,
-      repo_name: metadataRes.base.repo.name,
+      repo_owner: owner,
+      repo_name: repo,
+      type: type,
       author: metadataRes.user.login,
       title: metadataRes.title,
       description: metadataRes.body,
@@ -80,35 +80,36 @@ export function makePRWithEvents(
   };
 }
 
-export async function makePRWithSummary(
+export async function makeWorkItemWithSummary(
   owner: string,
   repo: string,
+  type: string,
   id: number,
-): Promise<PRWithSummaryJSON> {
+): Promise<WorkItemWithSummaryJSON> {
   // const prWithEventsFile = `./lib/action/summary-tests/${owner}-${repo}-${id}-prWithEvents.json`;
 
   //* Fetch PR metadata
-  logger.debug("Fetch PR metadata and timeline");
+  logger.debug("Fetch work item metadata and timeline");
   const [metadataRes, timelineRes] = await Promise.all([
-    fetchPRPulls(owner, repo, id),
-    fetchPRIssuesTimeline(owner, repo, id),
+    fetchWorkItemData(owner, repo, type, id),
+    fetchWorkItemTimeline(owner, repo, id),
   ]);
 
   //* Make PR timeline
-  logger.debug("Making PR events");
-  const events = makePREvents(timelineRes);
+  logger.debug("Making work item events");
+  const events = makeWorkItemEvents(timelineRes);
 
   //* Make PR with timeline
-  logger.debug("Making PR with events");
-  const prWithEvents = makePRWithEvents(metadataRes, events);
+  logger.debug("Making work item with events");
+  const promptSummaryInput = makePromptSummaryInput(metadataRes, events, owner, repo, type);
 
   //* Making PR summary
-  logger.debug("Making PR summary");
-  const prSummary = await makePRSummary(prWithEvents as PRWithEvents);
+  logger.debug("Making work item summary");
+  const WorkItemSummary = await makeWorkItemSummary(promptSummaryInput as PromptSummaryInput);
 
   return {
-    metadata: prWithEvents.metadata,
-    summaryJSON: prSummary,
+    metadata: promptSummaryInput.metadata,
+    summaryJSON: WorkItemSummary,
   };
 }
 
@@ -122,4 +123,3 @@ export async function makePRWithSummary(
 //   JSON.stringify(prWithSummary, null, 2),
 //   "utf-8",
 // );
-
