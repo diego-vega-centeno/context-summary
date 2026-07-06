@@ -73,13 +73,15 @@ password          text
 created_at        timestamptz
 stale_days        integer
 
-### `tracked_prs`
+### `tracked_work_items`
 ```
 id                uuid, PK
 user_id           uuid, FK → auth.users
-repo_owner        text
-repo_name         text
-pr_number         integer
+provider work_provider
+work_item_type work_item_type 
+owner        text
+container         text
+external_id       text
 title             text
 status            text  -- open / closed / merged / stale
 author            text
@@ -93,25 +95,25 @@ added_at          timestamptz
 <!-- ### `pr_raw_data`
 ```
 id              uuid, PK
-pr_id           uuid, FK → tracked_prs
+pr_id           uuid, FK → tracked_work_items
 raw_json        jsonb
 fetched_at      timestamptz
 ```
 Stores full GitHub API response. Allows re-running AI summarization without hitting GitHub again. -->
 
-### `pr_summaries`
+### `work_item_summaries`
 ```
 id              uuid, PK
-pr_id           uuid, FK → tracked_prs
+work_item_id    uuid, FK → tracked_work_items
 summary_json    jsonb
 generated_at    timestamptz
 ```
 
 ### Relationships
 ```
-users → tracked_prs       one to many
-tracked_prs → pr_raw_data      one to one (latest only)
-tracked_prs → pr_summaries     one to one (latest only)
+users → tracked_work_items       one to many
+tracked_work_items → pr_raw_data      one to one (latest only)
+tracked_work_items → pr_summaries     one to one (latest only)
 ```
 
 ## AI Summary JSON Structure
