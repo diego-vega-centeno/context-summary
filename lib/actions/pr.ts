@@ -116,7 +116,7 @@ export async function addPR(
 export async function syncActivePRs(userId: string) {
   try {
     const activePRs = await sql`
-        SELECT id FROM tracked_prs
+        SELECT id FROM external_id
         WHERE user_id = ${userId} AND status IN ('open', 'stale')
       `;
     for (const pr of activePRs) {
@@ -141,7 +141,7 @@ export async function syncActivePRs(userId: string) {
 
 export async function deletePR(id: string) {
   try {
-    await sql`DELETE FROM tracked_prs WHERE id = ${id}`;
+    await sql`DELETE FROM tracked_work_items WHERE id = ${id}`;
     revalidatePath("/dashboard");
     revalidatePath("/stories");
     return { success: true, data: "Deleted PR" };
@@ -248,7 +248,7 @@ export async function register(
 export async function deleteAllPRs(id: string) {
   try {
     await sql`
-      DELETE FROM tracked_prs
+      DELETE FROM tracked_work_items
       WHERE user_id = ${id}
     `;
     revalidatePath("/dashboard");

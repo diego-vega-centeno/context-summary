@@ -19,7 +19,7 @@ async function fetchTrackedWorkItems(
           'summary_json', s.summary_json,
           'generated_at', s.generated_at
         ) as summary
-      FROM tracked_prs  p
+      FROM tracked_work_items  p
       LEFT JOIN pr_summaries s ON p.id = s.pr_id
       WHERE user_id=${userId}
     `;
@@ -38,7 +38,7 @@ async function fetchDashboardPRs(userId: string): Promise<WorkItemDashboardType[
         p.author,
         p.last_activity_at,
         s.summary_json->>'current_state' AS current_state
-      FROM tracked_prs  p
+      FROM tracked_work_items  p
       LEFT JOIN pr_summaries s ON p.id = s.pr_id
       WHERE user_id=${userId}
     `;
@@ -46,11 +46,11 @@ async function fetchDashboardPRs(userId: string): Promise<WorkItemDashboardType[
 
 async function fetchStatusCounts(userId: string) {
   return await sql`
-    SELECT status::text, count(*)::int FROM tracked_prs
+    SELECT status::text, count(*)::int FROM tracked_work_items
     WHERE user_id = ${userId}
     GROUP BY status
     UNION
-    SELECT 'total', count(*)::int FROM tracked_prs
+    SELECT 'total', count(*)::int FROM tracked_work_items
     WHERE user_id = ${userId}
   `;
 }
@@ -65,7 +65,7 @@ async function fetchPRStoryById(id: string) {
         'summary_json', s.summary_json,
         'generated_at', s.generated_at
       ) as summary
-    FROM tracked_prs p
+    FROM tracked_work_items p
     LEFT JOIN pr_summaries s ON p.id = s.pr_id
     WHERE p.id = ${id} 
   `;
@@ -92,7 +92,7 @@ async function fetchWorkItemIdentifiers(
   const data = await sql<
     { repo_owner: string; repo_name: string; type: string; pr_number: number }[]
   >`
-  SELECT repo_owner, repo_name, type, pr_number FROM tracked_prs WHERE id = ${id}`;
+  SELECT provider, owner, container, work_item_type, external_id FROM tracked_work_items WHERE id = ${id}`;
   return data[0];
 }
 
@@ -102,9 +102,9 @@ async function updatePRData(
 ) {
   const [{ stale_days }] = await sql`
     SELECT u.stale_days
-    FROM tracked_prs tp
-    JOIN users u ON u.id = tp.user_id
-    WHERE tp.id = ${prId}
+    FROM tracked_work_items ti
+    JOIN users u ON u.id = ti.user_id
+    WHERE ti.id = ${prId}
   `;
 
   let status = WorkItemWithSummaryJSON.metadata.status;
@@ -116,7 +116,7 @@ async function updatePRData(
 
   await sql.begin(async (sql) => {
     await sql`
-      UPDATE tracked_prs
+      UPDATE tracked_work_items
       SET title = ${WorkItemWithSummaryJSON.metadata.title}, status = ${status},
           last_activity_at = ${WorkItemWithSummaryJSON.metadata.last_activity_at}, last_synced_at = NOW()
       WHERE id = ${prId}
@@ -144,12 +144,13 @@ async function addWorkItemData(workItemWithSummary: WorkItemWithSummaryJSON) {
   if (status === "open" && lastActivity < staleThreshold) status = "stale";
 
   const result = await sql`
-      INSERT INTO tracked_prs (
+      INSERT INTO tracked_work_items (
         user_id,
-        repo_owner,
-        repo_name,
-        github_type,
-        pr_number,
+        provider,
+        owner,
+        container,
+        work_item_type,
+        external_id,
         title,
         status,
         author,
@@ -160,10 +161,11 @@ async function addWorkItemData(workItemWithSummary: WorkItemWithSummaryJSON) {
       )
       VALUES (
       ${userId},
-      ${metadata.repo_owner},
-      ${metadata.repo_name},
-      ${metadata.type},
-      ${metadata.pr_number},
+      ${metadata.provider},
+      ${metadata.owner},
+      ${metadata.container},
+      ${metadata.work_item_type},
+      ${metadata.external_id},
       ${metadata.title},
       ${status},
       ${metadata.author},

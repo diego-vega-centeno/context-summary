@@ -5,9 +5,10 @@ export type WorkItemStatus = "open" | "merged" | "closed" | "stale";
 export interface TrackedWorkItem {
   id: string;
   user_id: string;
-  repo_owner: string;
-  repo_name: string;
-  pr_number: number;
+  provider: string;
+  owner: string;
+  container: string;
+  external_id: string;
   title: string;
   status: WorkItemStatus;
   author: string;
@@ -69,9 +70,9 @@ export type WorkItemDashboardType = Pick<
   | "id"
   | "title"
   | "status"
-  | "pr_number"
-  | "repo_name"
-  | "repo_owner"
+  | "external_id"
+  | "container"
+  | "owner"
   | "author"
   | "last_activity_at"
 > & { current_state: string | null };
@@ -95,10 +96,11 @@ export interface WorkItemTimelineEvent {
 }
 
 export interface MetadataType {
-  pr_number: number;
-  repo_owner: string;
-  repo_name: string;
-  type: string;
+  external_id: string;
+  provider: string;
+  owner: string;
+  container: string;
+  work_item_type: string;
   title: string;
   description: string;
   author: string;

@@ -57,47 +57,48 @@ async function seedUsers() {
 //   }
 // }
 
-export async function seedTrackingPRs() {
+export async function seedTrackingWorkItems() {
   await sql`
   DO $$ BEGIN
-    CREATE TYPE pr_status AS ENUM ('open', 'closed', 'merged', 'stale');
+    CREATE TYPE work_item_status AS ENUM ('open', 'closed', 'merged', 'stale');
   EXCEPTION
     WHEN duplicate_object THEN null;
   END $$
 `;
 
   await sql`
-    CREATE TABLE IF NOT EXISTS tracked_prs (
+    CREATE TABLE IF NOT EXISTS tracked_work_items (
       id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
       user_id UUID REFERENCES users(id) ON DELETE CASCADE,
-      repo_owner TEXT NOT NULL,
-      repo_name TEXT NOT NULL,
-      pr_number INTEGER NOT NULL,
+      provider work_provider NOT NULL,
+      owner TEXT NOT NULL,
+      container TEXT NOT NULL,
+      external_id INTEGER NOT NULL,
       title TEXT NOT NULL,
-      status pr_status NOT NULL,
+      status work_item_status NOT NULL,
       author TEXT NOT NULL,
       created_at TIMESTAMP,
       last_activity_at TIMESTAMP,
       last_synced_at TIMESTAMP,
       added_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
-      UNIQUE (user_id, repo_owner, repo_name, pr_number)
+      UNIQUE (user_id, provider, owner, container, external_id)
     )
   `;
 
-  const tracked_prs = await sql`
-  INSERT INTO tracked_prs ${sql(dummyPRs, "id", "user_id", "repo_owner", "repo_name", "pr_number", "title", "status", "author", "created_at", "last_activity_at", "last_synced_at", "added_at")}
+  const tracked_work_items = await sql`
+  INSERT INTO tracked_work_items ${sql(dummyPRs, "id", "user_id", "provider", "owner", "container", "external_id", "title", "status", "author", "created_at", "last_activity_at", "last_synced_at", "added_at")}
   ON CONFLICT (id) DO NOTHING
 `;
 
-  return tracked_prs;
+  return tracked_work_items;
 }
 
 async function seedPRSummaries() {
   await sql`
     CREATE TABLE IF NOT EXISTS pr_summaries (
       id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-      pr_id UUID REFERENCES tracked_prs(id) ON DELETE CASCADE UNIQUE,
+      pr_id UUID REFERENCES tracked_work_items(id) ON DELETE CASCADE UNIQUE,
       summary_json JSONB NOT NULL,
       generated_at TIMESTAMP
     );
@@ -121,7 +122,7 @@ async function seedPRSummaries() {
 }
 
 seedUsers()
-  .then(() => seedTrackingPRs())
+  .then(() => seedTrackingWorkItems())
   .then(() => seedPRSummaries())
   .then(() => sql.end())
   .catch((error) => logger.error(error));
