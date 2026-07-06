@@ -1,15 +1,15 @@
 // Core PR Types
 
-export type PRStatus = "open" | "merged" | "closed" | "stale";
+export type WorkItemStatus = "open" | "merged" | "closed" | "stale";
 
-export interface TrackedPR {
+export interface TrackedWorkItem {
   id: string;
   user_id: string;
   repo_owner: string;
   repo_name: string;
   pr_number: number;
   title: string;
-  status: PRStatus;
+  status: WorkItemStatus;
   author: string;
   created_at: Date;
   last_activity_at: Date;
@@ -50,7 +50,7 @@ export interface SummaryJSON {
 
 // PR Summary Record (maps to pr_summaries table)
 
-export interface PRSummary {
+export interface WorkItemSummary {
   id: string;
   pr_id: string;
   summary_json: SummaryJSON;
@@ -60,12 +60,12 @@ export interface PRSummary {
 // Combined type — PR + its summary
 // Used in Story View and enriched cards
 
-export interface TrackedPRWithSummary extends TrackedPR {
-  summary: PRSummary | null;
+export interface TrackedWorkItemWithSummary extends TrackedWorkItem {
+  summary: WorkItemSummary | null;
 }
 
-export type PRDashboardType = Pick<
-  TrackedPR,
+export type WorkItemDashboardType = Pick<
+  TrackedWorkItem,
   | "id"
   | "title"
   | "status"
@@ -76,17 +76,17 @@ export type PRDashboardType = Pick<
   | "last_activity_at"
 > & { current_state: string | null };
 
-export interface PRWithEvents {
+export interface PromptSummaryInput {
   metadata: MetadataType;
-  events: PRTimelineEvent[];
+  events: WorkItemTimelineEvent[];
 }
 
-export interface PRWithSummaryJSON {
+export interface WorkItemWithSummaryJSON {
   metadata: MetadataType;
   summaryJSON: SummaryJSON;
 }
 
-export interface PRTimelineEvent {
+export interface WorkItemTimelineEvent {
   type: string;
   user: string;
   state?: string;
@@ -98,6 +98,7 @@ export interface MetadataType {
   pr_number: number;
   repo_owner: string;
   repo_name: string;
+  type: string;
   title: string;
   description: string;
   author: string;
