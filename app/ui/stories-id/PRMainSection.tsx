@@ -1,10 +1,10 @@
 import { ExternalLink } from "lucide-react";
 import { formatRelativeDate } from "@/lib/utils";
 import { statusConfig } from "@/lib/data/status-data";
-import { type TrackedPRWithSummary } from "@/types/index";
+import { type TrackedWorkItemWithSummary } from "@/types/index";
 import Link from "next/link";
 
-export default function PRMainSection({ pr }: { pr: TrackedPRWithSummary }) {
+export default function PRMainSection({ pr }: { pr: TrackedWorkItemWithSummary }) {
 ;
   return (
     <div className="p-5 border-1 border-border rounded-lg w-full">

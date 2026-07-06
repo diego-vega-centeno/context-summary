@@ -1,9 +1,9 @@
 import { statusConfig } from "@/lib/data/status-data";
-import { PRStatus } from "@/types";
+import { WorkItemStatus } from "@/types";
 import { ArrowLeft, Plus, RefreshCw } from "lucide-react";
 import Button from "./Button";
 
-const status: PRStatus[] = ["open", "stale", "merged", "closed"];
+const status: WorkItemStatus[] = ["open", "stale", "merged", "closed"];
 const shimmer =
   "before:absolute before:inset-0 before:-translate-x-full before:animate-[shimmer_2s_infinite] before:bg-gradient-to-r before:from-transparent before:via-gray-500/20 before:to-transparent";
 

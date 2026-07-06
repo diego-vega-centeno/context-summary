@@ -4,10 +4,10 @@ import {
   SquareDot,
   TriangleAlert,
 } from "lucide-react";
-import { type PRStatus } from "@/types/index";
+import { type WorkItemStatus } from "@/types/index";
 
 const statusConfig: Record<
-  PRStatus | "total",
+  WorkItemStatus | "total",
   {
     title: string;
     icon: React.ComponentType<any>;

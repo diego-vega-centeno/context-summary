@@ -1,17 +1,17 @@
 import {
-  PRDashboardType,
-  PRWithSummaryJSON,
-  TrackedPRWithSummary,
+  WorkItemDashboardType,
+  WorkItemWithSummaryJSON,
+  TrackedWorkItemWithSummary,
   User,
   UserAuth,
 } from "@/types";
 import sql from "../db";
 import { auth } from "@/auth";
 
-async function fetchTrackedPRs(
+async function fetchTrackedWorkItems(
   userId: string,
-): Promise<TrackedPRWithSummary[]> {
-  return await sql<TrackedPRWithSummary[]>`
+): Promise<TrackedWorkItemWithSummary[]> {
+  return await sql<TrackedWorkItemWithSummary[]>`
       SELECT
         p.*,
         json_build_object(
@@ -25,9 +25,9 @@ async function fetchTrackedPRs(
     `;
 }
 
-async function fetchDashboardPRs(userId: string): Promise<PRDashboardType[]> {
+async function fetchDashboardPRs(userId: string): Promise<WorkItemDashboardType[]> {
   // throw new Error("some error")
-  return await sql<PRDashboardType[]>`
+  return await sql<WorkItemDashboardType[]>`
       SELECT
         p.id, 
         p.title,
@@ -57,7 +57,7 @@ async function fetchStatusCounts(userId: string) {
 
 async function fetchPRStoryById(id: string) {
   // throw new Error("some error")
-  const data = await sql<TrackedPRWithSummary[]>`
+  const data = await sql<TrackedWorkItemWithSummary[]>`
     SELECT
       p.*,
       json_build_object(
@@ -72,7 +72,7 @@ async function fetchPRStoryById(id: string) {
   return data[0];
 }
 
-async function upsertPRSummary(prId: string, summaryJSON: any) {
+async function upsertWorkItemSummary(prId: string, summaryJSON: any) {
   return await sql`
     INSERT INTO pr_summaries (pr_id, summary_json, generated_at)
     VALUES (${prId}, ${summaryJSON}, NOW())
@@ -83,21 +83,22 @@ async function upsertPRSummary(prId: string, summaryJSON: any) {
   `;
 }
 
-async function fetchPRGithubIdentifiers(
-  prId: string,
+async function fetchWorkItemIdentifiers(
+  id: string,
 ): Promise<
-  { repo_owner: string; repo_name: string; pr_number: number } | undefined
+  | { repo_owner: string; repo_name: string; type: string; pr_number: number }
+  | undefined
 > {
   const data = await sql<
-    { repo_owner: string; repo_name: string; pr_number: number }[]
+    { repo_owner: string; repo_name: string; type: string; pr_number: number }[]
   >`
-  SELECT repo_owner, repo_name, pr_number FROM tracked_prs WHERE id = ${prId}`;
+  SELECT repo_owner, repo_name, type, pr_number FROM tracked_prs WHERE id = ${id}`;
   return data[0];
 }
 
 async function updatePRData(
   prId: string,
-  prWithSummaryJSON: PRWithSummaryJSON,
+  WorkItemWithSummaryJSON: WorkItemWithSummaryJSON,
 ) {
   const [{ stale_days }] = await sql`
     SELECT u.stale_days
@@ -106,8 +107,8 @@ async function updatePRData(
     WHERE tp.id = ${prId}
   `;
 
-  let status = prWithSummaryJSON.metadata.status;
-  const lastActivity = new Date(prWithSummaryJSON.metadata.last_activity_at);
+  let status = WorkItemWithSummaryJSON.metadata.status;
+  const lastActivity = new Date(WorkItemWithSummaryJSON.metadata.last_activity_at);
   const staleThreshold = new Date();
   staleThreshold.setDate(staleThreshold.getDate() - stale_days);
 
@@ -116,20 +117,20 @@ async function updatePRData(
   await sql.begin(async (sql) => {
     await sql`
       UPDATE tracked_prs
-      SET title = ${prWithSummaryJSON.metadata.title}, status = ${status},
-          last_activity_at = ${prWithSummaryJSON.metadata.last_activity_at}, last_synced_at = NOW()
+      SET title = ${WorkItemWithSummaryJSON.metadata.title}, status = ${status},
+          last_activity_at = ${WorkItemWithSummaryJSON.metadata.last_activity_at}, last_synced_at = NOW()
       WHERE id = ${prId}
     `;
 
-    await upsertPRSummary(prId, prWithSummaryJSON.summaryJSON);
+    await upsertWorkItemSummary(prId, WorkItemWithSummaryJSON.summaryJSON);
   });
 }
 
-async function addPRData(prWithSummary: PRWithSummaryJSON) {
+async function addWorkItemData(workItemWithSummary: WorkItemWithSummaryJSON) {
   const session = await auth();
   if (!session) throw new Error("Unauthorized");
   const userId = session.user?.id!;
-  const metadata = prWithSummary.metadata;
+  const metadata = workItemWithSummary.metadata;
 
   let status = metadata.status;
   const lastActivity = new Date(metadata.last_activity_at);
@@ -147,6 +148,7 @@ async function addPRData(prWithSummary: PRWithSummaryJSON) {
         user_id,
         repo_owner,
         repo_name,
+        github_type,
         pr_number,
         title,
         status,
@@ -160,6 +162,7 @@ async function addPRData(prWithSummary: PRWithSummaryJSON) {
       ${userId},
       ${metadata.repo_owner},
       ${metadata.repo_name},
+      ${metadata.type},
       ${metadata.pr_number},
       ${metadata.title},
       ${status},
@@ -172,18 +175,18 @@ async function addPRData(prWithSummary: PRWithSummaryJSON) {
     `;
   const prId = result[0].id;
 
-  await upsertPRSummary(prId, prWithSummary.summaryJSON);
+  await upsertWorkItemSummary(prId, workItemWithSummary.summaryJSON);
 
   return prId;
 }
 
 export {
-  fetchTrackedPRs,
+  fetchTrackedWorkItems,
   fetchStatusCounts,
   fetchDashboardPRs,
   fetchPRStoryById,
-  upsertPRSummary,
-  fetchPRGithubIdentifiers,
-  addPRData,
+  upsertWorkItemSummary,
+  fetchWorkItemIdentifiers,
+  addWorkItemData,
   updatePRData,
 };

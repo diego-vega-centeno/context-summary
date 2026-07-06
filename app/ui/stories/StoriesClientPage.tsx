@@ -1,5 +1,5 @@
 "use client";
-import { PRDashboardType, type PRStatus } from "@/types/index";
+import { WorkItemDashboardType, type WorkItemStatus } from "@/types/index";
 import { Plus } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useDebounce } from "@/hooks/useDebounce";
@@ -9,7 +9,7 @@ import { syncPR } from "@/lib/actions/pr";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
-const status: (PRStatus | "total")[] = [
+const status: (WorkItemStatus | "total")[] = [
   "total",
   "open",
   "stale",
@@ -21,13 +21,13 @@ export default function StoriesClientPage({
   initialPrs,
   demo,
 }: {
-  initialPrs: PRDashboardType[];
+  initialPrs: WorkItemDashboardType[];
   demo?: boolean;
 }) {
   const router = useRouter();
   const [refreshingPR, setRefreshingPR] = useState<null | string>(null);
   const [searchInput, setSearchInput] = useState("");
-  const [statusSelected, setStatusSelected] = useState<PRStatus | "total">(
+  const [statusSelected, setStatusSelected] = useState<WorkItemStatus | "total">(
     "total",
   );
   const debouncedSearchInput = useDebounce(searchInput, 300);
@@ -106,7 +106,7 @@ export default function StoriesClientPage({
             <div
               className={`min-h-9 flex items-center gap-2 px-2 rounded-xl text-sm hover:cursor-pointer border-1 border-border font-semibold ${statusSelected === status ? "bg-white text-black" : "hover:bg-hover hover:text-white text-muted-foreground"}`}
               key={status}
-              onClick={() => setStatusSelected(status as PRStatus)}
+              onClick={() => setStatusSelected(status as WorkItemStatus)}
             >
               <span>{status}</span>
               <div className="inline-flex items-center justify-center rounded-full bg-muted-background w-6 h-6 text-white text-xs ml-2">

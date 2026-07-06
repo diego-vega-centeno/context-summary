@@ -1,4 +1,4 @@
-export async function fetchPRIssuesTimeline(
+export async function fetchWorkItemTimeline(
   owner: string,
   repo: string,
   number: number,
@@ -12,25 +12,29 @@ export async function fetchPRIssuesTimeline(
     },
   );
 
-  if (!res.ok) throw new Error(`GitHub API error: ${res.status} - ${res.statusText}`);
+  if (!res.ok)
+    throw new Error(`GitHub API error: ${res.status} - ${res.statusText}`);
 
   return res.json();
 }
 
-export async function fetchPRPulls(
+export async function fetchWorkItemData(
   owner: string,
   repo: string,
+  type: string,
   number: number,
 ) {
+  const urlType = type.replace("pull", "pulls");
   const res = await fetch(
-    `https://api.github.com/repos/${owner}/${repo}/pulls/${number}`,
+    `https://api.github.com/repos/${owner}/${repo}/${urlType}/${number}`,
     {
       headers: {
         Accept: "application/vnd.github+json",
       },
     },
   );
-  if (!res.ok) throw new Error(`GitHub API error: ${res.status} - ${res.statusText}`);
+  if (!res.ok)
+    throw new Error(`GitHub API error: ${res.status} - ${res.statusText}`);
 
   return res.json();
 }

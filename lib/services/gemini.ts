@@ -1,5 +1,5 @@
-import { GoogleGenAI } from "@google/genai";
-import { PRWithEvents, SummaryJSON } from "@/types";
+import { ApiError, GoogleGenAI } from "@google/genai";
+import { PromptSummaryInput, SummaryJSON } from "@/types";
 import { NARRATIVE_RECOVERY_PROMPT } from "../data/prompts";
 import logger from "../logger";
 
@@ -7,10 +7,10 @@ const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const ai = new GoogleGenAI({
   apiKey: GEMINI_API_KEY,
 });
-export async function makePRSummary(
-  prWithEvents: PRWithEvents,
+export async function makeWorkItemSummary(
+  promptSummaryInput: PromptSummaryInput,
 ): Promise<SummaryJSON> {
-  const prompt = `${NARRATIVE_RECOVERY_PROMPT}\n\nINPUT DATA:\n${JSON.stringify(prWithEvents)}`;
+  const prompt = `${NARRATIVE_RECOVERY_PROMPT}\n\nINPUT DATA:\n${JSON.stringify(promptSummaryInput)}`;
 
   try {
     const response = await ai.models.generateContent({
@@ -24,6 +24,11 @@ export async function makePRSummary(
     return summary;
   } catch (error) {
     logger.log("Gemini AI Error:", error);
-    throw new Error("Failed to generate development narrative.");
+    let msg = "Failed to generate development narrative.";
+
+    if (error instanceof ApiError) {
+      msg = JSON.parse(error.message).message;
+    }
+    throw new Error(msg);
   }
 }

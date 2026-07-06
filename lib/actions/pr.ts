@@ -1,8 +1,8 @@
 "use server";
-import { addPRData, fetchPRGithubIdentifiers, updatePRData } from "../data/prs";
+import { addWorkItemData, fetchWorkItemIdentifiers, updatePRData } from "../data/prs";
 import { createUser, getUser } from "../data/user";
 import { revalidatePath } from "next/cache";
-import { makePRWithSummary } from "../data/transformers";
+import { makeWorkItemWithSummary } from "../data/transformers";
 import sql from "../db";
 import logger from "../logger";
 import { z } from "zod";
@@ -14,12 +14,13 @@ import bcrypt from "bcryptjs";
 
 export async function syncPR(prId: string) {
   try {
-    const prIdentifiers = await fetchPRGithubIdentifiers(prId);
+    const prIdentifiers = await fetchWorkItemIdentifiers(prId);
     if (!prIdentifiers) throw new Error("PR not found in database");
 
-    const prWithSummary = await makePRWithSummary(
+    const prWithSummary = await makeWorkItemWithSummary(
       prIdentifiers.repo_owner,
       prIdentifiers.repo_name,
+      prIdentifiers.type,
       prIdentifiers.pr_number,
     );
     await updatePRData(prId, prWithSummary);
@@ -52,7 +53,8 @@ const PRURLSchema = z.object({
 const prParams = z.object({
   owner: z.string(),
   repo: z.string(),
-  prNumber: z.coerce.number(),
+  type: z.string(),
+  itemId: z.coerce.number(),
 });
 
 export async function addPR(
@@ -66,17 +68,23 @@ export async function addPR(
     const objectURL = new URL(url);
     const segments = objectURL!.pathname.split("/").filter(Boolean);
 
-    const { owner, repo, prNumber } = prParams.parse({
+    const { owner, repo, type, itemId } = prParams.parse({
       owner: segments[0],
       repo: segments[1],
-      prNumber: segments[3],
+      type: segments[2],
+      itemId: segments[3],
     });
 
-    logger.info(`Adding PR: ${owner}/${repo} #${prNumber}`);
-    const prWithSummary = await makePRWithSummary(owner, repo, prNumber);
+    logger.info(`Adding ${type}: ${owner}/${repo} #${itemId}`);
+    const workItemWithSummary = await makeWorkItemWithSummary(
+      owner,
+      repo,
+      type,
+      itemId,
+    );
 
     logger.info("Adding PR to database");
-    await addPRData(prWithSummary);
+    await addWorkItemData(workItemWithSummary);
   } catch (error) {
     logger.error("Add PR error:", error);
 

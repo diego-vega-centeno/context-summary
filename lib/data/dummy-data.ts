@@ -1,4 +1,4 @@
-import { TrackedPRWithSummary } from "@/types/index";
+import { TrackedWorkItemWithSummary } from "@/types/index";
 
 export const users = [
   {
@@ -11,7 +11,7 @@ export const users = [
 
 // Dummy data — 8 PRs: open (3), merged (2), closed (1), stale (2)
 
-export const dummyPRs: TrackedPRWithSummary[] = [
+export const dummyPRs: TrackedWorkItemWithSummary[] = [
   // ── OPEN ──────────────────────────────────
 
   {
@@ -497,7 +497,7 @@ export const dummyPRs: TrackedPRWithSummary[] = [
   },
 ];
 
-export const getPRsByStatus = (status: string): TrackedPRWithSummary[] =>
+export const getPRsByStatus = (status: string): TrackedWorkItemWithSummary[] =>
   dummyPRs.filter((pr) => pr.status === status);
 
 export const getDummyPRById = (id: string) =>

@@ -1,7 +1,7 @@
-import { PRDashboardType } from "@/types";
+import { WorkItemDashboardType } from "@/types";
 import Link from "next/link";
 
-export default function PRMiniCard({ pr }: { pr: PRDashboardType }) {
+export default function PRMiniCard({ pr }: { pr: WorkItemDashboardType }) {
   return (
     <Link
       href={`stories/${pr.id}`}
