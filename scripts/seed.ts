@@ -96,7 +96,7 @@ export async function seedTrackingWorkItems() {
 
 async function seedPRSummaries() {
   await sql`
-    CREATE TABLE IF NOT EXISTS pr_summaries (
+    CREATE TABLE IF NOT EXISTS work_item_summaries (
       id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
       pr_id UUID REFERENCES tracked_work_items(id) ON DELETE CASCADE UNIQUE,
       summary_json JSONB NOT NULL,
@@ -114,7 +114,7 @@ async function seedPRSummaries() {
     }));
 
   const insertedPRSummaries = await sql`
-        INSERT INTO pr_summaries ${sql(prSummaries, "id", "pr_id", "summary_json", "generated_at")}
+        INSERT INTO work_item_summaries ${sql(prSummaries, "id", "pr_id", "summary_json", "generated_at")}
         ON CONFLICT (id) DO NOTHING;
       `;
 

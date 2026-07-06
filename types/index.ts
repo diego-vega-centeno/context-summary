@@ -49,7 +49,7 @@ export interface SummaryJSON {
   next_steps: string[];
 }
 
-// PR Summary Record (maps to pr_summaries table)
+// PR Summary Record (maps to work_item_summaries table)
 
 export interface WorkItemSummary {
   id: string;

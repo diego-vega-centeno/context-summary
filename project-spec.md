@@ -112,8 +112,8 @@ generated_at    timestamptz
 ### Relationships
 ```
 users → tracked_work_items       one to many
-tracked_work_items → pr_raw_data      one to one (latest only)
-tracked_work_items → pr_summaries     one to one (latest only)
+tracked_work_items → work_item_raw_data      one to one (latest only)
+tracked_work_items → work_item_summaries     one to one (latest only)
 ```
 
 ## AI Summary JSON Structure
