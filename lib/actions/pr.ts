@@ -72,7 +72,7 @@ export async function addPR(
     const { url } = PRURLSchema.parse({ url: formURL });
     const objectURL = new URL(url);
     const segments = objectURL!.pathname.split("/").filter(Boolean);
-    const provider = objectURL.hostname;
+    const provider = objectURL.hostname.replace(".com", "");
     const { owner, container, type, itemId } = prParams.parse({
       owner: segments[0],
       container: segments[1],
