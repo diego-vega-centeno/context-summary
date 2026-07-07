@@ -20,7 +20,7 @@ async function fetchTrackedWorkItems(
           'generated_at', s.generated_at
         ) as summary
       FROM tracked_work_items  p
-      LEFT JOIN work_item_summaries s ON p.id = s.pr_id
+      LEFT JOIN work_item_summaries s ON p.id = s.external_id
       WHERE user_id=${userId}
     `;
 }
@@ -41,7 +41,7 @@ async function fetchDashboardPRs(
         p.last_activity_at,
         s.summary_json->>'current_state' AS current_state
       FROM tracked_work_items  p
-      LEFT JOIN work_item_summaries s ON p.id = s.pr_id
+      LEFT JOIN work_item_summaries s ON p.id = s.external_id
       WHERE user_id=${userId}
     `;
 }
@@ -68,7 +68,7 @@ async function fetchPRStoryById(id: string) {
         'generated_at', s.generated_at
       ) as summary
     FROM tracked_work_items p
-    LEFT JOIN work_item_summaries s ON p.id = s.pr_id
+    LEFT JOIN work_item_summaries s ON p.id = s.external_id
     WHERE p.id = ${id} 
   `;
   return data[0];
@@ -76,9 +76,9 @@ async function fetchPRStoryById(id: string) {
 
 async function upsertWorkItemSummary(prId: string, summaryJSON: any) {
   return await sql`
-    INSERT INTO work_item_summaries (pr_id, summary_json, generated_at)
+    INSERT INTO work_item_summaries (external_id, summary_json, generated_at)
     VALUES (${prId}, ${summaryJSON}, NOW())
-    ON CONFLICT (pr_id) DO UPDATE
+    ON CONFLICT (external_id) DO UPDATE
     SET 
       summary_json = EXCLUDED.summary_json,
       generated_at = EXCLUDED.generated_at;

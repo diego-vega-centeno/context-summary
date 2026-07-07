@@ -95,7 +95,7 @@ added_at          timestamptz
 <!-- ### `pr_raw_data`
 ```
 id              uuid, PK
-pr_id           uuid, FK → tracked_work_items
+external_id           uuid, FK → tracked_work_items
 raw_json        jsonb
 fetched_at      timestamptz
 ```
