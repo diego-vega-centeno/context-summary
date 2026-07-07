@@ -27,7 +27,7 @@ export async function makeWorkItemSummary(
     let msg = "Failed to generate development narrative.";
 
     if (error instanceof ApiError) {
-      msg = JSON.parse(error.message).message;
+      msg = JSON.parse(error.message).error.message;
     }
     throw new Error(msg);
   }
