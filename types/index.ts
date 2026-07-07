@@ -6,6 +6,7 @@ export interface TrackedWorkItem {
   id: string;
   user_id: string;
   provider: string;
+  work_item_type: string;
   owner: string;
   container: string;
   external_id: string;
@@ -53,7 +54,7 @@ export interface SummaryJSON {
 
 export interface WorkItemSummary {
   id: string;
-  pr_id: string;
+  worke_item_id: string;
   summary_json: SummaryJSON;
   generated_at: Date; // ISO timestamptz
 }

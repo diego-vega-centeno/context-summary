@@ -11,13 +11,14 @@ export const users = [
 
 // Dummy data — 8 PRs: open (3), merged (2), closed (1), stale (2)
 
-export const dummyPRs: TrackedWorkItemWithSummary[] = [
+export const dummyWorkItems: TrackedWorkItemWithSummary[] = [
   // ── OPEN ──────────────────────────────────
 
   {
     id: "88268875-108e-4f58-8671-50e5021e16f3",
     user_id: "7f759600-988e-4a81-9878-439523293021",
     provider: "github",
+    work_item_type: "pull",
     owner: "acme-corp",
     container: "payments-service",
     external_id: "234",
@@ -30,7 +31,7 @@ export const dummyPRs: TrackedWorkItemWithSummary[] = [
     added_at: new Date("2024-03-02T08:00:00Z"),
     summary: {
       id: "e0f6c26d-49d7-4001-9f93-01826075d9e9",
-      pr_id: "88268875-108e-4f58-8671-50e5021e16f3",
+      worke_item_id: "88268875-108e-4f58-8671-50e5021e16f3",
       generated_at: new Date("2024-03-10T15:01:00Z"),
       summary_json: {
         one_liner:
@@ -83,6 +84,7 @@ export const dummyPRs: TrackedWorkItemWithSummary[] = [
     id: "f478631d-b355-460d-9659-197e412a149c",
     user_id: "7f759600-988e-4a81-9878-439523293021",
     provider: "github",
+    work_item_type: "pull",
     owner: "nova-labs",
     container: "dashboard-ui",
     external_id: "87",
@@ -95,7 +97,7 @@ export const dummyPRs: TrackedWorkItemWithSummary[] = [
     added_at: new Date("2024-03-06T08:00:00Z"),
     summary: {
       id: "c9664551-768a-4933-92f7-7b8229f3d97e",
-      pr_id: "f478631d-b355-460d-9659-197e412a149c",
+      worke_item_id: "f478631d-b355-460d-9659-197e412a149c",
       generated_at: new Date("2024-03-11T10:01:00Z"),
       summary_json: {
         one_liner:
@@ -141,6 +143,7 @@ export const dummyPRs: TrackedWorkItemWithSummary[] = [
     id: "67885b14-0f2c-473d-9d47-69634e9e4f5a",
     user_id: "7f759600-988e-4a81-9878-439523293021",
     provider: "github",
+    work_item_type: "pull",
     owner: "stackwise",
     container: "api-gateway",
     external_id: "412",
@@ -153,7 +156,7 @@ export const dummyPRs: TrackedWorkItemWithSummary[] = [
     added_at: new Date("2024-03-08T09:00:00Z"),
     summary: {
       id: "55403061-2679-4674-883a-44621c4b7261",
-      pr_id: "67885b14-0f2c-473d-9d47-69634e9e4f5a",
+      worke_item_id: "67885b14-0f2c-473d-9d47-69634e9e4f5a",
       generated_at: new Date("2024-03-11T16:31:00Z"),
       summary_json: {
         one_liner:
@@ -208,6 +211,7 @@ export const dummyPRs: TrackedWorkItemWithSummary[] = [
     id: "9633e070-55e1-4545-9781-309d7373d573",
     user_id: "7f759600-988e-4a81-9878-439523293021",
     provider: "github",
+    work_item_type: "pull",
     owner: "acme-corp",
     container: "payments-service",
     external_id: "198",
@@ -220,7 +224,7 @@ export const dummyPRs: TrackedWorkItemWithSummary[] = [
     added_at: new Date("2024-02-11T08:00:00Z"),
     summary: {
       id: "45330386-3f6e-4e5a-8b43-68892415170d",
-      pr_id: "9633e070-55e1-4545-9781-309d7373d573",
+      worke_item_id: "9633e070-55e1-4545-9781-309d7373d573",
       generated_at: new Date("2024-03-11T10:01:00Z"),
       summary_json: {
         one_liner:
@@ -270,6 +274,7 @@ export const dummyPRs: TrackedWorkItemWithSummary[] = [
     id: "d3663a86-778a-4416-8798-963a48e78077",
     user_id: "7f759600-988e-4a81-9878-439523293021",
     provider: "github",
+    work_item_type: "pull",
     owner: "nova-labs",
     container: "mobile-app",
     external_id: "56",
@@ -282,7 +287,7 @@ export const dummyPRs: TrackedWorkItemWithSummary[] = [
     added_at: new Date("2024-01-16T08:00:00Z"),
     summary: {
       id: "85215033-689e-4a6c-9742-50853517269e",
-      pr_id: "d3663a86-778a-4416-8798-963a48e78077",
+      worke_item_id: "d3663a86-778a-4416-8798-963a48e78077",
       generated_at: new Date("2024-03-11T10:01:00Z"),
       summary_json: {
         one_liner:
@@ -326,6 +331,7 @@ export const dummyPRs: TrackedWorkItemWithSummary[] = [
     id: "f734493a-8772-4d2c-81f1-303c7270e557",
     user_id: "7f759600-988e-4a81-9878-439523293021",
     provider: "github",
+    work_item_type: "pull",
     owner: "stackwise",
     container: "billing-module",
     external_id: "301",
@@ -338,7 +344,7 @@ export const dummyPRs: TrackedWorkItemWithSummary[] = [
     added_at: new Date("2024-02-02T08:00:00Z"),
     summary: {
       id: "77965074-6725-4f4d-91a5-829215089223",
-      pr_id: "f734493a-8772-4d2c-81f1-303c7270e557",
+      worke_item_id: "f734493a-8772-4d2c-81f1-303c7270e557",
       generated_at: new Date("2024-03-11T10:01:00Z"),
       summary_json: {
         one_liner:
@@ -385,6 +391,7 @@ export const dummyPRs: TrackedWorkItemWithSummary[] = [
     id: "475b66d4-d576-4a46-88d4-531075778891",
     user_id: "7f759600-988e-4a81-9878-439523293021",
     provider: "github",
+    work_item_type: "pull",
     owner: "orion-tech",
     container: "data-pipeline",
     external_id: "78",
@@ -397,7 +404,7 @@ export const dummyPRs: TrackedWorkItemWithSummary[] = [
     added_at: new Date("2024-01-21T08:00:00Z"),
     summary: {
       id: "16541624-9548-4384-9642-169864275143",
-      pr_id: "475b66d4-d576-4a46-88d4-531075778891",
+      worke_item_id: "475b66d4-d576-4a46-88d4-531075778891",
       generated_at: new Date("2024-03-11T10:01:00Z"),
       summary_json: {
         one_liner:
@@ -442,6 +449,7 @@ export const dummyPRs: TrackedWorkItemWithSummary[] = [
     id: "2a346e45-2f9a-4712-888e-6715f606368d",
     user_id: "7f759600-988e-4a81-9878-439523293021",
     provider: "github",
+    work_item_type: "pull",
     owner: "bluewave-io",
     container: "search-service",
     external_id: "145",
@@ -454,7 +462,7 @@ export const dummyPRs: TrackedWorkItemWithSummary[] = [
     added_at: new Date("2024-01-06T08:00:00Z"),
     summary: {
       id: "68112101-7023-4484-9133-728795551322",
-      pr_id: "2a346e45-2f9a-4712-888e-6715f606368d",
+      worke_item_id: "2a346e45-2f9a-4712-888e-6715f606368d",
       generated_at: new Date("2024-03-11T10:01:00Z"),
       summary_json: {
         one_liner:
@@ -506,7 +514,7 @@ export const dummyPRs: TrackedWorkItemWithSummary[] = [
 ];
 
 export const getPRsByStatus = (status: string): TrackedWorkItemWithSummary[] =>
-  dummyPRs.filter((pr) => pr.status === status);
+  dummyWorkItems.filter((pr) => pr.status === status);
 
 export const getDummyPRById = (id: string) =>
-  dummyPRs.find((pr) => pr.id === id) ?? null;
+  dummyWorkItems.find((pr) => pr.id === id) ?? null;
