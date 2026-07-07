@@ -51,7 +51,7 @@ const PRURLSchema = z.object({
     .string()
     .regex(
       /^https:\/\/github.com\/[^/]+\/[^/]+\/(pull|issues)\/\d+$/,
-      "Please enter a valid GitHub Pull Request URL (e.g., https://github.com/owner/repo/pull/123)",
+      "Please enter a valid GitHub URL (e.g., https://github.com/owner/repo/pull/123)",
     ),
 });
 
@@ -82,8 +82,8 @@ export async function addPR(
 
     logger.info(`Adding ${type}: ${owner}/${container} #${itemId}`);
     const workItemWithSummary = await makeWorkItemWithSummary(
-      provider,
       owner,
+      provider,
       container,
       type,
       itemId,
