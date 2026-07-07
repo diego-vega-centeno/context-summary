@@ -87,19 +87,19 @@ export function makePromptSummaryInput(
 }
 
 export async function makeWorkItemWithSummary(
-  provider: string,
   owner: string,
-  repo: string,
+  provider: string,
+  container: string,
   type: string,
   id: number,
 ): Promise<WorkItemWithSummaryJSON> {
-  // const prWithEventsFile = `./lib/action/summary-tests/${owner}-${repo}-${id}-prWithEvents.json`;
+  // const prWithEventsFile = `./lib/action/summary-tests/${owner}-${container}-${id}-prWithEvents.json`;
 
   //* Fetch PR metadata
   logger.debug("Fetch work item metadata and timeline");
   const [metadataRes, timelineRes] = await Promise.all([
-    fetchWorkItemData(owner, repo, type, id),
-    fetchWorkItemTimeline(owner, repo, id),
+    fetchWorkItemData(owner, container, type, id),
+    fetchWorkItemTimeline(owner, container, id),
   ]);
 
   //* Make PR timeline
@@ -113,7 +113,7 @@ export async function makeWorkItemWithSummary(
     events,
     provider,
     owner,
-    repo,
+    container,
     type,
   );
 
