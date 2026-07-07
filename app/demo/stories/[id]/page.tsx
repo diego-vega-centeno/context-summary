@@ -14,7 +14,7 @@ import {
   ArrowLeft,
   RefreshCw,
 } from "lucide-react";
-import { dummyPRs } from "@/lib/data/dummy-data";
+import { dummyWorkItems } from "@/lib/data/dummy-data";
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -23,7 +23,7 @@ interface Props {
 export default async function StoryPage({ params }: Props) {
   const { id } = await params;
 
-  const pr = dummyPRs.find((pr) => pr.id === id);
+  const pr = dummyWorkItems.find((pr) => pr.id === id);
 
   return (
     <Suspense fallback={<StoryBoardSkeleton />}>
