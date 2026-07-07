@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import { dummyPRs } from "@/lib/data/dummy-data";
+import { dummyWorkItems } from "@/lib/data/dummy-data";
 import {
   DashboardStatusSkeleton,
   DashboardCountSkeleton,
@@ -13,17 +13,17 @@ import PRMiniCard from "@/app/ui/dashboard/PRMiniCard";
 
 const columns = ["open", "stale", "merged", "closed"];
 
-(dummyPRs as any).forEach((pr: any) => {
+(dummyWorkItems as any).forEach((pr: any) => {
   pr.current_state =
     pr.summary?.summary_json.current_state ?? "No summary available";
 });
 
 const prs = {
-  total: dummyPRs,
-  open: dummyPRs.filter((pr) => pr.status === "open"),
-  merged: dummyPRs.filter((pr) => pr.status === "merged"),
-  closed: dummyPRs.filter((pr) => pr.status === "closed"),
-  stale: dummyPRs.filter((pr) => pr.status === "stale"),
+  total: dummyWorkItems,
+  open: dummyWorkItems.filter((pr) => pr.status === "open"),
+  merged: dummyWorkItems.filter((pr) => pr.status === "merged"),
+  closed: dummyWorkItems.filter((pr) => pr.status === "closed"),
+  stale: dummyWorkItems.filter((pr) => pr.status === "stale"),
 };
 
 export const metadata: Metadata = {
