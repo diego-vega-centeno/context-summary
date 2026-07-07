@@ -27,7 +27,7 @@ export default function PRCard({ pr, refreshingPR, refreshPR }: PRCardProps) {
           </div>
           <div>
             <button
-              aria-label={`Refresh PR ${pr.pr_number}`}
+              aria-label={`Refresh PR ${pr.external_id}`}
               disabled={refreshingPR === pr.id}
               onClick={(e) => {
                 e.preventDefault();
@@ -44,7 +44,7 @@ export default function PRCard({ pr, refreshingPR, refreshPR }: PRCardProps) {
         </div>
         <div className="font-medium text-foreground">{pr.title}</div>
         <div className="">
-          <div className="py-2 text-muted-foreground">{`${pr.repo_owner}/${pr.repo_name} \u00B7 #${pr.pr_number} \u00B7 ${pr.author}`}</div>
+          <div className="py-2 text-muted-foreground">{`${pr.owner}/${pr.container} \u00B7 #${pr.external_id} \u00B7 ${pr.author}`}</div>
         </div>
         <div className="text-foreground py-2">
           {pr.current_state}

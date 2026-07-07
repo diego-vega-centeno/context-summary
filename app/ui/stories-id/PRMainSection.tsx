@@ -20,7 +20,7 @@ export default function PRMainSection({ pr }: { pr: TrackedWorkItemWithSummary }
           </div>
         </div>
         <Link
-          href={`https://github.com/${pr.repo_owner}/${pr.repo_name}/pull/${pr.pr_number}`}
+          href={`https://github.com/${pr.owner}/${pr.container}/pull/${pr.external_id}`}
           className="flex items-center gap-2 text-xs text-muted-foreground"
         >
           <span>View on Github</span> <ExternalLink className="w-4 h-4" />
@@ -31,13 +31,13 @@ export default function PRMainSection({ pr }: { pr: TrackedWorkItemWithSummary }
         <div>
           <div className="flex flex-col">
             <div className="text-muted-foreground">Repository</div>
-            <div className="font-bold">{pr.repo_name}</div>
+            <div className="font-bold">{pr.container}</div>
           </div>
         </div>
         <div>
           <div className="flex flex-col">
             <div className="text-muted-foreground">PR Number</div>
-            <div className="font-bold">#{pr.pr_number}</div>
+            <div className="font-bold">#{pr.external_id}</div>
           </div>
         </div>
         <div>

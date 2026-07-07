@@ -1,5 +1,9 @@
 "use server";
-import { addWorkItemData, fetchWorkItemIdentifiers, updatePRData } from "../data/prs";
+import {
+  addWorkItemData,
+  fetchWorkItemIdentifiers,
+  updatePRData,
+} from "../data/prs";
 import { createUser, getUser } from "../data/user";
 import { revalidatePath } from "next/cache";
 import { makeWorkItemWithSummary } from "../data/transformers";
@@ -18,10 +22,11 @@ export async function syncPR(prId: string) {
     if (!prIdentifiers) throw new Error("PR not found in database");
 
     const prWithSummary = await makeWorkItemWithSummary(
-      prIdentifiers.repo_owner,
-      prIdentifiers.repo_name,
-      prIdentifiers.type,
-      prIdentifiers.pr_number,
+      prIdentifiers.owner,
+      prIdentifiers.provider,
+      prIdentifiers.container,
+      prIdentifiers.work_item_type,
+      prIdentifiers.external_id,
     );
     await updatePRData(prId, prWithSummary);
 
@@ -52,7 +57,7 @@ const PRURLSchema = z.object({
 
 const prParams = z.object({
   owner: z.string(),
-  repo: z.string(),
+  container: z.string(),
   type: z.string(),
   itemId: z.coerce.number(),
 });
@@ -67,18 +72,19 @@ export async function addPR(
     const { url } = PRURLSchema.parse({ url: formURL });
     const objectURL = new URL(url);
     const segments = objectURL!.pathname.split("/").filter(Boolean);
-
-    const { owner, repo, type, itemId } = prParams.parse({
+    const provider = objectURL.hostname;
+    const { owner, container, type, itemId } = prParams.parse({
       owner: segments[0],
-      repo: segments[1],
+      container: segments[1],
       type: segments[2],
       itemId: segments[3],
     });
 
-    logger.info(`Adding ${type}: ${owner}/${repo} #${itemId}`);
+    logger.info(`Adding ${type}: ${owner}/${container} #${itemId}`);
     const workItemWithSummary = await makeWorkItemWithSummary(
+      provider,
       owner,
-      repo,
+      container,
       type,
       itemId,
     );

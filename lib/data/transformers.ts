@@ -1,5 +1,9 @@
 import { fetchWorkItemTimeline, fetchWorkItemData } from "../services/github";
-import { PromptSummaryInput, WorkItemTimelineEvent, WorkItemWithSummaryJSON } from "@/types";
+import {
+  PromptSummaryInput,
+  WorkItemTimelineEvent,
+  WorkItemWithSummaryJSON,
+} from "@/types";
 import { makeWorkItemSummary } from "../services/gemini";
 import logger from "../logger";
 
@@ -59,16 +63,18 @@ export function makeWorkItemEvents(
 export function makePromptSummaryInput(
   metadataRes: Record<string, any>,
   events: WorkItemTimelineEvent[],
+  provider: string,
   owner: string,
   repo: string,
   type: string,
 ): PromptSummaryInput {
   return {
     metadata: {
-      pr_number: metadataRes.number,
-      repo_owner: owner,
-      repo_name: repo,
-      type: type,
+      external_id: metadataRes.number,
+      provider: provider,
+      owner: owner,
+      container: repo,
+      work_item_type: type,
       author: metadataRes.user.login,
       title: metadataRes.title,
       description: metadataRes.body,
@@ -81,6 +87,7 @@ export function makePromptSummaryInput(
 }
 
 export async function makeWorkItemWithSummary(
+  provider: string,
   owner: string,
   repo: string,
   type: string,
@@ -101,11 +108,20 @@ export async function makeWorkItemWithSummary(
 
   //* Make PR with timeline
   logger.debug("Making work item with events");
-  const promptSummaryInput = makePromptSummaryInput(metadataRes, events, owner, repo, type);
+  const promptSummaryInput = makePromptSummaryInput(
+    metadataRes,
+    events,
+    provider,
+    owner,
+    repo,
+    type,
+  );
 
   //* Making PR summary
   logger.debug("Making work item summary");
-  const WorkItemSummary = await makeWorkItemSummary(promptSummaryInput as PromptSummaryInput);
+  const WorkItemSummary = await makeWorkItemSummary(
+    promptSummaryInput as PromptSummaryInput,
+  );
 
   return {
     metadata: promptSummaryInput.metadata,

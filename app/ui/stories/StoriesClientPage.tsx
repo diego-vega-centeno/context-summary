@@ -50,8 +50,8 @@ export default function StoriesClientPage({
       return basePRs.filter(
         (pr) =>
           pr.title.toLowerCase().includes(query) ||
-          pr.repo_owner.toLowerCase().includes(query) ||
-          pr.repo_name.toLowerCase().includes(query) ||
+          pr.owner.toLowerCase().includes(query) ||
+          pr.container.toLowerCase().includes(query) ||
           pr.author.toLowerCase().includes(query),
       );
     }

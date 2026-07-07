@@ -25,16 +25,18 @@ async function fetchTrackedWorkItems(
     `;
 }
 
-async function fetchDashboardPRs(userId: string): Promise<WorkItemDashboardType[]> {
+async function fetchDashboardPRs(
+  userId: string,
+): Promise<WorkItemDashboardType[]> {
   // throw new Error("some error")
   return await sql<WorkItemDashboardType[]>`
       SELECT
         p.id, 
         p.title,
         p.status,
-        p.pr_number, 
-        p.repo_name, 
-        p.repo_owner,
+        p.external_id, 
+        p.container, 
+        p.owner,
         p.author,
         p.last_activity_at,
         s.summary_json->>'current_state' AS current_state
@@ -83,14 +85,24 @@ async function upsertWorkItemSummary(prId: string, summaryJSON: any) {
   `;
 }
 
-async function fetchWorkItemIdentifiers(
-  id: string,
-): Promise<
-  | { repo_owner: string; repo_name: string; type: string; pr_number: number }
+async function fetchWorkItemIdentifiers(id: string): Promise<
+  | {
+      provider: string;
+      owner: string;
+      container: string;
+      work_item_type: string;
+      external_id: number;
+    }
   | undefined
 > {
   const data = await sql<
-    { repo_owner: string; repo_name: string; type: string; pr_number: number }[]
+    {
+      provider: string;
+      owner: string;
+      container: string;
+      work_item_type: string;
+      external_id: number;
+    }[]
   >`
   SELECT provider, owner, container, work_item_type, external_id FROM tracked_work_items WHERE id = ${id}`;
   return data[0];
@@ -108,7 +120,9 @@ async function updatePRData(
   `;
 
   let status = WorkItemWithSummaryJSON.metadata.status;
-  const lastActivity = new Date(WorkItemWithSummaryJSON.metadata.last_activity_at);
+  const lastActivity = new Date(
+    WorkItemWithSummaryJSON.metadata.last_activity_at,
+  );
   const staleThreshold = new Date();
   staleThreshold.setDate(staleThreshold.getDate() - stale_days);
 

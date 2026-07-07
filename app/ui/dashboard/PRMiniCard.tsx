@@ -9,7 +9,7 @@ export default function PRMiniCard({ pr }: { pr: WorkItemDashboardType }) {
     >
       <div className="font-medium text-foreground">{pr.title}</div>
       <div className="text-muted-foreground pb-2">
-        <div className="pt-2">{`#${pr.pr_number} - ${pr.repo_name}`}</div>
+        <div className="pt-2">{`#${pr.external_id} - ${pr.container}`}</div>
       </div>
       <hr className="border-border" />
       <div className="pt-2">{pr.current_state}</div>
