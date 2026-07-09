@@ -9,8 +9,10 @@ import {
 } from "lucide-react";
 import Button from "@/app/ui/Button";
 import ThemeToggle from "@/app/ui/ThemeToggle";
+import { auth } from "@/auth";
 
-export default function LandingPage() {
+export default async function LandingPage() {
+  const session = await auth();
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <header className="border-b border-b-2 border-border px-6 py-4 flex items-center justify-between">
@@ -63,7 +65,7 @@ export default function LandingPage() {
             Demo
           </Button>
           <Button size="md" href="/login" className="gap-2 px-3">
-            Sign in
+            {session ? "Continue" : "Sign in"}
             <ArrowRight className="w-4 h-4" />
           </Button>
         </div>
