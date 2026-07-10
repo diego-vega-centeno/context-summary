@@ -36,10 +36,10 @@ const SelectItem = function SelectItem({
 };
 
 async function deleteAllPRsOnClick(id: string) {
-  if (window.confirm("Delete all tracked PRs? This cannot be undone.")) {
+  if (window.confirm("Delete all tracked stories? This cannot be undone.")) {
     const result = await deleteAllPRs(id);
     if (result?.success) {
-      toast.success("Entire PR list deleted", {
+      toast.success("Entire story list deleted", {
         duration: 3000,
         style: {
           background: "#ef4444",
@@ -178,13 +178,13 @@ export default function SettingsForm({ user }: { user: UserAuth }) {
       </SettingsSection>
       <SettingsSection
         title="Sync & Staleness"
-        description="Configure how often PRs sync and when they're considered stale"
+        description="Configure how often stories sync and when they're considered stale"
       >
         <div className="flex items-center justify-between gap-2">
           <div className="">
             <div className="">Stale threshold</div>
             <div className="text-muted-foreground">
-              Days of inactivity before a PR is marked stale
+              Days of inactivity before a story is marked stale
             </div>
           </div>
           <Select.Root value={staleDays} onValueChange={setStaleDays}>
@@ -226,9 +226,9 @@ export default function SettingsForm({ user }: { user: UserAuth }) {
       >
         <div className="flex items-center justify-between gap-2">
           <div className="">
-            <div>Delete all tracked PRs</div>
+            <div>Delete all tracked stories</div>
             <div className="text-muted-foreground">
-              Clears your entire PR list. Cannot be undone.
+              Clears your entire story list. Cannot be undone.
             </div>
           </div>
           <Button

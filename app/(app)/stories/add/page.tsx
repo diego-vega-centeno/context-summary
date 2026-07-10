@@ -12,7 +12,7 @@ export default function AddPRPage() {
       <form action={formAction} className="w-full" aria-live="polite">
         <div className="space-y-3">
           <div>
-            <label htmlFor="url">Pull request URL</label>
+            <label htmlFor="url">Work item URL</label>
           </div>
           <input
             id="url"
@@ -28,7 +28,7 @@ export default function AddPRPage() {
               </p>
             ))}
           <Button type="submit" disabled={isPending}>
-            {isPending ? "Analyzing summary..." : "Add PR"}
+            {isPending ? "Analyzing summary..." : "Add story"}
           </Button>
         </div>
       </form>

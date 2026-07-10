@@ -85,12 +85,12 @@ export function StoriesClientPageSkeleton() {
             className={`inline-flex items-center justify-center rounded-md hover:bg-highlight hover:text-foreground h-7 px-2 border-1 border-border bg-foreground text-background`}
           >
             <Plus className="w-5 h-5 mr-1" />
-            Add PR
+            Add story
           </button>
         </div>
         <div className="w-full flex gap-3 mb-8 flex-wrap">
           <input
-            placeholder="Search PRs ..."
+            placeholder="Search stories ..."
             className="min-w-full md:min-w-40 w-3/8 bg-sidebar-background p-2 rounded-md text-sm"
             type="text"
           />
@@ -135,7 +135,7 @@ export function StoryBoardSkeleton() {
       <div className="space-y-4">
         <div className="flex justify-between items-center mb-3">
           <Button href={"/stories"} variant="withIcon" icon={ArrowLeft}>
-            PR stories
+            Stories
           </Button>
           <div className="flex items-center gap-2">
             <span className="text-muted-foreground text-xs">Synced</span>

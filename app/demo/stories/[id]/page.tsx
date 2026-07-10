@@ -31,7 +31,7 @@ export default async function StoryPage({ params }: Props) {
         <div className="space-y-4">
           <div className="flex justify-between items-center mb-3">
             <Button href={"/demo/stories"} variant="withIcon" icon={ArrowLeft}>
-              PR stories
+              Back to stories
             </Button>
             <div className="flex items-center gap-2">
               <span className="text-muted-foreground text-xs">
@@ -111,7 +111,7 @@ export default async function StoryPage({ params }: Props) {
           >
             {pr?.summary?.summary_json.blocking_points.length === 0 ? (
               <p className="text-sm text-muted-foreground">
-                No blocking points — this PR is unblocked.
+                No blocking points — this work item is unblocked.
               </p>
             ) : (
               <div className="flex flex-col gap-5">
@@ -162,7 +162,7 @@ export default async function StoryPage({ params }: Props) {
           >
             {pr?.summary?.summary_json.next_steps.length === 0 ? (
               <p className="text-sm text-muted-foreground">
-                No next steps — this PR may be complete.
+                No next steps — this work item may be complete.
               </p>
             ) : (
               <ul className="flex flex-col gap-2.5">

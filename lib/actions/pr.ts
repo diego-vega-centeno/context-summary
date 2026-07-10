@@ -92,7 +92,7 @@ export async function addPR(
     logger.info("Adding PR to database");
     await addWorkItemData(workItemWithSummary);
   } catch (error) {
-    logger.error("Add PR error:", error);
+    logger.error("Add story error:", error);
 
     if (error instanceof z.ZodError) {
       return {

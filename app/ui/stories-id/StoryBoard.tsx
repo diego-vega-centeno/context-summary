@@ -29,7 +29,7 @@ export default async function StoryBoard({ id }: { id: string }) {
       <div className="space-y-4">
         <div className="flex justify-between items-center mb-3">
           <Button href={"/stories"} variant="withIcon" icon={ArrowLeft}>
-            PR stories
+            Back to stories
           </Button>
           <div className="flex items-center gap-2">
             <span className="text-muted-foreground text-xs">
