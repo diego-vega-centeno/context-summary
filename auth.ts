@@ -13,7 +13,7 @@ export const { auth, signIn, signOut, handlers, unstable_update } = NextAuth({
     Google({
       authorization: {
         params: {
-          scope: "openid profile",
+          scope: "openid profile email",
         },
       },
     }),
@@ -50,6 +50,7 @@ export const { auth, signIn, signOut, handlers, unstable_update } = NextAuth({
           if (!oauthUser) {
             await createUser({
               name: user.name!,
+              email: user.email!,
               oauth_id: googleId!,
               oauth_provider: "google",
             });

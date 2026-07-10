@@ -44,10 +44,10 @@ export async function createUser({
   oauth_id?: string;
   oauth_provider?: string;
 }) {
-  if (oauth_provider && oauth_id) {
+  if (oauth_provider && oauth_id && email) {
     await sql`
-      INSERT INTO users (name, oauth_id, oauth_provider)
-      VALUES (${name}, ${oauth_id}, ${oauth_provider})
+      INSERT INTO users (name, email, oauth_id, oauth_provider)
+      VALUES (${name}, ${email}, ${oauth_id}, ${oauth_provider})
     `;
   } else if (email && password) {
     await sql`
