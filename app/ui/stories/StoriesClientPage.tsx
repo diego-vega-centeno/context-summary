@@ -27,9 +27,9 @@ export default function StoriesClientPage({
   const router = useRouter();
   const [refreshingPR, setRefreshingPR] = useState<null | string>(null);
   const [searchInput, setSearchInput] = useState("");
-  const [statusSelected, setStatusSelected] = useState<WorkItemStatus | "total">(
-    "total",
-  );
+  const [statusSelected, setStatusSelected] = useState<
+    WorkItemStatus | "total"
+  >("total");
   const debouncedSearchInput = useDebounce(searchInput, 300);
 
   const prs = useMemo(() => {
@@ -87,7 +87,7 @@ export default function StoriesClientPage({
             <h2 className="text-muted-foreground text-sm">Last synced</h2>
           </div>
           <Link
-            href="/stories/add"
+            href={demo ? "" : "/stories/add"}
             className={`inline-flex items-center justify-center rounded-md hover:bg-highlight hover:text-foreground h-7 px-2 border-1 border-border bg-foreground text-background`}
           >
             <Plus className="w-5 h-5 mr-1" />
