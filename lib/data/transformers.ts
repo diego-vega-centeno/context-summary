@@ -48,7 +48,7 @@ export function makeWorkItemEvents(
           return {
             type: entry.event,
             user: entry.actor.login,
-            content: entry.requested_reviewer.login,
+            content: entry.requested_reviewer?.login || entry.requested_team?.name,
             timestamp: entry.created_at,
           };
         default:
