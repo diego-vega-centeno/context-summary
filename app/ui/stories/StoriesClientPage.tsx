@@ -8,6 +8,7 @@ import Link from "next/link";
 import { syncPR } from "@/lib/actions/pr";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import SelectionCollapsible from "@/app/ui/SelectionCollapsible";
 
 const status: (WorkItemStatus | "total")[] = [
   "total",
@@ -31,6 +32,7 @@ export default function StoriesClientPage({
     WorkItemStatus | "total"
   >("total");
   const debouncedSearchInput = useDebounce(searchInput, 300);
+  const [currentOpen, setCurrentOpen] = useState<null | string>(null);
 
   const prs = useMemo(() => {
     return {
@@ -113,6 +115,15 @@ export default function StoriesClientPage({
                 {prs[status].length}
               </div>
             </div>
+          ))}
+        </div>
+        <div className="flex">
+          {["author", "status"].map((title) => (
+            <SelectionCollapsible
+              isOpen={currentOpen === title}
+              setCurrentOpen={setCurrentOpen}
+              title={title}
+            />
           ))}
         </div>
         <div className="grid md:grid-cols-2 grid-cols-1 gap-2">
