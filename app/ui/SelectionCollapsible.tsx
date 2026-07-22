@@ -1,37 +1,48 @@
-import * as Collapsible from "@radix-ui/react-collapsible";
+import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { ChevronDown, ChevronRight } from "lucide-react";
-import { Dispatch } from "react";
 
 interface SelectionCollapsibleProps {
   isOpen: boolean;
   setCurrentOpen: React.Dispatch<React.SetStateAction<string | null>>;
-  title: string;
+  field: string;
+  content: [] | React.ReactNode;
 }
 
 export default function SelectionCollapsible({
   isOpen,
   setCurrentOpen,
-  title,
+  field,
+  content,
 }: SelectionCollapsibleProps) {
   return (
-    <Collapsible.Root
+    <DropdownMenu.Root
       open={isOpen}
-      onOpenChange={(open) => setCurrentOpen(open ? title : null)}
-      className="text-sm"
+      onOpenChange={(open: boolean) => setCurrentOpen(open ? field : null)}
     >
-      <Collapsible.Trigger className="w-full">
+      <DropdownMenu.Trigger className="outline-none">
         <div
-          className={`flex justify-between items-center font-semibold px-2 py-1 border border-border rounded-lg hover:bg-hover ${isOpen ? "border-b-0 rounded-b-none" : ""}`}
+          className={`
+            flex justify-between items-center font-semibold px-2 py-1 border 
+            border-border rounded-lg hover:bg-hover
+            ${isOpen ? "bg-hover text-white" : "hover:bg-hover hover:text-white text-muted-foreground"}`}
         >
-          <div>{title}</div>
-          <div>{isOpen ? <ChevronDown /> : <ChevronRight />}</div>
+          <div>{field}</div>
+          <div>
+            {isOpen ? (
+              <ChevronDown className="size-5" />
+            ) : (
+              <ChevronRight className="size-5" />
+            )}
+          </div>
         </div>
-      </Collapsible.Trigger>
-      <Collapsible.Content
-        className={`overflow-hidden ${isOpen ? "animate-collapsible-down" : "animate-collapsible-up"}`}
-      >
-        <div>content</div>
-      </Collapsible.Content>
-    </Collapsible.Root>
+      </DropdownMenu.Trigger>
+      <DropdownMenu.Portal>
+        <DropdownMenu.Content
+          className={`w-[200px] bg-sidebar-background overflow-hidden ${isOpen ? "animate-collapsible-down" : "animate-collapsible-up"}`}
+        >
+          <div>{content}</div>
+        </DropdownMenu.Content>
+      </DropdownMenu.Portal>
+    </DropdownMenu.Root>
   );
 }

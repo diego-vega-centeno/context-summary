@@ -9,6 +9,7 @@ import { syncPR } from "@/lib/actions/pr";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import SelectionCollapsible from "@/app/ui/SelectionCollapsible";
+import { keyof } from "zod";
 
 const status: (WorkItemStatus | "total")[] = [
   "total",
@@ -17,6 +18,19 @@ const status: (WorkItemStatus | "total")[] = [
   "merged",
   "closed",
 ];
+
+const selectionBarConfig = {
+  status: {
+    content: (
+      <div>
+        {status.map((st) => (
+          <div>{st}</div>
+        ))}
+      </div>
+    ),
+  },
+  author: { content: [] },
+};
 
 export default function StoriesClientPage({
   initialPrs,
@@ -117,12 +131,17 @@ export default function StoriesClientPage({
             </div>
           ))}
         </div>
-        <div className="flex">
-          {["author", "status"].map((title) => (
+        <div className="flex py-4">
+          {(
+            Object.keys(selectionBarConfig) as Array<
+              keyof typeof selectionBarConfig
+            >
+          ).map((field) => (
             <SelectionCollapsible
-              isOpen={currentOpen === title}
+              isOpen={currentOpen === field}
               setCurrentOpen={setCurrentOpen}
-              title={title}
+              field={field}
+              content={selectionBarConfig[field].content}
             />
           ))}
         </div>
