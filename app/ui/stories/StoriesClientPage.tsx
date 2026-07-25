@@ -55,7 +55,7 @@ export default function StoriesClientPage({
             key={au}
             className={`hover:bg-hover px-2 py-1 border border-border 
               rounded-md hover:cursor-pointer
-              ${au === author ? "bg-white text-black" : ""}
+              ${au === author ? "bg-white text-black hover:text-white" : ""}
               `}
             onClick={(e) => {
               setCurrentOpen(null);
