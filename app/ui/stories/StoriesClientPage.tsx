@@ -148,7 +148,6 @@ export default function StoriesClientPage({
           <SelectionCollapsible
             isOpen={"author" === currentOpen}
             setCurrentOpen={setCurrentOpen}
-            setAuthor={setAuthor}
             field="author"
             content={authorContent}
           />
