@@ -9,7 +9,6 @@ import { syncPR } from "@/lib/actions/pr";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import SelectionCollapsible from "@/app/ui/SelectionCollapsible";
-import { keyof } from "zod";
 
 const status: (WorkItemStatus | "total")[] = [
   "total",
@@ -18,19 +17,6 @@ const status: (WorkItemStatus | "total")[] = [
   "merged",
   "closed",
 ];
-
-const selectionBarConfig = {
-  status: {
-    content: (
-      <div>
-        {status.map((st) => (
-          <div>{st}</div>
-        ))}
-      </div>
-    ),
-  },
-  author: { content: [] },
-};
 
 export default function StoriesClientPage({
   initialPrs,
@@ -47,6 +33,7 @@ export default function StoriesClientPage({
   >("total");
   const debouncedSearchInput = useDebounce(searchInput, 300);
   const [currentOpen, setCurrentOpen] = useState<null | string>(null);
+  const [author, setAuthor] = useState<null | string>(null);
 
   const prs = useMemo(() => {
     return {
@@ -58,12 +45,35 @@ export default function StoriesClientPage({
     };
   }, [initialPrs]);
 
+  const authorContent = useMemo(() => {
+    const authors = [...new Set(prs.total.map((pr) => pr.author))];
+    return (
+      <div className="flex flex-col px-1 py-2 gap-1 text-sm">
+        {authors.map((au) => (
+          <div
+            id={au}
+            key={au}
+            className={`hover:bg-hover px-2 py-1 border border-border 
+              rounded-md hover:cursor-pointer
+              ${au === author ? "bg-white text-black" : ""}
+              `}
+            onClick={(e) => {
+              setCurrentOpen(null);
+              setAuthor(au === author ? null : e.currentTarget.id);
+            }}
+          >
+            {au}
+          </div>
+        ))}
+      </div>
+    );
+  }, [prs, author]);
+
   const filteredPRs = useMemo(() => {
-    const basePRs =
-      statusSelected === "total" ? prs.total : prs[statusSelected];
+    let filtered = statusSelected === "total" ? prs.total : prs[statusSelected];
     if (debouncedSearchInput) {
       const query = debouncedSearchInput.trim().toLowerCase();
-      return basePRs.filter(
+      filtered = filtered.filter(
         (pr) =>
           pr.title.toLowerCase().includes(query) ||
           pr.owner.toLowerCase().includes(query) ||
@@ -71,8 +81,11 @@ export default function StoriesClientPage({
           pr.author.toLowerCase().includes(query),
       );
     }
-    return basePRs;
-  }, [statusSelected, debouncedSearchInput, prs]);
+    if (!!author) {
+      filtered = filtered.filter((pr) => pr.author === author);
+    }
+    return filtered;
+  }, [statusSelected, debouncedSearchInput, prs, author]);
 
   async function refreshPR(id: string) {
     if (demo) return;
@@ -110,7 +123,7 @@ export default function StoriesClientPage({
             Add story
           </Link>
         </div>
-        <div className="w-full flex gap-3 mb-8 flex-wrap">
+        <div className="w-full flex gap-3 mb-2 flex-wrap">
           <input
             placeholder="Search stories ..."
             className="min-w-full md:min-w-40 w-3/8 bg-sidebar-background p-2 rounded-md text-sm"
@@ -132,18 +145,13 @@ export default function StoriesClientPage({
           ))}
         </div>
         <div className="flex py-4">
-          {(
-            Object.keys(selectionBarConfig) as Array<
-              keyof typeof selectionBarConfig
-            >
-          ).map((field) => (
-            <SelectionCollapsible
-              isOpen={currentOpen === field}
-              setCurrentOpen={setCurrentOpen}
-              field={field}
-              content={selectionBarConfig[field].content}
-            />
-          ))}
+          <SelectionCollapsible
+            isOpen={"author" === currentOpen}
+            setCurrentOpen={setCurrentOpen}
+            setAuthor={setAuthor}
+            field="author"
+            content={authorContent}
+          />
         </div>
         <div className="grid md:grid-cols-2 grid-cols-1 gap-2">
           {filteredPRs.map((pr) => (
