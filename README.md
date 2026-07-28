@@ -15,7 +15,7 @@ For full product specs and requirements, refer to the [project-spec.md](https://
   - Key decisions (who made them, when, and context).
   - Blocking points (context and who we are waiting on).
   - Suggested next steps.
-- **Manual & Automated Sync**: Manual refresh button for on-demand sync.
+- **Manual Sync**: Manual refresh button for on-demand sync.
 
 ---
 
