@@ -196,6 +196,13 @@ async function addWorkItemData(workItemWithSummary: WorkItemWithSummaryJSON) {
   return prId;
 }
 
+async function fetchAlldWorkItems(): Promise<TrackedWorkItemWithSummary[]> {
+  return await sql<TrackedWorkItemWithSummary[]>`
+      SELECT id, last_synced_at
+      FROM tracked_work_items
+    `;
+}
+
 export {
   fetchTrackedWorkItems,
   fetchStatusCounts,
@@ -205,4 +212,5 @@ export {
   fetchWorkItemIdentifiers,
   addWorkItemData,
   updatePRData,
+  fetchAlldWorkItems
 };
