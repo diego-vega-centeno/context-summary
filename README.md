@@ -16,8 +16,6 @@ For full product specs and requirements, refer to the [project-spec.md](https://
   - Blocking points (context and who we are waiting on).
   - Suggested next steps.
 - **LLM pre-process**: Parses and normalizes GitHub's PR timeline events (reviews, comments, commits, status changes) into structured input for LLM processing
-- **Manual Sync**: Manual refresh button for on-demand sync.
-
 ---
 
 ## Tech Stack
